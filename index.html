@@ -717,27 +717,55 @@
             </button>
         </div>
 
-        <!-- Title Screen Overlay -->
-        <div id="title-screen" class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/85 backdrop-blur-md transition-opacity duration-700 p-6 text-center">
-            <div class="mb-3 flex items-center gap-3">
-                <span class="w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_12px_#fff]"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_12px_#fff]"></span>
-            </div>
-            <h2 class="title-font text-5xl sm:text-7xl font-bold text-white mb-2 drop-shadow-[0_0_30px_rgba(255,255,255,0.45)]">UMBRA</h2>
-            <p class="text-neutral-400 text-xs sm:text-sm tracking-[0.3em] uppercase mb-8">Terinspirasi dari dunia sunyi LIMBO + Tantangan Eksponen</p>
-            
-            <div class="max-w-md bg-neutral-900/80 border border-neutral-800 rounded-xl p-4 mb-8 text-xs sm:text-sm text-neutral-300 space-y-2">
-                <p>Terbangun di hutan berkabut. Dorong peti untuk memanjat, pecahkan teka-teki eksponen di tengah perjalanan untuk membuka jalan, dan hindari jebakan mematikan!</p>
-                <div class="pt-2 flex flex-wrap justify-center gap-2 text-xs text-neutral-400">
-                    <span><span class="control-pill">A / D</span> atau <span class="control-pill">← / →</span> Jalan</span>
-                    <span><span class="control-pill">W / Spasi / ↑</span> Lompat</span>
-                    <span><span class="control-pill">Dorong / Tarik</span> Peti &amp; Gerobak</span>
-                </div>
-            </div>
+        <!-- Title Screen Overlay (Kombinasi Proporsional Ilustrasi Gambar 1 & Tata Letak UI Gambar 2) -->
+        <div id="title-screen" class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#060606] transition-opacity duration-700 p-4 sm:p-6 text-center overflow-hidden select-none">
+            <!-- Kanvas Latar Belakang Sinematik Halus & Animasi Karakter Berjalan Menuju Cahaya (Sesuai Gambar 1) -->
+            <canvas id="titleBgCanvas" width="1280" height="720" class="absolute inset-0 w-full h-full object-cover pointer-events-none"></canvas>
 
-            <button id="btn-start-game" class="noir-btn px-9 py-4 text-base font-semibold border-white/40 text-white shadow-[0_0_35px_rgba(255,255,255,0.25)]">
-                Masuk ke Kegelapan
-            </button>
+            <!-- Konten UI Halaman Utama Sesuai Gambar 2 (Proporsional & Berada di Tengah) -->
+            <div class="relative z-10 flex flex-col items-center justify-center w-full max-w-2xl px-4 my-auto">
+                <!-- Dua Titik Mata Putih Bersinar di Atas Huruf B (Sesuai Gambar 2) -->
+                <div class="mb-2 sm:mb-3 flex items-center justify-center gap-3.5">
+                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white shadow-[0_0_14px_#fff,0_0_28px_#fff]"></span>
+                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white shadow-[0_0_14px_#fff,0_0_28px_#fff]"></span>
+                </div>
+
+                <!-- Judul Utama UMBRA -->
+                <h1 class="title-font text-5xl sm:text-7xl md:text-[5.25rem] font-bold text-white leading-none tracking-[0.36em] pl-[0.36em] mb-3 sm:mb-4 drop-shadow-[0_4px_32px_rgba(255,255,255,0.45)]">
+                    UMBRA
+                </h1>
+
+                <!-- Subjudul (Sesuai Gambar 2) -->
+                <p class="text-neutral-300 text-[10px] sm:text-xs md:text-[13px] font-medium tracking-[0.28em] uppercase mb-6 sm:mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                    TERINSPIRASI DARI DUNIA SUNYI LIMBO + TANTANGAN EKSPONEN
+                </p>
+
+                <!-- Kotak Deskripsi & Panduan Kontrol (Sesuai Gambar 2) -->
+                <div class="w-full max-w-[30rem] bg-[#111111]/88 backdrop-blur-md border border-white/15 rounded-2xl px-5 py-4 sm:px-7 sm:py-5 mb-6 sm:mb-8 text-xs sm:text-sm text-neutral-200 shadow-[0_12px_40px_rgba(0,0,0,0.85)] space-y-3.5">
+                    <p class="leading-relaxed text-neutral-200 font-normal">
+                        Terbangun di hutan berkabut. Dorong peti untuk memanjat, pecahkan teka-teki eksponen di tengah perjalanan untuk membuka jalan, dan hindari jebakan mematikan!
+                    </p>
+                    <div class="pt-1 flex flex-col items-center justify-center gap-2 text-[11px] sm:text-xs text-neutral-400">
+                        <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+                            <span class="control-pill">A / D</span>
+                            <span>atau</span>
+                            <span class="control-pill">← / →</span>
+                            <span class="mr-1">Jalan</span>
+                            <span class="control-pill">W / Spasi / ↑</span>
+                            <span>Lompat</span>
+                        </div>
+                        <div class="flex items-center justify-center gap-1.5">
+                            <span class="control-pill">Dorong / Tarik</span>
+                            <span>Peti &amp; Gerobak</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Masuk ke Kegelapan (Sesuai Gambar 2) -->
+                <button id="btn-start-game" class="noir-btn px-8 sm:px-10 py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-bold tracking-[0.14em] border-white/35 text-white bg-gradient-to-b from-neutral-800/90 to-neutral-950/95 shadow-[0_0_35px_rgba(255,255,255,0.22),0_8px_25px_rgba(0,0,0,0.9)] hover:shadow-[0_0_45px_rgba(255,255,255,0.4)]">
+                    MASUK KE KEGELAPAN
+                </button>
+            </div>
         </div>
 
         <!-- Interactive World Map Overlay (Peta Pulau Stage Bergaya Monokrom Realistis LIMBO) -->
@@ -9855,11 +9883,1538 @@ function setupControls() {
 }
 
 let lastFrameTime = performance.now();
+
+function renderTitleScreenBackground(now) {
+    const titleScreen = document.getElementById('title-screen');
+    if (!titleScreen || titleScreen.classList.contains('hidden')) return;
+    const tCanvas = document.getElementById('titleBgCanvas');
+    if (!tCanvas) return;
+    const tCtx = tCanvas.getContext('2d');
+    const W = tCanvas.width;
+    const H = tCanvas.height;
+    const t = now * 0.001;
+
+    // Koordinat pusat sumber cahaya utama di sisi kanan
+    const LIGHT_X = W * 0.95;
+    const LIGHT_Y = H * 0.32;
+
+    tCtx.save();
+    tCtx.clearRect(0, 0, W, H);
+
+    // 1. Gradasi Dasar Langit & Atmosfer Solid (100% Opaque)
+    const skyGrad = tCtx.createLinearGradient(0, 0, W, H * 0.85);
+    skyGrad.addColorStop(0, '#050505');
+    skyGrad.addColorStop(0.30, '#141414');
+    skyGrad.addColorStop(0.58, '#303030');
+    skyGrad.addColorStop(0.82, '#707070');
+    skyGrad.addColorStop(1, '#c4c4c4');
+    tCtx.fillStyle = skyGrad;
+    tCtx.fillRect(0, 0, W, H);
+
+    // 2. Pancaran Sumber Cahaya Utama dari Kanan Atas/Tengah
+    const lightPulse = Math.sin(t * 1.1) * 14;
+    const mainLight = tCtx.createRadialGradient(LIGHT_X, LIGHT_Y, 15, LIGHT_X - 40, LIGHT_Y + 20, W * 0.82 + lightPulse);
+    mainLight.addColorStop(0, 'rgba(255, 255, 255, 1)');
+    mainLight.addColorStop(0.18, 'rgba(242, 242, 242, 0.88)');
+    mainLight.addColorStop(0.42, 'rgba(185, 185, 185, 0.48)');
+    mainLight.addColorStop(0.72, 'rgba(75, 75, 75, 0.16)');
+    mainLight.addColorStop(1, 'rgba(5, 5, 5, 0)');
+    tCtx.fillStyle = mainLight;
+    tCtx.fillRect(0, 0, W, H);
+
+    // Fungsi ketinggian kontur pegunungan jauh
+    const getFarMountainY = (x) => {
+        const u = x / W;
+        const mainRange =
+            165 * Math.pow(1 - u, 3) +
+            3 * 105 * u * Math.pow(1 - u, 2) +
+            3 * 255 * u * u * (1 - u) +
+            140 * Math.pow(u, 3);
+        const ridgeDetail =
+            Math.sin(x * 0.0052 + 0.4) * 34 +
+            Math.cos(x * 0.013 - 1.1) * 16 +
+            Math.sin(x * 0.031 + 2.2) * 6.5 +
+            Math.cos(x * 0.068) * 2.5;
+        return mainRange + ridgeDetail;
+    };
+
+    // Fungsi ketinggian kontur perbukitan menengah
+    const getMidMountainY = (x) => {
+        const u = x / W;
+        const midRange =
+            335 * Math.pow(1 - u, 3) +
+            3 * 265 * u * Math.pow(1 - u, 2) +
+            3 * 290 * u * u * (1 - u) +
+            175 * Math.pow(u, 3);
+        const hillDetail =
+            Math.sin(x * 0.0068 + 2.1) * 26 +
+            Math.cos(x * 0.017 + 0.7) * 12 +
+            Math.sin(x * 0.042) * 4.2;
+        return midRange + hillDetail;
+    };
+
+    // Fungsi ketinggian kontur bukit belakang (tempat bebatuan atas & pohon utama berada)
+    const getUpperHillY = (x) => {
+        const u = x / W;
+        const base = 535 * Math.pow(1 - u, 3) +
+                     3 * 465 * u * Math.pow(1 - u, 2) +
+                     3 * 345 * u * u * (1 - u) +
+                     185 * Math.pow(u, 3);
+        return base + Math.sin(x * 0.011) * 4.5 + Math.cos(x * 0.027) * 2.2;
+    };
+
+    // Fungsi ketinggian tanggul rumput di tepi atas jalur cahaya
+    const getMainSlopeY = (x) => {
+        const u = x / W;
+        const baseCurve = 590 * Math.pow(1 - u, 3) +
+                          3 * 505 * u * Math.pow(1 - u, 2) +
+                          3 * 368 * u * u * (1 - u) +
+                          222 * Math.pow(u, 3);
+        const microUndulation = Math.sin(x * 0.014) * 3.2 + Math.cos(x * 0.031) * 1.8;
+        return baseCurve + microUndulation;
+    };
+
+    // Fungsi ketinggian permukaan Jalur Cahaya (tanah terang tempat karakter berdiri)
+    const getLightPathY = (x) => {
+        const u = x / W;
+        const naturalMeander = Math.sin(u * Math.PI * 2.2 + 0.4) * 6.5 +
+                               Math.sin(x * 0.015) * 3.2 +
+                               Math.cos(x * 0.038) * 1.6;
+        return getMainSlopeY(x) + 42 + (1 - u * 0.35) * 10 + naturalMeander;
+    };
+
+    // Fungsi ketinggian lereng depan (foreground)
+    const getForegroundRidgeY = (x) => {
+        const u = x / W;
+        const base = 648 * Math.pow(1 - u, 3) +
+                     3 * 665 * u * Math.pow(1 - u, 2) +
+                     3 * 575 * u * u * (1 - u) +
+                     272 * Math.pow(u, 3);
+        return base + Math.sin(x * 0.019) * 5.5 + Math.cos(x * 0.045) * 2.5;
+    };
+
+    // Fungsi pembantu untuk menggambar hamparan rumput 100% solid (tidak transparan) dengan gradasi cahaya dari pangkal ke pucuk
+    const drawWispyGrassLayer = (startX, endX, stepX, getSurfaceFn, heightScale, baseRootTone = 10, isForeground = false, seedShift = 0) => {
+        tCtx.save();
+        tCtx.lineCap = 'round';
+        let idx = 0;
+        for (let gx = startX; gx <= endX; gx += stepX) {
+            idx++;
+            const sIdx = idx + seedShift * 137;
+            const hash1 = Math.sin(sIdx * 12.9898 + gx * 0.13) * 43758.5453;
+            const r1 = hash1 - Math.floor(hash1);
+            const hash2 = Math.sin(sIdx * 78.233 + gx * 0.29) * 19341.123;
+            const r2 = hash2 - Math.floor(hash2);
+            const hash3 = Math.sin(sIdx * 39.425 + gx * 0.07) * 29183.719;
+            const r3 = hash3 - Math.floor(hash3);
+
+            // Pangkal rumput ditanam beberapa piksel di bawah garis permukaan tanah agar tidak pernah tampak mengambang
+            const baseY = getSurfaceFn(gx) + (isForeground ? 5.5 : 4.0);
+            const clumpEnvelope = 0.68 + 0.38 * (Math.sin(gx * 0.024 + 0.8 + seedShift) * 0.5 + Math.cos(gx * 0.061 - seedShift) * 0.5 + 0.5);
+            const isTallWisp = r1 > 0.72;
+            const bladeH = (isTallWisp ? (19 + r2 * 15) : (8 + r2 * 11)) * heightScale * clumpEnvelope;
+
+            const naturalDir = (r1 - 0.45) * (isForeground ? 15.5 : 11.5);
+            const individualFreq = 1.45 + r2 * 1.65;
+            const individualPhase = r3 * Math.PI * 2 + gx * 0.035 + seedShift;
+
+            const gustPass = Math.sin(t * 1.15 - gx * 0.0045) * 2.2;
+            const midSway = Math.sin(t * individualFreq + individualPhase) * (1.4 + r1 * 1.6) + gustPass * 0.45;
+            const tipSway = Math.sin(t * individualFreq + individualPhase - 0.85) * (3.2 + r2 * 3.4) +
+                            Math.cos(t * (individualFreq * 0.7) - individualPhase) * 1.4 + gustPass;
+
+            const cp1X = gx + naturalDir * 0.28 + midSway * 0.5;
+            const cp1Y = baseY - bladeH * 0.36;
+            const cp2X = gx + naturalDir * 0.68 + midSway;
+            const cp2Y = baseY - bladeH * 0.72;
+            const tipX = gx + naturalDir + tipSway;
+            const tipY = baseY - bladeH;
+
+            // Hitung intensitas cahaya berdasarkan jarak ke sumber cahaya di kanan (100% solid RGB)
+            const distToLight = Math.hypot(LIGHT_X - gx, LIGHT_Y - baseY);
+            const lightFactor = Math.pow(Math.max(0, 1 - distToLight / (W * 0.92)), 1.65);
+
+            const rootShade = Math.min(255, Math.round(baseRootTone + lightFactor * (isForeground ? 18 : 38)));
+            const midShade = Math.min(255, Math.round(rootShade + lightFactor * (isForeground ? 42 : 78) + (r1 * 8)));
+            const tipShade = Math.min(255, Math.round(midShade + lightFactor * (isForeground ? 65 : 105) + (isTallWisp ? 12 : 4)));
+
+            if (tipShade > rootShade + 6) {
+                const gradG = tCtx.createLinearGradient(gx, baseY, tipX, tipY);
+                gradG.addColorStop(0, `rgb(${rootShade}, ${rootShade}, ${rootShade})`);
+                gradG.addColorStop(0.55, `rgb(${midShade}, ${midShade}, ${midShade})`);
+                gradG.addColorStop(1, `rgb(${tipShade}, ${tipShade}, ${tipShade})`);
+                tCtx.strokeStyle = gradG;
+            } else {
+                tCtx.strokeStyle = `rgb(${rootShade}, ${rootShade}, ${rootShade})`;
+            }
+
+            tCtx.lineWidth = (isForeground ? 0.55 : 0.42) + r3 * (isForeground ? 0.45 : 0.35);
+            tCtx.beginPath();
+            tCtx.moveTo(gx, baseY);
+            tCtx.bezierCurveTo(cp1X, cp1Y, cp2X, cp2Y, tipX, tipY);
+            tCtx.stroke();
+        }
+        tCtx.restore();
+    };
+
+    // Fungsi pembantu menggambar Pohon Hutan 100% Solid dengan Pencahayaan Silindris 3D & Akar Menyatu Tanah
+    const drawTitleForestTree = (cfg) => {
+        const { x, baseY, height, baseW, topW, lean, curve, baseShade, lightStrength, seed, branches, groundFn } = cfg;
+        const windSway = Math.sin(t * 1.15 + seed * 1.7) * (height * 0.012);
+
+        tCtx.save();
+        tCtx.lineCap = 'round';
+        tCtx.lineJoin = 'round';
+
+        // 0. Bayangan Pohon Jatuh ke Kiri di Atas Tanah (Agar Pohon Terlihat Menapak & Menyatu dengan Bukit)
+        if (groundFn) {
+            const gY = groundFn(x);
+            const shadowSpread = baseW * 2.6;
+            const shGrad = tCtx.createLinearGradient(x + baseW * 0.4, gY, x - shadowSpread, gY + 18);
+            const shDark = Math.max(2, baseShade - 14);
+            const shMid = Math.max(4, baseShade - 6);
+            shGrad.addColorStop(0, `rgb(${shDark}, ${shDark}, ${shDark})`);
+            shGrad.addColorStop(0.65, `rgb(${shMid}, ${shMid}, ${shMid})`);
+            shGrad.addColorStop(1, `rgb(${baseShade}, ${baseShade}, ${baseShade})`);
+            tCtx.fillStyle = shGrad;
+            tCtx.beginPath();
+            tCtx.ellipse(x - baseW * 0.65, gY + 4, shadowSpread * 0.65, Math.max(6, baseW * 0.22), -0.18, 0, Math.PI * 2);
+            tCtx.fill();
+        }
+
+        const getTrunkAxisX = (frac) => {
+            return x + Math.sin(frac * Math.PI) * curve + Math.pow(frac, 1.35) * (lean + windSway);
+        };
+        const getTrunkHalfW = (frac) => {
+            const rootFlare = Math.pow(1 - frac, 3.2) * (baseW * 0.95);
+            const taper = baseW * (1 - frac * 0.72) + topW * (frac * 0.72);
+            const barkWave = Math.sin(frac * 14 + seed) * (baseW * 0.04 * (1 - frac));
+            return (taper + rootFlare) * 0.5 + barkWave;
+        };
+
+        // Bangun poligon batang pohon lengkap dengan akar banir (buttress roots) yang mencengkeram tanah
+        const steps = 20;
+        const traceTrunkPath = () => {
+            tCtx.beginPath();
+            for (let i = 0; i <= steps; i++) {
+                const f = i / steps;
+                const py = baseY - f * height;
+                const px = getTrunkAxisX(f) - getTrunkHalfW(f);
+                if (i === 0) tCtx.moveTo(px - baseW * 0.38, py + 18);
+                else tCtx.lineTo(px, py);
+            }
+            for (let i = steps; i >= 0; i--) {
+                const f = i / steps;
+                const py = baseY - f * height;
+                const px = getTrunkAxisX(f) + getTrunkHalfW(f);
+                if (i === 0) tCtx.lineTo(px + baseW * 0.38, py + 18);
+                else tCtx.lineTo(px, py);
+            }
+            tCtx.closePath();
+        };
+
+        // 1. Isi Dasar Batang Pohon 100% Opaque
+        const darkCore = Math.max(3, baseShade - 8);
+        tCtx.fillStyle = `rgb(${darkCore}, ${darkCore}, ${darkCore})`;
+        traceTrunkPath();
+        tCtx.fill();
+
+        // 2. Pencahayaan Silindris 3D Membungkus Batang Pohon & Tekstur Kulit Kayu (Bukan Garis Pinggir)
+        tCtx.save();
+        traceTrunkPath();
+        tCtx.clip();
+
+        // Gradasi silindris horizontal dari sisi kanan (menghadap cahaya) ke sisi kiri (bayangan inti)
+        const minX = x - baseW * 1.1;
+        const maxX = x + baseW * 1.1 + lean;
+        const litBoost = Math.round(lightStrength * 95);
+        const midBoost = Math.round(lightStrength * 42);
+        const rightLit = Math.min(235, baseShade + litBoost);
+        const midLit = Math.min(200, baseShade + midBoost);
+        const leftShadow = Math.max(3, baseShade - 7);
+
+        const cylGrad = tCtx.createLinearGradient(maxX, baseY - height * 0.45, minX, baseY - height * 0.45);
+        cylGrad.addColorStop(0, `rgb(${rightLit}, ${rightLit}, ${rightLit})`);
+        cylGrad.addColorStop(0.24, `rgb(${midLit}, ${midLit}, ${midLit})`);
+        cylGrad.addColorStop(0.58, `rgb(${baseShade}, ${baseShade}, ${baseShade})`);
+        cylGrad.addColorStop(1, `rgb(${leftShadow}, ${leftShadow}, ${leftShadow})`);
+        tCtx.fillStyle = cylGrad;
+        tCtx.fillRect(minX - 60, baseY - height - 20, (maxX - minX) + 120, height + 50);
+
+        // Gurat-gurat tekstur kulit kayu 3D (bark ridges) yang menangkap cahaya secara alami di sepanjang batang
+        const ridgeCount = 5;
+        for (let r = 0; r < ridgeCount; r++) {
+            const rOffset = -0.35 + (r / (ridgeCount - 1)) * 0.82; // Posisi relatif dari tengah ke sisi kanan batang
+            const ridgeExposure = Math.max(0, (rOffset + 0.4) / 1.25);
+            const rShade = Math.min(240, Math.round(baseShade + ridgeExposure * litBoost * 0.85));
+            const furrowShade = Math.max(3, Math.round(baseShade - (1 - ridgeExposure) * 6));
+
+            // Tonjolan serat kayu yang terkena cahaya
+            tCtx.strokeStyle = `rgb(${rShade}, ${rShade}, ${rShade})`;
+            tCtx.lineWidth = Math.max(1.2, baseW * (0.06 + ridgeExposure * 0.05));
+            tCtx.beginPath();
+            for (let i = 0; i <= steps; i++) {
+                const f = i / steps;
+                const py = baseY - f * height;
+                const wiggle = Math.sin(f * 18 + seed + r * 2.1) * (baseW * 0.03);
+                const px = getTrunkAxisX(f) + getTrunkHalfW(f) * rOffset + wiggle;
+                if (i === 0) tCtx.moveTo(px, py + 12);
+                else tCtx.lineTo(px, py);
+            }
+            tCtx.stroke();
+
+            // Celah gelap kulit kayu di sebelahnya untuk memberi kedalaman tekstur
+            tCtx.strokeStyle = `rgb(${furrowShade}, ${furrowShade}, ${furrowShade})`;
+            tCtx.lineWidth = Math.max(0.8, baseW * 0.035);
+            tCtx.beginPath();
+            for (let i = 0; i <= steps; i++) {
+                const f = i / steps;
+                const py = baseY - f * height;
+                const wiggle = Math.sin(f * 18 + seed + r * 2.1) * (baseW * 0.03);
+                const px = getTrunkAxisX(f) + getTrunkHalfW(f) * (rOffset - 0.09) + wiggle;
+                if (i === 0) tCtx.moveTo(px, py + 12);
+                else tCtx.lineTo(px, py);
+            }
+            tCtx.stroke();
+        }
+
+        // Gradasi Ambient Occlusion di pangkal bawah pohon agar menyatu pekat dengan tanah
+        const baseAoGrad = tCtx.createLinearGradient(0, baseY - 38, 0, baseY + 18);
+        const aoColor = Math.max(2, baseShade - 10);
+        baseAoGrad.addColorStop(0, `rgba(${aoColor}, ${aoColor}, ${aoColor}, 0)`);
+        baseAoGrad.addColorStop(1, `rgb(${aoColor}, ${aoColor}, ${aoColor})`);
+        tCtx.fillStyle = baseAoGrad;
+        tCtx.fillRect(minX - 60, baseY - 40, (maxX - minX) + 120, 65);
+
+        tCtx.restore();
+
+        // 3. Fungsi Rekursif Menggambar Dahan & Ranting 100% Solid dengan Gradasi Cahaya 3D pada Permukaan Dahan
+        const drawBranchSegment = (sx, sy, angle, len, startThick, depth, brSeed) => {
+            const localSway = Math.sin(t * (1.4 + depth * 0.35) + brSeed) * (0.022 * depth);
+            const curAng = angle + localSway;
+            const ex = sx + Math.cos(curAng) * len;
+            const ey = sy + Math.sin(curAng) * len;
+            const bend = Math.sin(brSeed * 3.1) * (len * 0.14);
+            const mx = (sx + ex) * 0.5 - Math.sin(curAng) * bend;
+            const my = (sy + ey) * 0.5 + Math.cos(curAng) * bend;
+
+            const endThick = depth >= 3 ? 0.45 : startThick * 0.38;
+            const nx = -Math.sin(curAng);
+            const ny = Math.cos(curAng);
+
+            // Hitung arah vektor cahaya menuju tengah dahan
+            const toLightX = LIGHT_X - mx;
+            const toLightY = LIGHT_Y - my;
+            const toLightLen = Math.max(1, Math.hypot(toLightX, toLightY));
+            const lx = toLightX / toLightLen;
+            const ly = toLightY / toLightLen;
+
+            // Tentukan sisi normal dahan mana yang menghadap sumber cahaya
+            const normalDot = nx * lx + ny * ly;
+            const litSide = normalDot >= 0 ? 1 : -1;
+            const branchExposure = Math.abs(normalDot) * lightStrength;
+            const brLitShade = Math.min(230, Math.round(baseShade + branchExposure * 82));
+            const brDarkShade = Math.max(3, Math.round(baseShade - 7));
+
+            const brGrad = tCtx.createLinearGradient(
+                mx + nx * litSide * startThick * 0.65,
+                my + ny * litSide * startThick * 0.65,
+                mx - nx * litSide * startThick * 0.65,
+                my - ny * litSide * startThick * 0.65
+            );
+            brGrad.addColorStop(0, `rgb(${brLitShade}, ${brLitShade}, ${brLitShade})`);
+            brGrad.addColorStop(0.45, `rgb(${baseShade}, ${baseShade}, ${baseShade})`);
+            brGrad.addColorStop(1, `rgb(${brDarkShade}, ${brDarkShade}, ${brDarkShade})`);
+
+            tCtx.fillStyle = brGrad;
+            tCtx.beginPath();
+            tCtx.moveTo(sx + nx * startThick * 0.5, sy + ny * startThick * 0.5);
+            tCtx.quadraticCurveTo(mx + nx * (startThick * 0.32), my + ny * (startThick * 0.32), ex + nx * endThick * 0.5, ey + ny * endThick * 0.5);
+            tCtx.lineTo(ex - nx * endThick * 0.5, ey - ny * endThick * 0.5);
+            tCtx.quadraticCurveTo(mx - nx * (startThick * 0.32), my - ny * (startThick * 0.32), sx - nx * startThick * 0.5, sy - ny * startThick * 0.5);
+            tCtx.closePath();
+            tCtx.fill();
+
+            // Sulur lumut tipis 100% solid menjuntai di bawah dahan utama
+            if (depth === 1 && len > 42) {
+                const vineX = mx;
+                const vineY = my;
+                const vineLen = 18 + (Math.abs(Math.sin(brSeed * 5)) * 22);
+                const vineSway = Math.sin(t * 1.8 + brSeed) * 3.2;
+                const vineShade = Math.min(200, Math.round(baseShade + branchExposure * 35));
+                tCtx.strokeStyle = `rgb(${vineShade}, ${vineShade}, ${vineShade})`;
+                tCtx.lineWidth = Math.max(0.65, startThick * 0.14);
+                tCtx.beginPath();
+                tCtx.moveTo(vineX, vineY);
+                tCtx.quadraticCurveTo(vineX + vineSway * 0.5, vineY + vineLen * 0.55, vineX + vineSway, vineY + vineLen);
+                tCtx.stroke();
+            }
+
+            if (depth < 3) {
+                const midBranchX = (sx + mx) * 0.5;
+                const midBranchY = (sy + my) * 0.5;
+                const sideDir = (brSeed % 2 === 0) ? -1 : 1;
+                drawBranchSegment(
+                    midBranchX,
+                    midBranchY,
+                    curAng + sideDir * (0.42 + (brSeed % 3) * 0.08),
+                    len * 0.56,
+                    startThick * 0.52,
+                    depth + 1,
+                    brSeed + 7.3
+                );
+                drawBranchSegment(
+                    ex,
+                    ey,
+                    curAng - 0.32 - (brSeed % 2) * 0.1,
+                    len * 0.64,
+                    startThick * 0.55,
+                    depth + 1,
+                    brSeed + 13.7
+                );
+                drawBranchSegment(
+                    ex,
+                    ey,
+                    curAng + 0.36 + (brSeed % 3) * 0.08,
+                    len * 0.54,
+                    startThick * 0.46,
+                    depth + 1,
+                    brSeed + 21.1
+                );
+            }
+        };
+
+        for (let bIdx = 0; bIdx < branches.length; bIdx++) {
+            const br = branches[bIdx];
+            const by = baseY - br.f * height;
+            // Pangkal dahan ditanam masuk ke dalam batang pohon agar tidak terlihat terpisah
+            const bx = getTrunkAxisX(br.f) + br.dir * (getTrunkHalfW(br.f) * 0.35);
+            const startThick = Math.max(2.4, getTrunkHalfW(br.f) * 0.92 * (br.thickScale || 0.75));
+            drawBranchSegment(bx, by, br.angle, br.len, startThick, 1, seed * 11 + bIdx * 5);
+        }
+
+        // 4. Gundukan Tanah & Rumput Pengunci di Pangkal Akar Pohon (Agar Pohon 100% Menyatu dengan Bumi)
+        if (groundFn) {
+            const gY = groundFn(x);
+            const moundShade = Math.max(3, baseShade - 6);
+            tCtx.fillStyle = `rgb(${moundShade}, ${moundShade}, ${moundShade})`;
+            tCtx.beginPath();
+            tCtx.moveTo(x - baseW * 1.15, gY + 14);
+            tCtx.quadraticCurveTo(x, gY - 8, x + baseW * 1.15, gY + 14);
+            tCtx.closePath();
+            tCtx.fill();
+
+            drawWispyGrassLayer(
+                x - baseW * 1.1,
+                x + baseW * 1.1,
+                1.5,
+                (gx) => groundFn(gx) - Math.max(0, (1 - Math.pow((gx - x) / (baseW * 1.2), 2)) * 4),
+                0.75,
+                moundShade,
+                false,
+                seed * 9
+            );
+        }
+
+        tCtx.restore();
+    };
+
+    // Fungsi pembantu untuk menggambar Batu Alam 100% Solid (Tidak Tembus Pandang), Tertanam di Tanah & Berpencahayaan Faset 3D Realistis
+    const drawRealisticRock = (bx, by, rx, ry, rot, baseShade, shadowShade, lightIntensity, seed = 1, withTopGrass = true, groundFn = null) => {
+        const sRand = (n) => {
+            const x = Math.sin(seed * 91.345 + n * 47.853) * 43758.5453;
+            return x - Math.floor(x);
+        };
+
+        // 0. Bayangan Kontak & Bayangan Jatuh (Cast Shadow) ke Kiri di Atas Permukaan Tanah
+        const surfY = groundFn ? groundFn(bx) : by;
+        tCtx.save();
+        const castLen = rx * (1.45 + lightIntensity * 0.65);
+        const shDark = Math.max(2, shadowShade - 8);
+        const shEdge = Math.max(4, baseShade - 2);
+        const castGrad = tCtx.createLinearGradient(bx + rx * 0.3, surfY, bx - castLen, surfY + 12);
+        castGrad.addColorStop(0, `rgb(${shDark}, ${shDark}, ${shDark})`);
+        castGrad.addColorStop(0.6, `rgb(${shadowShade}, ${shadowShade}, ${shadowShade})`);
+        castGrad.addColorStop(1, `rgb(${shEdge}, ${shEdge}, ${shEdge})`);
+        tCtx.fillStyle = castGrad;
+        tCtx.beginPath();
+        tCtx.ellipse(bx - rx * 0.35, surfY + ry * 0.18, castLen * 0.65, Math.max(6, ry * 0.32), rot * 0.6 - 0.12, 0, Math.PI * 2);
+        tCtx.fill();
+        tCtx.restore();
+
+        tCtx.save();
+        // Tanam posisi batu sedikit lebih dalam ke tanah agar bagian bawahnya menyatu utuh
+        tCtx.translate(bx, by + ry * 0.12);
+        tCtx.rotate(rot);
+
+        const rockType = Math.floor(sRand(1) * 4);
+        let profileAnchors;
+
+        if (rockType === 0) {
+            profileAnchors = [
+                [-1.12, 0.42], [-0.98, -0.18], [-0.72, -0.68], [-0.34, -1.05],
+                [0.08, -0.88], [0.42, -0.94], [0.78, -0.46], [0.98, -0.12],
+                [1.10, 0.40], [0.52, 0.48], [-0.15, 0.50], [-0.68, 0.46]
+            ];
+        } else if (rockType === 1) {
+            profileAnchors = [
+                [-1.08, 0.40], [-0.98, -0.12], [-0.78, -0.52], [-0.46, -0.92],
+                [-0.14, -0.62], [0.22, -1.08], [0.64, -0.76], [0.92, -0.28],
+                [1.08, 0.38], [0.48, 0.46], [-0.22, 0.48], [-0.74, 0.44]
+            ];
+        } else if (rockType === 2) {
+            profileAnchors = [
+                [-1.14, 0.38], [-1.02, -0.24], [-0.64, -0.36], [-0.48, -0.82],
+                [0.14, -0.96], [0.58, -0.84], [0.74, -0.38], [1.04, -0.22],
+                [1.12, 0.38], [0.55, 0.46], [-0.18, 0.48], [-0.72, 0.44]
+            ];
+        } else {
+            profileAnchors = [
+                [-1.06, 0.42], [-1.06, -0.28], [-0.82, -0.78], [-0.28, -0.98],
+                [0.28, -1.04], [0.68, -0.64], [0.96, -0.36], [1.08, 0.36],
+                [0.62, 0.46], [0.05, 0.50], [-0.58, 0.46]
+            ];
+        }
+
+        const pts = [];
+        const len = profileAnchors.length;
+        for (let i = 0; i < len; i++) {
+            const a = profileAnchors[i];
+            const b = profileAnchors[(i + 1) % len];
+            const jx = (sRand(i * 3 + 2) - 0.5) * 0.14;
+            const jy = (sRand(i * 3 + 3) - 0.5) * 0.14;
+            const p1x = (a[0] + jx) * rx;
+            const p1y = (a[1] + jy) * ry;
+            pts.push({ x: p1x, y: p1y });
+
+            if (a[1] < 0.22 || b[1] < 0.22) {
+                const t1 = 0.35 + sRand(i * 7 + 4) * 0.3;
+                const indent = (sRand(i * 7 + 5) - 0.48) * 0.12;
+                const nx = -(b[1] - a[1]);
+                const ny = (b[0] - a[0]);
+                const mx = (a[0] + (b[0] - a[0]) * t1 + nx * indent) * rx;
+                const my = (a[1] + (b[1] - a[1]) * t1 + ny * indent) * ry;
+                pts.push({ x: mx, y: my });
+            }
+        }
+
+        const traceRockSilhouette = () => {
+            tCtx.beginPath();
+            tCtx.moveTo(pts[0].x, pts[0].y);
+            for (let i = 1; i < pts.length; i++) {
+                const prev = pts[i - 1];
+                const curr = pts[i];
+                const midX = prev.x + (curr.x - prev.x) * 0.85;
+                const midY = prev.y + (curr.y - prev.y) * 0.85;
+                tCtx.lineTo(midX, midY);
+                const next = pts[(i + 1) % pts.length];
+                tCtx.quadraticCurveTo(curr.x, curr.y, curr.x + (next.x - curr.x) * 0.15, curr.y + (next.y - curr.y) * 0.15);
+            }
+            tCtx.closePath();
+        };
+
+        // 1. Siluet Dasar Batu 100% Solid (Tidak Tembus Pandang)
+        tCtx.fillStyle = `rgb(${shadowShade}, ${shadowShade}, ${shadowShade})`;
+        traceRockSilhouette();
+        tCtx.fill();
+
+        // 2. Pencahayaan Faset 3D Realistis (Setiap Bidang Batu Menangkap Cahaya Sesuai Sudut Kemiringannya)
+        tCtx.save();
+        traceRockSilhouette();
+        tCtx.clip();
+
+        const ridgeTopX = (-0.18 + (sRand(20) - 0.5) * 0.26) * rx;
+        const ridgeTopY = (-0.94 + (sRand(21) - 0.5) * 0.14) * ry;
+        const ridgeMidX = (0.04 + (sRand(22) - 0.5) * 0.22) * rx;
+        const ridgeMidY = (-0.26 + (sRand(23) - 0.5) * 0.16) * ry;
+        const ridgeBotX = (-0.22 + (sRand(24) - 0.5) * 0.28) * rx;
+        const ridgeBotY = 0.48 * ry;
+
+        // Warna solid untuk masing-masing faset berdasarkan intensitas cahaya
+        const deepShadow = Math.max(2, shadowShade - 6);
+        const litPeak = Math.min(242, Math.round(baseShade + lightIntensity * 110));
+        const litMid = Math.min(210, Math.round(baseShade + lightIntensity * 58));
+        const litLow = Math.min(175, Math.round(baseShade + lightIntensity * 22));
+        const backSlopeLit = Math.min(185, Math.round(shadowShade + lightIntensity * 28));
+
+        // Bidang Kiri-Atas (Menerima sedikit pantulan cahaya langit, lalu jatuh ke bayangan inti di kiri-bawah)
+        const leftPlaneGrad = tCtx.createLinearGradient(ridgeTopX, ridgeTopY, -rx * 1.05, ry * 0.55);
+        leftPlaneGrad.addColorStop(0, `rgb(${backSlopeLit}, ${backSlopeLit}, ${backSlopeLit})`);
+        leftPlaneGrad.addColorStop(0.42, `rgb(${shadowShade}, ${shadowShade}, ${shadowShade})`);
+        leftPlaneGrad.addColorStop(1, `rgb(${deepShadow}, ${deepShadow}, ${deepShadow})`);
+        tCtx.fillStyle = leftPlaneGrad;
+        tCtx.beginPath();
+        tCtx.moveTo(-rx * 1.3, -ry * 1.3);
+        tCtx.lineTo(ridgeTopX, ridgeTopY - ry * 0.3);
+        tCtx.lineTo(ridgeMidX, ridgeMidY);
+        tCtx.lineTo(ridgeBotX, ridgeBotY + ry * 0.3);
+        tCtx.lineTo(-rx * 1.3, ry * 1.3);
+        tCtx.closePath();
+        tCtx.fill();
+
+        // Bidang Utama Kanan-Atas (Menghadap Langsung ke Sumber Cahaya — Gradasi Permukaan 3D yang Halus & Lebar)
+        const rightPlaneGrad = tCtx.createLinearGradient(rx * 0.92, -ry * 0.92, ridgeMidX - rx * 0.25, ry * 0.48);
+        rightPlaneGrad.addColorStop(0, `rgb(${litPeak}, ${litPeak}, ${litPeak})`);
+        rightPlaneGrad.addColorStop(0.35, `rgb(${litMid}, ${litMid}, ${litMid})`);
+        rightPlaneGrad.addColorStop(0.72, `rgb(${litLow}, ${litLow}, ${litLow})`);
+        rightPlaneGrad.addColorStop(1, `rgb(${baseShade}, ${baseShade}, ${baseShade})`);
+        tCtx.fillStyle = rightPlaneGrad;
+        tCtx.beginPath();
+        tCtx.moveTo(ridgeTopX, ridgeTopY - ry * 0.3);
+        tCtx.lineTo(rx * 1.3, -ry * 1.3);
+        tCtx.lineTo(rx * 1.3, ry * 1.3);
+        tCtx.lineTo(ridgeBotX, ridgeBotY + ry * 0.3);
+        tCtx.lineTo(ridgeMidX, ridgeMidY);
+        tCtx.closePath();
+        tCtx.fill();
+
+        // Faset Teras Tengah-Kanan (Bidang Patahan Sekunder dengan Sudut Cahaya Berbeda)
+        const subFacetGrad = tCtx.createLinearGradient(rx * 0.75, -ry * 0.42, ridgeBotX, ry * 0.52);
+        subFacetGrad.addColorStop(0, `rgb(${litMid}, ${litMid}, ${litMid})`);
+        subFacetGrad.addColorStop(0.55, `rgb(${baseShade}, ${baseShade}, ${baseShade})`);
+        subFacetGrad.addColorStop(1, `rgb(${shadowShade}, ${shadowShade}, ${shadowShade})`);
+        tCtx.fillStyle = subFacetGrad;
+        tCtx.beginPath();
+        tCtx.moveTo(ridgeMidX, ridgeMidY);
+        tCtx.lineTo(rx * 0.62, -ry * 0.38);
+        tCtx.lineTo(rx * 0.98, 0.12 * ry);
+        tCtx.lineTo(ridgeBotX, ridgeBotY);
+        tCtx.closePath();
+        tCtx.fill();
+
+        // Faset Puncak Atas (Top Crown Facet yang Menangkap Cahaya Paling Terang)
+        const topCrownGrad = tCtx.createLinearGradient(rx * 0.35, -ry * 1.05, -rx * 0.35, -ry * 0.25);
+        topCrownGrad.addColorStop(0, `rgb(${litPeak}, ${litPeak}, ${litPeak})`);
+        topCrownGrad.addColorStop(0.65, `rgb(${litMid}, ${litMid}, ${litMid})`);
+        topCrownGrad.addColorStop(1, `rgb(${baseShade}, ${baseShade}, ${baseShade})`);
+        tCtx.fillStyle = topCrownGrad;
+        tCtx.beginPath();
+        tCtx.moveTo(ridgeTopX, ridgeTopY);
+        tCtx.lineTo(rx * 0.62, -ry * 0.82);
+        tCtx.lineTo(rx * 0.62, -ry * 0.38);
+        tCtx.lineTo(ridgeMidX, ridgeMidY);
+        tCtx.closePath();
+        tCtx.fill();
+
+        // Faset Cekungan Gelap di Sisi Kiri-Tengah
+        tCtx.fillStyle = `rgb(${deepShadow}, ${deepShadow}, ${deepShadow})`;
+        tCtx.beginPath();
+        tCtx.moveTo(ridgeTopX, ridgeTopY);
+        tCtx.lineTo(-rx * 0.68, -ry * 0.42);
+        tCtx.lineTo(-rx * 0.45, 0.05 * ry);
+        tCtx.lineTo(ridgeMidX, ridgeMidY);
+        tCtx.closePath();
+        tCtx.fill();
+
+        // Tekstur Retakan Geologis & Tonjolan Patahan dengan Bevel Cahaya 3D
+        const crackDark = Math.max(2, deepShadow - 2);
+        const crackHighlight = Math.min(245, Math.round(litMid + 18));
+        tCtx.lineCap = 'round';
+        tCtx.lineJoin = 'round';
+
+        // Bevel terang di tepi bawah retakan yang menangkap cahaya
+        tCtx.strokeStyle = `rgb(${crackHighlight}, ${crackHighlight}, ${crackHighlight})`;
+        tCtx.lineWidth = Math.max(0.9, rx * 0.018);
+        tCtx.beginPath();
+        tCtx.moveTo(ridgeTopX + rx * 0.09, ridgeTopY + ry * 0.14);
+        tCtx.lineTo(ridgeMidX - rx * 0.03, ridgeMidY + 1.2);
+        tCtx.lineTo(rx * 0.49, -ry * 0.16);
+        tCtx.stroke();
+
+        // Garis retakan gelap utama
+        tCtx.strokeStyle = `rgb(${crackDark}, ${crackDark}, ${crackDark})`;
+        tCtx.lineWidth = Math.max(1.2, rx * 0.026);
+        tCtx.beginPath();
+        tCtx.moveTo(ridgeTopX + rx * 0.08, ridgeTopY + ry * 0.12);
+        tCtx.lineTo(ridgeMidX - rx * 0.04, ridgeMidY);
+        tCtx.lineTo(ridgeBotX + rx * 0.12, ridgeBotY - ry * 0.05);
+        tCtx.moveTo(ridgeMidX - rx * 0.04, ridgeMidY);
+        tCtx.lineTo(rx * 0.48, -ry * 0.18);
+        tCtx.lineTo(rx * 0.72, 0.05 * ry);
+        tCtx.moveTo(ridgeMidX - rx * 0.04, ridgeMidY);
+        tCtx.lineTo(-rx * 0.52, -ry * 0.12);
+        tCtx.lineTo(-rx * 0.78, 0.14 * ry);
+        tCtx.stroke();
+
+        // Guratan lapisan sedimen batu (stone strata)
+        tCtx.lineWidth = Math.max(0.75, rx * 0.015);
+        tCtx.strokeStyle = `rgb(${shadowShade}, ${shadowShade}, ${shadowShade})`;
+        for (let st = 0; st < 4; st++) {
+            const sy = (-0.55 + st * 0.28 + sRand(30 + st) * 0.1) * ry;
+            tCtx.beginPath();
+            tCtx.moveTo(-rx * 0.85, sy + ry * 0.08);
+            tCtx.lineTo(-rx * 0.15, sy - ry * 0.04);
+            tCtx.lineTo(rx * 0.45, sy + ry * 0.06);
+            tCtx.lineTo(rx * 0.88, sy - ry * 0.02);
+            tCtx.stroke();
+        }
+
+        // Butiran pori & faset mikro permukaan batu (100% solid RGB)
+        for (let sp = 0; sp < 14; sp++) {
+            const spX = (sRand(50 + sp * 2) * 1.7 - 0.85) * rx;
+            const spY = (sRand(51 + sp * 2) * 1.2 - 0.75) * ry;
+            const spW = (1.6 + sRand(70 + sp) * 3.8) * (rx / 60);
+            const spH = spW * (0.45 + sRand(80 + sp) * 0.4);
+            const spShade = (sp % 3 === 0 && spX > 0)
+                ? Math.min(235, Math.round(litMid + 12))
+                : deepShadow;
+            tCtx.fillStyle = `rgb(${spShade}, ${spShade}, ${spShade})`;
+            tCtx.beginPath();
+            tCtx.moveTo(spX - spW, spY);
+            tCtx.lineTo(spX, spY - spH);
+            tCtx.lineTo(spX + spW, spY + spH * 0.3);
+            tCtx.lineTo(spX - spW * 0.3, spY + spH);
+            tCtx.closePath();
+            tCtx.fill();
+        }
+
+        // Gradasi pengunci pangkal batu ke warna tanah bukit di bawahnya
+        const baseLockGrad = tCtx.createLinearGradient(0, ry * 0.02, 0, ry * 0.52);
+        baseLockGrad.addColorStop(0, `rgba(${deepShadow}, ${deepShadow}, ${deepShadow}, 0)`);
+        baseLockGrad.addColorStop(1, `rgb(${deepShadow}, ${deepShadow}, ${deepShadow})`);
+        tCtx.fillStyle = baseLockGrad;
+        tCtx.fillRect(-rx * 1.25, ry * 0.02, rx * 2.5, ry * 0.55);
+
+        tCtx.restore();
+        tCtx.restore();
+
+        // 3. Sabuk Tanah & Rumpun Rumput yang Menutup Bagian Bawah Batu (Agar Batu Terlihat Tertanam di Dalam Tanah)
+        const collarY = groundFn ? groundFn(bx) + 3 : by + ry * 0.22;
+        const collarShade = Math.max(2, shadowShade - 4);
+        tCtx.save();
+        tCtx.fillStyle = `rgb(${collarShade}, ${collarShade}, ${collarShade})`;
+        tCtx.beginPath();
+        tCtx.moveTo(bx - rx * 1.18, collarY + ry * 0.28);
+        tCtx.quadraticCurveTo(bx - rx * 0.35, collarY - ry * 0.08, bx + rx * 0.25, collarY + ry * 0.04);
+        tCtx.quadraticCurveTo(bx + rx * 0.75, collarY - ry * 0.05, bx + rx * 1.15, collarY + ry * 0.26);
+        tCtx.closePath();
+        tCtx.fill();
+        tCtx.restore();
+
+        if (withTopGrass && rx >= 22) {
+            const rockGrassSpan = rx * 1.12;
+            const getRockBaseGrassY = (wx) => {
+                const baseGround = groundFn ? groundFn(wx) : by + ry * 0.15;
+                const dx = (wx - bx) / (rx * 1.15);
+                const arch = Math.max(0, 1 - dx * dx);
+                return baseGround - arch * (ry * 0.16) + Math.sin(wx * 0.11 + seed) * 1.8;
+            };
+            drawWispyGrassLayer(
+                bx - rockGrassSpan,
+                bx + rockGrassSpan,
+                1.35,
+                getRockBaseGrassY,
+                0.76 + (rx / 130) * 0.32,
+                collarShade,
+                false,
+                seed * 3
+            );
+        }
+    };
+
+    // =========================================================================
+    // LAPISAN 1: PEGUNUNGAN JAUH (100% SOLID & BERFASET CAHAYA DARI KANAN)
+    // =========================================================================
+    tCtx.save();
+    const farMtnGrad = tCtx.createLinearGradient(0, 110, W, 380);
+    farMtnGrad.addColorStop(0, '#1e1e1e');
+    farMtnGrad.addColorStop(0.38, '#383838');
+    farMtnGrad.addColorStop(0.72, '#6e6e6e');
+    farMtnGrad.addColorStop(1, '#a8a8a8');
+    tCtx.fillStyle = farMtnGrad;
+    tCtx.beginPath();
+    tCtx.moveTo(0, H);
+    tCtx.lineTo(0, getFarMountainY(0));
+    for (let mx = 10; mx <= W; mx += 10) {
+        tCtx.lineTo(mx, getFarMountainY(mx));
+    }
+    tCtx.lineTo(W, H);
+    tCtx.closePath();
+    tCtx.fill();
+
+    // Faset 3D Punggung Gunung Jauh (Sisi Kanan Puncak Terang Terkena Cahaya, Sisi Kiri Puncak Gelap Berbayang)
+    tCtx.save();
+    tCtx.clip();
+    const ridgePeaks = [115, 295, 510, 745, 980, 1185];
+    for (let pIdx = 0; pIdx < ridgePeaks.length; pIdx++) {
+        const px = ridgePeaks[pIdx];
+        const py = getFarMountainY(px);
+        const u = px / W;
+        const baseMtnTone = Math.round(30 + u * 135);
+        const darkSlope = Math.max(16, baseMtnTone - 22);
+        const litSlope = Math.min(220, baseMtnTone + 26);
+
+        // Lereng Kiri Puncak (Bayangan)
+        const leftSlopeGrad = tCtx.createLinearGradient(px, py, px - 125, py + 190);
+        leftSlopeGrad.addColorStop(0, `rgb(${darkSlope}, ${darkSlope}, ${darkSlope})`);
+        leftSlopeGrad.addColorStop(1, `rgb(${baseMtnTone}, ${baseMtnTone}, ${baseMtnTone})`);
+        tCtx.fillStyle = leftSlopeGrad;
+        tCtx.beginPath();
+        tCtx.moveTo(px, py);
+        tCtx.quadraticCurveTo(px - 28, py + 75, px - 68, py + 195);
+        tCtx.lineTo(px - 145, py + 205);
+        tCtx.lineTo(px - 95, getFarMountainY(px - 95) - 10);
+        tCtx.closePath();
+        tCtx.fill();
+
+        // Lereng Kanan Puncak (Menghadap Cahaya)
+        const rightSlopeGrad = tCtx.createLinearGradient(px, py, px + 115, py + 180);
+        rightSlopeGrad.addColorStop(0, `rgb(${litSlope}, ${litSlope}, ${litSlope})`);
+        rightSlopeGrad.addColorStop(1, `rgb(${baseMtnTone}, ${baseMtnTone}, ${baseMtnTone})`);
+        tCtx.fillStyle = rightSlopeGrad;
+        tCtx.beginPath();
+        tCtx.moveTo(px, py);
+        tCtx.quadraticCurveTo(px + 24, py + 70, px + 62, py + 190);
+        tCtx.lineTo(px + 130, py + 195);
+        tCtx.lineTo(px + 85, getFarMountainY(px + 85) - 10);
+        tCtx.closePath();
+        tCtx.fill();
+    }
+    tCtx.restore();
+    tCtx.restore();
+
+    // =========================================================================
+    // LAPISAN 2: PEPOHONAN HUTAN JAUH (100% SOLID, DITANAM DI BELAKANG BUKIT TENGAH)
+    // =========================================================================
+    const distantForestTrees = [
+        {
+            x: 145, baseY: getMidMountainY(145) + 55, height: 395, baseW: 24, topW: 3.0, lean: 8, curve: -6,
+            baseShade: 30, lightStrength: 0.25, seed: 1, groundFn: null,
+            branches: [
+                { f: 0.62, dir: 1, angle: -0.45, len: 52, thickScale: 0.65 },
+                { f: 0.78, dir: -1, angle: -2.55, len: 46, thickScale: 0.6 },
+                { f: 0.95, dir: 1, angle: -1.15, len: 40, thickScale: 0.55 }
+            ]
+        },
+        {
+            x: 285, baseY: getMidMountainY(285) + 50, height: 345, baseW: 20, topW: 2.5, lean: -10, curve: 5,
+            baseShade: 36, lightStrength: 0.32, seed: 2, groundFn: null,
+            branches: [
+                { f: 0.58, dir: -1, angle: -2.62, len: 48, thickScale: 0.62 },
+                { f: 0.76, dir: 1, angle: -0.52, len: 44, thickScale: 0.58 },
+                { f: 0.96, dir: -1, angle: -1.85, len: 36, thickScale: 0.52 }
+            ]
+        },
+        {
+            x: 475, baseY: getMidMountainY(475) + 48, height: 315, baseW: 18, topW: 2.2, lean: 6, curve: -4,
+            baseShade: 46, lightStrength: 0.44, seed: 3, groundFn: null,
+            branches: [
+                { f: 0.64, dir: 1, angle: -0.48, len: 44, thickScale: 0.6 },
+                { f: 0.82, dir: -1, angle: -2.58, len: 38, thickScale: 0.55 }
+            ]
+        },
+        {
+            x: 785, baseY: getMidMountainY(785) + 46, height: 300, baseW: 19, topW: 2.4, lean: -12, curve: -5,
+            baseShade: 64, lightStrength: 0.65, seed: 4, groundFn: null,
+            branches: [
+                { f: 0.60, dir: -1, angle: -2.52, len: 46, thickScale: 0.6 },
+                { f: 0.80, dir: 1, angle: -0.58, len: 40, thickScale: 0.55 },
+                { f: 0.96, dir: -1, angle: -1.92, len: 34, thickScale: 0.5 }
+            ]
+        },
+        {
+            x: 965, baseY: getMidMountainY(965) + 45, height: 320, baseW: 21, topW: 2.6, lean: -8, curve: 4,
+            baseShade: 78, lightStrength: 0.82, seed: 5, groundFn: null,
+            branches: [
+                { f: 0.56, dir: -1, angle: -2.60, len: 50, thickScale: 0.62 },
+                { f: 0.78, dir: 1, angle: -0.46, len: 42, thickScale: 0.56 }
+            ]
+        }
+    ];
+
+    for (const dtTree of distantForestTrees) {
+        drawTitleForestTree(dtTree);
+    }
+
+    // =========================================================================
+    // LAPISAN 3: PERBUKITAN HUTAN MENENGAH (100% SOLID, MENUTUP AKAR POHON JAUH)
+    // =========================================================================
+    tCtx.save();
+    const midMtnGrad = tCtx.createLinearGradient(0, 220, W, 480);
+    midMtnGrad.addColorStop(0, '#141414');
+    midMtnGrad.addColorStop(0.42, '#282828');
+    midMtnGrad.addColorStop(0.76, '#505050');
+    midMtnGrad.addColorStop(1, '#828282');
+    tCtx.fillStyle = midMtnGrad;
+    tCtx.beginPath();
+    tCtx.moveTo(0, H);
+    for (let mx = 0; mx <= W; mx += 8) {
+        const baseRidgeY = getMidMountainY(mx);
+        const treeLineVariation =
+            (Math.sin(mx * 0.19) * 0.5 + 0.5) *
+            (Math.cos(mx * 0.053 + 1.2) * 0.5 + 0.5) * 14 +
+            Math.sin(mx * 0.47) * 3.2;
+        tCtx.lineTo(mx, baseRidgeY - treeLineVariation);
+    }
+    tCtx.lineTo(W, H);
+    tCtx.closePath();
+    tCtx.fill();
+
+    // Pencahayaan Lereng Bukit Menengah dari Arah Cahaya Kanan
+    tCtx.save();
+    tCtx.clip();
+    const midSlopeLight = tCtx.createRadialGradient(LIGHT_X, LIGHT_Y, 40, LIGHT_X - 120, LIGHT_Y + 90, W * 0.75);
+    midSlopeLight.addColorStop(0, 'rgba(175, 175, 175, 0.42)');
+    midSlopeLight.addColorStop(0.5, 'rgba(95, 95, 95, 0.18)');
+    midSlopeLight.addColorStop(1, 'rgba(20, 20, 20, 0)');
+    tCtx.fillStyle = midSlopeLight;
+    tCtx.fillRect(0, 150, W, H - 150);
+    tCtx.restore();
+    tCtx.restore();
+
+    // Berkas Sinar Cahaya Volumetrik (Crepuscular Rays) di Antara Bukit Menengah & Hutan Utama
+    tCtx.save();
+    const rayConfigs = [
+        { srcX: LIGHT_X, srcY: H * 0.14, dstX: W * 0.34, dstY: H * 0.78, topW: 50, botW: 210, alpha: 0.13 },
+        { srcX: LIGHT_X, srcY: H * 0.20, dstX: W * 0.55, dstY: H * 0.72, topW: 60, botW: 235, alpha: 0.17 },
+        { srcX: LIGHT_X + 20, srcY: H * 0.26, dstX: W * 0.76, dstY: H * 0.65, topW: 70, botW: 260, alpha: 0.22 }
+    ];
+    for (let rIdx = 0; rIdx < rayConfigs.length; rIdx++) {
+        const rc = rayConfigs[rIdx];
+        const rayPulse = Math.sin(t * 0.9 + rIdx * 1.4) * 0.02;
+        const rGrad = tCtx.createLinearGradient(rc.srcX, rc.srcY, rc.dstX, rc.dstY);
+        rGrad.addColorStop(0, `rgba(255, 255, 255, ${rc.alpha + rayPulse})`);
+        rGrad.addColorStop(0.55, `rgba(220, 220, 220, ${(rc.alpha + rayPulse) * 0.5})`);
+        rGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        tCtx.fillStyle = rGrad;
+        tCtx.beginPath();
+        tCtx.moveTo(rc.srcX - rc.topW * 0.5, rc.srcY);
+        tCtx.lineTo(rc.srcX + rc.topW * 0.5, rc.srcY);
+        tCtx.lineTo(rc.dstX + rc.botW * 0.5, rc.dstY);
+        tCtx.lineTo(rc.dstX - rc.botW * 0.5, rc.dstY);
+        tCtx.closePath();
+        tCtx.fill();
+    }
+    tCtx.restore();
+
+    // =========================================================================
+    // LAPISAN 4: BUKIT ATAS (100% SOLID, BERGRADASI CAHAYA REALISTIS DARI KANAN)
+    // =========================================================================
+    tCtx.save();
+    const upperHillGrad = tCtx.createLinearGradient(0, 480, W, 210);
+    upperHillGrad.addColorStop(0, '#101010');
+    upperHillGrad.addColorStop(0.35, '#1d1d1d');
+    upperHillGrad.addColorStop(0.70, '#353535');
+    upperHillGrad.addColorStop(1, '#5c5c5c');
+    tCtx.fillStyle = upperHillGrad;
+    tCtx.beginPath();
+    tCtx.moveTo(0, getUpperHillY(0));
+    for (let x = 12; x <= W; x += 12) {
+        tCtx.lineTo(x, getUpperHillY(x));
+    }
+    tCtx.lineTo(W, H);
+    tCtx.lineTo(0, H);
+    tCtx.closePath();
+    tCtx.fill();
+
+    // Pencahayaan Permukaan Punggung Bukit Atas (Membuat Lereng Bukit Bervolume 3D)
+    tCtx.save();
+    tCtx.clip();
+    const upperSurfaceGlow = tCtx.createRadialGradient(LIGHT_X - 30, LIGHT_Y + 40, 20, LIGHT_X - 180, LIGHT_Y + 140, W * 0.72);
+    upperSurfaceGlow.addColorStop(0, 'rgba(165, 165, 165, 0.45)');
+    upperSurfaceGlow.addColorStop(0.45, 'rgba(85, 85, 85, 0.20)');
+    upperSurfaceGlow.addColorStop(1, 'rgba(16, 16, 16, 0)');
+    tCtx.fillStyle = upperSurfaceGlow;
+    tCtx.fillRect(0, 170, W, H - 170);
+    tCtx.restore();
+    tCtx.restore();
+
+    // =========================================================================
+    // LAPISAN 5: PEPOHONAN HUTAN TUA UTAMA (TERTANAM DI BUKIT ATAS + CAHAYA 3D)
+    // =========================================================================
+    const midForestTrees = [
+        {
+            x: 68, baseY: getUpperHillY(68) + 10, height: 555, baseW: 54, topW: 5.5, lean: 14, curve: 12,
+            baseShade: 12, lightStrength: 0.28, seed: 11, groundFn: getUpperHillY,
+            branches: [
+                { f: 0.44, dir: 1, angle: -0.34, len: 115, thickScale: 0.72 },
+                { f: 0.62, dir: 1, angle: -0.48, len: 96, thickScale: 0.65 },
+                { f: 0.74, dir: -1, angle: -2.65, len: 68, thickScale: 0.58 },
+                { f: 0.88, dir: 1, angle: -0.62, len: 78, thickScale: 0.55 }
+            ]
+        },
+        {
+            x: 215, baseY: getUpperHillY(215) + 10, height: 475, baseW: 36, topW: 3.5, lean: 18, curve: -9,
+            baseShade: 16, lightStrength: 0.36, seed: 12, groundFn: getUpperHillY,
+            branches: [
+                { f: 0.48, dir: -1, angle: -2.68, len: 74, thickScale: 0.65 },
+                { f: 0.64, dir: 1, angle: -0.42, len: 86, thickScale: 0.68 },
+                { f: 0.82, dir: -1, angle: -2.42, len: 64, thickScale: 0.56 },
+                { f: 0.95, dir: 1, angle: -0.95, len: 54, thickScale: 0.50 }
+            ]
+        },
+        {
+            x: 365, baseY: getUpperHillY(365) + 10, height: 395, baseW: 26, topW: 2.6, lean: -8, curve: 7,
+            baseShade: 22, lightStrength: 0.46, seed: 13, groundFn: getUpperHillY,
+            branches: [
+                { f: 0.55, dir: -1, angle: -2.58, len: 68, thickScale: 0.64 },
+                { f: 0.72, dir: 1, angle: -0.52, len: 62, thickScale: 0.58 },
+                { f: 0.92, dir: -1, angle: -1.95, len: 48, thickScale: 0.52 }
+            ]
+        },
+        {
+            x: 895, baseY: getUpperHillY(895) + 10, height: 350, baseW: 25, topW: 2.5, lean: -14, curve: -7,
+            baseShade: 36, lightStrength: 0.78, seed: 14, groundFn: getUpperHillY,
+            branches: [
+                { f: 0.52, dir: -1, angle: -2.64, len: 66, thickScale: 0.64 },
+                { f: 0.70, dir: 1, angle: -0.46, len: 58, thickScale: 0.58 },
+                { f: 0.90, dir: -1, angle: -2.15, len: 46, thickScale: 0.50 }
+            ]
+        },
+        {
+            x: 1060, baseY: getUpperHillY(1060) + 10, height: 375, baseW: 32, topW: 3.2, lean: -18, curve: 8,
+            baseShade: 44, lightStrength: 0.92, seed: 15, groundFn: getUpperHillY,
+            branches: [
+                { f: 0.46, dir: -1, angle: -2.68, len: 82, thickScale: 0.68 },
+                { f: 0.66, dir: 1, angle: -0.40, len: 68, thickScale: 0.60 },
+                { f: 0.84, dir: -1, angle: -2.35, len: 58, thickScale: 0.54 }
+            ]
+        },
+        {
+            x: 1215, baseY: getUpperHillY(1215) + 12, height: 420, baseW: 40, topW: 4.0, lean: -22, curve: -10,
+            baseShade: 50, lightStrength: 1.0, seed: 16, groundFn: getUpperHillY,
+            branches: [
+                { f: 0.42, dir: -1, angle: -2.72, len: 94, thickScale: 0.70 },
+                { f: 0.64, dir: -1, angle: -2.50, len: 76, thickScale: 0.62 },
+                { f: 0.82, dir: 1, angle: -0.55, len: 56, thickScale: 0.54 }
+            ]
+        }
+    ];
+
+    for (const mfTree of midForestTrees) {
+        drawTitleForestTree(mfTree);
+    }
+
+    // Rumput berlapis di punggung bukit atas
+    drawWispyGrassLayer(20, W - 20, 1.45, getUpperHillY, 0.80, 14, false, 1);
+
+    // Gugusan Bebatuan Bukit Atas (100% Solid, Tertanam di Tanah & Berfaset Cahaya 3D)
+    drawRealisticRock(345, getUpperHillY(345) + 6, 32, 18, -0.18, 22, 12, 0.34, 101, false, getUpperHillY);
+    drawRealisticRock(395, getUpperHillY(395) + 5, 64, 38, -0.22, 24, 13, 0.38, 1, true, getUpperHillY);
+    drawRealisticRock(548, getUpperHillY(548) + 4, 86, 52, -0.24, 28, 15, 0.48, 2, true, getUpperHillY);
+    drawRealisticRock(612, getUpperHillY(612) + 7, 38, 22, -0.15, 30, 16, 0.52, 102, true, getUpperHillY);
+    drawRealisticRock(735, getUpperHillY(735) + 6, 52, 31, -0.26, 34, 18, 0.62, 3, true, getUpperHillY);
+    drawRealisticRock(868, getUpperHillY(868) + 3, 104, 62, -0.27, 40, 21, 0.74, 4, true, getUpperHillY);
+    drawRealisticRock(942, getUpperHillY(942) + 8, 44, 25, -0.20, 44, 23, 0.80, 103, true, getUpperHillY);
+    drawRealisticRock(1098, getUpperHillY(1098) + 4, 78, 46, -0.25, 50, 26, 0.92, 5, true, getUpperHillY);
+    drawRealisticRock(1158, getUpperHillY(1158) + 7, 34, 19, -0.28, 54, 28, 0.96, 104, false, getUpperHillY);
+
+    // Rumput lapisan depan bukit atas yang mengunci kaki bebatuan
+    drawWispyGrassLayer(60, W - 20, 1.85, getUpperHillY, 0.98, 16, false, 2);
+
+    // =========================================================================
+    // LAPISAN 6: TANGGUL RUMPUT TENGAH & BEBATUAN TEPI JALUR CAHAYA (100% SOLID)
+    // =========================================================================
+    tCtx.save();
+    const midSlopeGrad = tCtx.createLinearGradient(0, 560, W, 240);
+    midSlopeGrad.addColorStop(0, '#090909');
+    midSlopeGrad.addColorStop(0.40, '#141414');
+    midSlopeGrad.addColorStop(0.75, '#262626');
+    midSlopeGrad.addColorStop(1, '#444444');
+    tCtx.fillStyle = midSlopeGrad;
+    tCtx.beginPath();
+    tCtx.moveTo(0, getMainSlopeY(0));
+    for (let sx = 12; sx <= W; sx += 12) {
+        tCtx.lineTo(sx, getMainSlopeY(sx));
+    }
+    tCtx.lineTo(W, H);
+    tCtx.lineTo(0, H);
+    tCtx.closePath();
+    tCtx.fill();
+    tCtx.restore();
+
+    // Gugusan Bebatuan di Tanggul Tengah (100% Solid, Berbayangan Jatuh & Tertanam di Tanah)
+    drawRealisticRock(142, getMainSlopeY(142) + 5, 28, 15, -0.12, 14, 7, 0.25, 105, false, getMainSlopeY);
+    drawRealisticRock(188, getMainSlopeY(188) + 4, 62, 36, -0.18, 16, 8, 0.30, 6, true, getMainSlopeY);
+    drawRealisticRock(232, getMainSlopeY(232) + 6, 22, 12, -0.08, 17, 8, 0.34, 106, false, getMainSlopeY);
+    drawRealisticRock(648, getMainSlopeY(648) + 3, 76, 44, -0.25, 24, 12, 0.62, 7, true, getMainSlopeY);
+    drawRealisticRock(704, getMainSlopeY(704) + 6, 34, 19, -0.19, 26, 13, 0.66, 107, true, getMainSlopeY);
+    drawRealisticRock(928, getMainSlopeY(928) + 4, 82, 48, -0.24, 34, 17, 0.82, 8, true, getMainSlopeY);
+    drawRealisticRock(988, getMainSlopeY(988) + 6, 38, 21, -0.27, 36, 18, 0.86, 108, true, getMainSlopeY);
+    drawRealisticRock(1022, getMainSlopeY(1022) + 8, 18, 10, -0.22, 38, 19, 0.88, 109, false, getMainSlopeY);
+
+    // Hamparan Rumput Tebal & Solid Berlapis-lapis di Tanggul Atas
+    drawWispyGrassLayer(0, W, 1.05, getMainSlopeY, 0.92, 10, false, 3);
+    drawWispyGrassLayer(0, W, 0.95, getMainSlopeY, 1.12, 8, false, 4);
+    drawWispyGrassLayer(40, W - 20, 1.45, getMainSlopeY, 1.28, 7, false, 5);
+
+    // =========================================================================
+    // LAPISAN 7: JALAN SETAPAK HUTAN ALAMI (TANAH, CEKUNGAN JALAN, AKAR & KERIKIL)
+    // =========================================================================
+    tCtx.save();
+    const pathTopFn = (x) => {
+        const bankWave = Math.sin(x * 0.018 + 1.1) * 4.2 +
+                         Math.cos(x * 0.047 - 0.6) * 2.4 +
+                         Math.sin(x * 0.11) * 1.1;
+        return getLightPathY(x) - 22 + bankWave;
+    };
+    const pathCenterFn = (x) => getLightPathY(x) + Math.sin(x * 0.013 + 0.5) * 3.0;
+    const pathBotFn = (x) => getForegroundRidgeY(x) + 14;
+
+    // 1. Dasar Tanah Jalan Setapak dengan Gradasi Pencahayaan Alami dari Sumber Cahaya
+    const slopeGrad = tCtx.createLinearGradient(W * 0.96, H * 0.30, W * 0.02, H * 0.88);
+    slopeGrad.addColorStop(0, '#dedede');
+    slopeGrad.addColorStop(0.18, '#b8b8b8');
+    slopeGrad.addColorStop(0.45, '#727272');
+    slopeGrad.addColorStop(0.74, '#2e2e2e');
+    slopeGrad.addColorStop(1, '#101010');
+
+    tCtx.fillStyle = slopeGrad;
+    tCtx.beginPath();
+    tCtx.moveTo(0, pathTopFn(0));
+    for (let sx = 8; sx <= W; sx += 8) {
+        tCtx.lineTo(sx, pathTopFn(sx));
+    }
+    tCtx.lineTo(W, pathBotFn(W));
+    for (let sx = W; sx >= 0; sx -= 12) {
+        tCtx.lineTo(sx, pathBotFn(sx));
+    }
+    tCtx.closePath();
+    tCtx.fill();
+
+    // 2. Detail Permukaan Jalan Tanah, Alur Jejak Tapak, Akar Menjalar & Lempengan Batu Jalan
+    tCtx.save();
+    tCtx.clip();
+
+    // Sorot cahaya lembut di punggung tengah jalan setapak (worn crown of the trail)
+    tCtx.beginPath();
+    for (let sx = 0; sx <= W; sx += 10) {
+        const cy = pathCenterFn(sx) - 4;
+        if (sx === 0) tCtx.moveTo(sx, cy);
+        else tCtx.lineTo(sx, cy);
+    }
+    for (let sx = W; sx >= 0; sx -= 10) {
+        const cy = pathCenterFn(sx) + 14;
+        tCtx.lineTo(sx, cy);
+    }
+    tCtx.closePath();
+    const trailCrownGrad = tCtx.createLinearGradient(W, H * 0.32, 0, H * 0.85);
+    trailCrownGrad.addColorStop(0, '#f0f0f0');
+    trailCrownGrad.addColorStop(0.35, '#9e9e9e');
+    trailCrownGrad.addColorStop(0.72, '#3d3d3d');
+    trailCrownGrad.addColorStop(1, '#161616');
+    tCtx.fillStyle = trailCrownGrad;
+    tCtx.fill();
+
+    // Cekungan Alur Jalan Tanah (Natural Dirt Ruts & Eroded Channels)
+    for (let r = 0; r < 3; r++) {
+        const offset = (r - 1) * 11;
+        // Sisi gelap cekungan alur tanah
+        tCtx.beginPath();
+        for (let sx = 0; sx <= W; sx += 10) {
+            const ry = pathCenterFn(sx) + offset + Math.sin(sx * 0.025 + r * 2.1) * 2.6;
+            if (sx === 0) tCtx.moveTo(sx, ry);
+            else tCtx.lineTo(sx, ry);
+        }
+        const rutShadowGrad = tCtx.createLinearGradient(W, H * 0.32, 0, H * 0.85);
+        rutShadowGrad.addColorStop(0, '#969696');
+        rutShadowGrad.addColorStop(0.45, '#484848');
+        rutShadowGrad.addColorStop(0.8, '#1c1c1c');
+        rutShadowGrad.addColorStop(1, '#0a0a0a');
+        tCtx.strokeStyle = rutShadowGrad;
+        tCtx.lineWidth = 2.6 - r * 0.4;
+        tCtx.stroke();
+
+        // Sisi bibir alur tanah yang menangkap pantulan cahaya dari kanan atas
+        tCtx.beginPath();
+        for (let sx = 0; sx <= W; sx += 10) {
+            const ry = pathCenterFn(sx) + offset + 2.2 + Math.sin(sx * 0.025 + r * 2.1) * 2.6;
+            if (sx === 0) tCtx.moveTo(sx, ry);
+            else tCtx.lineTo(sx, ry);
+        }
+        const rutLipGrad = tCtx.createLinearGradient(W, H * 0.32, 0, H * 0.85);
+        rutLipGrad.addColorStop(0, '#ffffff');
+        rutLipGrad.addColorStop(0.4, '#b5b5b5');
+        rutLipGrad.addColorStop(0.75, '#4a4a4a');
+        rutLipGrad.addColorStop(1, '#181818');
+        tCtx.strokeStyle = rutLipGrad;
+        tCtx.lineWidth = 1.2;
+        tCtx.stroke();
+    }
+
+    // Bayangan Tebing Rumput Atas yang Melengkung Halus di Bahu Jalan (Tanpa Kotak Kaku)
+    tCtx.beginPath();
+    tCtx.moveTo(0, pathTopFn(0) - 6);
+    for (let sx = 8; sx <= W; sx += 8) {
+        tCtx.lineTo(sx, pathTopFn(sx) - 4);
+    }
+    for (let sx = W; sx >= 0; sx -= 8) {
+        const overhangWidth = 13 + Math.sin(sx * 0.032) * 4.5 + Math.cos(sx * 0.075) * 2.5;
+        tCtx.lineTo(sx, pathTopFn(sx) + overhangWidth);
+    }
+    tCtx.closePath();
+    const vergeShadowGrad = tCtx.createLinearGradient(W, H * 0.30, 0, H * 0.85);
+    vergeShadowGrad.addColorStop(0, '#424242');
+    vergeShadowGrad.addColorStop(0.35, '#262626');
+    vergeShadowGrad.addColorStop(0.7, '#121212');
+    vergeShadowGrad.addColorStop(1, '#070707');
+    tCtx.fillStyle = vergeShadowGrad;
+    tCtx.fill();
+
+    // Lempengan Batu Pipih & Kerikil yang Tertanam di Permukaan Jalan Tanah
+    for (let p = 0; p < 55; p++) {
+        const h1 = Math.sin(p * 37.13 + 9.2) * 43758.5453;
+        const r1 = h1 - Math.floor(h1);
+        const h2 = Math.sin(p * 83.71 + 4.7) * 29183.719;
+        const r2 = h2 - Math.floor(h2);
+        const h3 = Math.sin(p * 19.43 + 1.3) * 19341.123;
+        const r3 = h3 - Math.floor(h3);
+
+        const px = 25 + r1 * (W - 50);
+        const u = px / W;
+        const py = pathCenterFn(px) - 10 + (r2 - 0.42) * 28;
+        const stoneRx = 3.2 + r3 * 9.5;
+        const stoneRy = stoneRx * (0.32 + r1 * 0.22);
+        const stoneTilt = -0.25 + (r2 - 0.5) * 0.18;
+
+        const baseStoneTone = Math.round(14 + Math.pow(u, 1.35) * 145);
+        const shadowTone = Math.max(4, baseStoneTone - 26);
+        const litTone = Math.min(248, baseStoneTone + 34);
+
+        // Bayangan kecil di sisi kiri bawah kerikil/batu pijakan
+        tCtx.fillStyle = `rgb(${shadowTone}, ${shadowTone}, ${shadowTone})`;
+        tCtx.beginPath();
+        tCtx.ellipse(px - stoneRx * 0.28, py + stoneRy * 0.38, stoneRx * 1.05, stoneRy * 0.9, stoneTilt, 0, Math.PI * 2);
+        tCtx.fill();
+
+        // Badan batu pipih di permukaan tanah
+        const stGrad = tCtx.createLinearGradient(px + stoneRx, py - stoneRy, px - stoneRx, py + stoneRy);
+        stGrad.addColorStop(0, `rgb(${litTone}, ${litTone}, ${litTone})`);
+        stGrad.addColorStop(0.55, `rgb(${baseStoneTone}, ${baseStoneTone}, ${baseStoneTone})`);
+        stGrad.addColorStop(1, `rgb(${shadowTone}, ${shadowTone}, ${shadowTone})`);
+        tCtx.fillStyle = stGrad;
+        tCtx.beginPath();
+        tCtx.ellipse(px, py, stoneRx, stoneRy, stoneTilt, 0, Math.PI * 2);
+        tCtx.fill();
+    }
+
+    // Urat Akar Pohon Tua yang Menjalar Melintasi Bahu Jalan Tanah
+    const rootCrossings = [110, 225, 385, 575, 815, 1045];
+    tCtx.lineCap = 'round';
+    for (let rc = 0; rc < rootCrossings.length; rc++) {
+        const rx = rootCrossings[rc];
+        const ry = pathTopFn(rx);
+        const u = rx / W;
+        const rootDark = Math.max(5, Math.round(8 + u * 35));
+        const rootLit = Math.min(195, Math.round(22 + u * 95));
+        const reachX = 18 + (rc % 3) * 12 * (rc % 2 === 0 ? 1 : -1);
+        const reachY = 16 + (rc % 2) * 9;
+
+        // Bayangan akar di tanah
+        tCtx.strokeStyle = `rgb(${rootDark}, ${rootDark}, ${rootDark})`;
+        tCtx.lineWidth = 3.2;
+        tCtx.beginPath();
+        tCtx.moveTo(rx, ry - 2);
+        tCtx.quadraticCurveTo(rx + reachX * 0.45, ry + reachY * 0.55, rx + reachX, ry + reachY);
+        tCtx.stroke();
+
+        // Punggung akar yang terkena cahaya dari kanan
+        tCtx.strokeStyle = `rgb(${rootLit}, ${rootLit}, ${rootLit})`;
+        tCtx.lineWidth = 1.4;
+        tCtx.beginPath();
+        tCtx.moveTo(rx + 1, ry - 2.5);
+        tCtx.quadraticCurveTo(rx + reachX * 0.45 + 1, ry + reachY * 0.55 - 0.8, rx + reachX, ry + reachY - 0.5);
+        tCtx.stroke();
+    }
+
+    tCtx.restore();
+    tCtx.restore();
+
+    // Rumput pendek tidak beraturan yang tumbuh alami di sepanjang bahu jalan
+    drawWispyGrassLayer(0, W, 2.2, pathTopFn, 0.52, 9, false, 9);
+
+    // =========================================================================
+    // LAPISAN 8: KARAKTER UTAMA BERDIRI MENYATU DI ATAS JALAN SETAPAK
+    // =========================================================================
+    const boyX = 265;
+    const boyY = pathCenterFn(boyX) + 4;
+    const slopeAngle = -0.255;
+
+    // Pendaran pantulan cahaya tanah yang lembut di sekitar pijakan kaki karakter
+    const footGlow = tCtx.createRadialGradient(boyX + 8, boyY - 2, 4, boyX + 8, boyY - 2, 68);
+    footGlow.addColorStop(0, 'rgba(185, 185, 185, 0.22)');
+    footGlow.addColorStop(0.55, 'rgba(120, 120, 120, 0.08)');
+    footGlow.addColorStop(1, 'rgba(60, 60, 60, 0)');
+    tCtx.fillStyle = footGlow;
+    tCtx.beginPath();
+    tCtx.ellipse(boyX + 8, boyY - 2, 68, 12, slopeAngle, 0, Math.PI * 2);
+    tCtx.fill();
+
+    const breath = Math.sin(t * 1.65);
+    const weightShift = Math.sin(t * 0.82);
+    const breeze = Math.sin(t * 3.1) * 0.65 + Math.cos(t * 4.7) * 0.35;
+
+    const poiseX = 1.8 + weightShift * 2.1;
+    const chestLift = breath * 1.25;
+
+    // Bayangan Panjang Karakter Jatuh ke Kiri Bawah & Bayangan Kontak Pekat Tepat di Bawah Sepatu
+    tCtx.save();
+    tCtx.translate(boyX, boyY);
+    tCtx.rotate(slopeAngle);
+    const shadowLen = 235 + breath * 5;
+    const shGrad = tCtx.createLinearGradient(14, 0, -shadowLen, 20);
+    shGrad.addColorStop(0, '#040404');
+    shGrad.addColorStop(0.32, '#0d0d0d');
+    shGrad.addColorStop(0.72, '#181818');
+    shGrad.addColorStop(1, 'rgba(24, 24, 24, 0)');
+    tCtx.fillStyle = shGrad;
+    tCtx.beginPath();
+    tCtx.moveTo(-14, -2);
+    tCtx.lineTo(18, 1.5);
+    tCtx.lineTo(-shadowLen, 26);
+    tCtx.lineTo(-shadowLen - 16, 6);
+    tCtx.closePath();
+    tCtx.fill();
+
+    // Ambient occlusion kontak sepatu dengan tanah
+    tCtx.fillStyle = '#020202';
+    tCtx.beginPath();
+    tCtx.ellipse(-5, 1.5, 11, 3.2, 0, 0, Math.PI * 2);
+    tCtx.ellipse(15, 0.5, 11, 3.2, 0, 0, Math.PI * 2);
+    tCtx.fill();
+    tCtx.restore();
+
+    const hipX = poiseX * 0.55;
+    const hipY = -46 + Math.abs(weightShift) * 0.6;
+    const shoulderX = 4.5 + poiseX + breath * 0.45;
+    const shoulderY = -88 + chestLift;
+    const neckX = shoulderX + 1.2;
+    const neckY = shoulderY - 6.5;
+    const headX = neckX + 1.8 + weightShift * 0.4;
+    const headY = neckY - 17.5 + chestLift * 0.5;
+
+    const drawSmoothLeg = (ctxTarget, hX, hY, kX, kY, aX, aY, footTilt, heelRaise) => {
+        ctxTarget.beginPath();
+        ctxTarget.moveTo(hX - 4.4, hY);
+        ctxTarget.bezierCurveTo(
+            hX - 4.8, hY + (kY - hY) * 0.5,
+            kX - 4.2, kY - 3,
+            kX - 3.5, kY + 1
+        );
+        ctxTarget.bezierCurveTo(
+            kX - 4.8, kY + (aY - kY) * 0.38,
+            aX - 3.6, aY - 6,
+            aX - 3.2, aY - heelRaise
+        );
+        const cosF = Math.cos(footTilt);
+        const sinF = Math.sin(footTilt);
+        const toeX = aX + cosF * 11.5;
+        const toeY = (aY - heelRaise) + sinF * 11.5;
+        ctxTarget.quadraticCurveTo(
+            aX + cosF * 5 - sinF * 2.5, (aY - heelRaise) + sinF * 5 + cosF * 2.5,
+            toeX, toeY + 1.8
+        );
+        ctxTarget.bezierCurveTo(
+            toeX + 2.2, toeY + 0.5,
+            toeX + 1.2, toeY - 2.8,
+            aX + 3.0, aY - 2.2 - heelRaise * 0.6
+        );
+        ctxTarget.bezierCurveTo(
+            aX + 2.8, kY + (aY - kY) * 0.55,
+            kX + 3.6, kY + 3,
+            kX + 3.8, kY - 1
+        );
+        ctxTarget.bezierCurveTo(
+            kX + 4.2, hY + (kY - hY) * 0.45,
+            hX + 4.8, hY + 4,
+            hX + 4.4, hY - 1
+        );
+        ctxTarget.closePath();
+        ctxTarget.fill();
+    };
+
+    const drawSmoothArm = (ctxTarget, sX, sY, eX, eY, wrX, wrY) => {
+        ctxTarget.beginPath();
+        ctxTarget.moveTo(sX - 3.4, sY);
+        ctxTarget.bezierCurveTo(
+            sX - 3.8, (sY + eY) * 0.5,
+            eX - 3.6, eY - 2,
+            eX - 3.2, eY + 1
+        );
+        ctxTarget.bezierCurveTo(
+            eX - 2.8, (eY + wrY) * 0.52,
+            wrX - 2.6, wrY - 2,
+            wrX - 2.2, wrY + 2
+        );
+        ctxTarget.bezierCurveTo(
+            wrX - 1.2, wrY + 5.2,
+            wrX + 3.2, wrY + 4.8,
+            wrX + 3.0, wrY + 1.0
+        );
+        ctxTarget.bezierCurveTo(
+            wrX + 2.6, (eY + wrY) * 0.5,
+            eX + 3.0, eY + 1,
+            eX + 3.2, eY - 1.5
+        );
+        ctxTarget.bezierCurveTo(
+            eX + 3.4, (sY + eY) * 0.48,
+            sX + 3.6, sY + 3,
+            sX + 3.2, sY
+        );
+        ctxTarget.closePath();
+        ctxTarget.fill();
+    };
+
+    tCtx.save();
+    tCtx.translate(boyX, boyY);
+    tCtx.fillStyle = '#040404';
+    tCtx.strokeStyle = '#040404';
+    tCtx.lineCap = 'round';
+    tCtx.lineJoin = 'round';
+
+    // 1. Lengan Belakang & Kaki Belakang (Siluet Hitam Pekat Khas LIMBO)
+    const backArmSwing = Math.sin(t * 1.65 - 0.5) * 1.5 - weightShift * 1.2;
+    drawSmoothArm(
+        tCtx,
+        shoulderX - 1.8, shoulderY + 3,
+        shoulderX - 6.2 + backArmSwing * 0.5, shoulderY + 20,
+        shoulderX - 2.5 + backArmSwing, shoulderY + 37
+    );
+    drawSmoothLeg(
+        tCtx,
+        hipX - 2.6, hipY,
+        hipX - 4.8 + poiseX * 0.25, hipY + 23,
+        -9.5, 2.2,
+        -0.20, 0
+    );
+
+    // 2. Torso & Leher Siluet Hitam Pekat
+    const chestBreath = 1.0 + breath * 1.15;
+    const hemFlutter = breeze * 0.9;
+    tCtx.beginPath();
+    tCtx.moveTo(neckX - 3.8, neckY - 3);
+    tCtx.quadraticCurveTo(neckX - 4.2, shoulderY - 2, shoulderX - 7.8, shoulderY + 2.5);
+    tCtx.bezierCurveTo(
+        shoulderX - 11.2, shoulderY + 14,
+        hipX - 9.8, hipY - 14,
+        hipX - 9.2 + hemFlutter * 0.5, hipY + 2.5
+    );
+    tCtx.bezierCurveTo(
+        hipX - 3.5, hipY + 6.2,
+        hipX + 4.5, hipY + 5.8,
+        hipX + 8.6 + hemFlutter, hipY + 1.8
+    );
+    tCtx.bezierCurveTo(
+        hipX + 9.2 + chestBreath * 0.5, hipY - 14,
+        shoulderX + 10.4 + chestBreath, shoulderY + 14,
+        shoulderX + 6.2 + chestBreath * 0.4, shoulderY + 1.5
+    );
+    tCtx.quadraticCurveTo(neckX + 3.6, shoulderY - 2, neckX + 3.4, neckY - 3);
+    tCtx.closePath();
+    tCtx.fill();
+
+    // 3. Kaki Depan Siluet Hitam Pekat
+    const frontStepRaise = Math.max(0, weightShift) * 1.4;
+    drawSmoothLeg(
+        tCtx,
+        hipX + 2.4, hipY - 1,
+        hipX + 10.8 + poiseX * 0.4, hipY + 19 - frontStepRaise * 0.6,
+        12.8 + poiseX * 0.25, -4.4,
+        -0.26, 0.6 + frontStepRaise
+    );
+
+    // 4. Kepala & Rambut Siluet Hitam Pekat Khas LIMBO
+    tCtx.save();
+    tCtx.translate(headX, headY);
+    tCtx.rotate(-0.09 + breath * 0.018);
+
+    tCtx.beginPath();
+    tCtx.moveTo(-4.5, 14.5);
+    tCtx.quadraticCurveTo(3.5, 16.5, 11.2, 14.2);
+    tCtx.bezierCurveTo(16.8, 12.2, 19.2, 6.2, 18.8, 0.5);
+    tCtx.quadraticCurveTo(19.6, -4.5, 17.5, -10.5);
+    tCtx.quadraticCurveTo(22.5 + breeze * 0.8, -12.8, 24.2 + breeze, -16.8);
+    tCtx.quadraticCurveTo(19.8, -17.8, 21.8 + breeze * 0.7, -21.2);
+    tCtx.bezierCurveTo(13.5, -24.5, 1.5, -25.2, -9.5, -21.5);
+    tCtx.quadraticCurveTo(-15.5, -19.5, -18.5 + breeze * 0.4, -15.5);
+    tCtx.quadraticCurveTo(-22.2 + breeze * 0.5, -12.5, -19.2, -8.5);
+    tCtx.quadraticCurveTo(-22.8 + breeze * 0.4, -4.5, -18.5, -1.2);
+    tCtx.bezierCurveTo(-19.5, 5.5, -14.2, 11.8, -4.5, 14.5);
+    tCtx.closePath();
+    tCtx.fill();
+
+    // Sepasang Mata Putih Bersinar Lembut Memandang ke Arah Cahaya
+    const blinkPhase = t % 5.4;
+    const eyeOpen = (blinkPhase > 5.15 && blinkPhase < 5.30) ? 0.12 : 1.0;
+    tCtx.shadowColor = '#ffffff';
+    tCtx.shadowBlur = 11;
+    tCtx.fillStyle = '#ffffff';
+    tCtx.beginPath();
+    tCtx.ellipse(9.8, 1.2, 2.0, 1.8 * eyeOpen, -0.04, 0, Math.PI * 2);
+    tCtx.ellipse(15.2, 0.6, 1.65, 1.55 * eyeOpen, -0.04, 0, Math.PI * 2);
+    tCtx.fill();
+    tCtx.restore();
+
+    // 5. Lengan Depan Siluet Hitam Pekat
+    const frontArmSwing = Math.sin(t * 1.65) * 1.8 + weightShift * 1.5;
+    drawSmoothArm(
+        tCtx,
+        shoulderX + 0.8, shoulderY + 3.5,
+        shoulderX + 2.2 + frontArmSwing * 0.45, shoulderY + 21,
+        shoulderX + 9.2 + frontArmSwing, shoulderY + 35 - chestLift * 0.35
+    );
+
+    tCtx.restore(); // Selesai menggambar karakter
+
+    // =========================================================================
+    // LAPISAN 9: FOREGROUND SILUET HITAM PEKAT, BEBATUAN & RUMPUT TEBAL SOLID
+    // =========================================================================
+    tCtx.save();
+    const fgRidgeGrad = tCtx.createLinearGradient(0, 660, W, 280);
+    fgRidgeGrad.addColorStop(0, '#020202');
+    fgRidgeGrad.addColorStop(0.55, '#060606');
+    fgRidgeGrad.addColorStop(0.85, '#121212');
+    fgRidgeGrad.addColorStop(1, '#202020');
+    tCtx.fillStyle = fgRidgeGrad;
+
+    tCtx.beginPath();
+    tCtx.moveTo(0, H);
+    tCtx.lineTo(0, getForegroundRidgeY(0));
+    for (let fx = 12; fx <= W + 12; fx += 12) {
+        tCtx.lineTo(fx, getForegroundRidgeY(fx));
+    }
+    tCtx.lineTo(W + 20, H);
+    tCtx.closePath();
+    tCtx.fill();
+    tCtx.restore();
+
+    // Formasi Bebatuan Alam di Lereng Bawah / Foreground (100% Solid, Tertanam & Berfaset Cahaya)
+    drawRealisticRock(62, getForegroundRidgeY(62) + 12, 36, 20, 0.08, 6, 3, 0.14, 110, false, getForegroundRidgeY);
+    drawRealisticRock(118, getForegroundRidgeY(118) + 8, 92, 50, 0.04, 7, 3, 0.18, 9, true, getForegroundRidgeY);
+    drawRealisticRock(182, getForegroundRidgeY(182) + 12, 28, 15, -0.05, 8, 4, 0.20, 111, false, getForegroundRidgeY);
+    drawRealisticRock(292, getForegroundRidgeY(292) + 6, 108, 56, -0.08, 9, 4, 0.24, 10, true, getForegroundRidgeY);
+    drawRealisticRock(368, getForegroundRidgeY(368) + 10, 44, 24, -0.11, 10, 4, 0.26, 112, true, getForegroundRidgeY);
+    drawRealisticRock(518, getForegroundRidgeY(518) + 8, 82, 44, -0.14, 12, 5, 0.34, 11, true, getForegroundRidgeY);
+    drawRealisticRock(578, getForegroundRidgeY(578) + 12, 30, 16, -0.10, 13, 5, 0.36, 113, false, getForegroundRidgeY);
+    drawRealisticRock(832, getForegroundRidgeY(832) + 8, 38, 21, -0.18, 18, 8, 0.58, 114, true, getForegroundRidgeY);
+    drawRealisticRock(888, getForegroundRidgeY(888) + 5, 88, 48, -0.21, 20, 9, 0.65, 12, true, getForegroundRidgeY);
+    drawRealisticRock(948, getForegroundRidgeY(948) + 10, 32, 18, -0.24, 22, 10, 0.70, 115, false, getForegroundRidgeY);
+    drawRealisticRock(1055, getForegroundRidgeY(1055) + 5, 76, 42, -0.26, 26, 12, 0.80, 13, true, getForegroundRidgeY);
+    drawRealisticRock(1112, getForegroundRidgeY(1112) + 8, 42, 23, -0.28, 28, 13, 0.84, 116, true, getForegroundRidgeY);
+    drawRealisticRock(1148, getForegroundRidgeY(1148) + 10, 20, 11, -0.25, 30, 14, 0.88, 117, false, getForegroundRidgeY);
+
+    // Hamparan Rumput Foreground Ekstra Tebal, 100% Solid & Melambai Lentur
+    drawWispyGrassLayer(-12, W + 12, 1.05, getForegroundRidgeY, 1.15, 4, true, 6);
+    drawWispyGrassLayer(-12, W + 12, 0.95, getForegroundRidgeY, 1.42, 3, true, 7);
+    drawWispyGrassLayer(20, W - 10, 1.35, getForegroundRidgeY, 1.65, 2, true, 8);
+
+    // 10. Vignette Halus di Tengah agar Teks & Kotak UI Tetap Kontras & Nyaman Dibaca
+    const uiVignette = tCtx.createRadialGradient(W * 0.5, H * 0.47, 60, W * 0.5, H * 0.47, W * 0.52);
+    uiVignette.addColorStop(0, 'rgba(4, 4, 4, 0.52)');
+    uiVignette.addColorStop(0.65, 'rgba(4, 4, 4, 0.24)');
+    uiVignette.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    tCtx.fillStyle = uiVignette;
+    tCtx.fillRect(0, 0, W, H);
+
+    tCtx.restore();
+}
+
 function gameLoop(now = performance.now()) {
     const elapsed = now - lastFrameTime;
     lastFrameTime = now;
     // Normalisasi ke 60 FPS (16.67ms per frame), dibatasi agar tetap mulus dan tidak pernah slow-motion
     const dt = Math.min(2.2, Math.max(0.5, elapsed / 16.667));
+    renderTitleScreenBackground(now);
     updateGame(dt);
     renderGame();
     requestAnimationFrame(gameLoop);
