@@ -139,6 +139,13 @@
             color: #ffffff;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
         }
+        body.pseudo-fullscreen #game-wrapper {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+        }
         .control-pill {
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.15);
@@ -646,21 +653,25 @@
                 </div>
                 <div class="relative w-full h-3 sm:h-3.5 bg-neutral-950 rounded-full border border-white/30 p-0.5 overflow-hidden">
                     <div id="boss-hp-fill" class="h-full rounded-full transition-all duration-500 ease-out bg-gradient-to-r from-neutral-400 via-white to-neutral-200 shadow-[0_0_15px_rgba(255,255,255,0.9)]" style="width: 100%;"></div>
-                    <div class="absolute inset-0 grid grid-cols-4 pointer-events-none">
-                        <div class="border-r border-black/60"></div>
-                        <div class="border-r border-black/60"></div>
-                        <div class="border-r border-black/60"></div>
-                        <div></div>
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Tombol Peta Stage di Pojok Kanan Atas Layar Game -->
-        <div class="absolute top-3.5 right-4 sm:top-5 sm:right-6 z-30 flex items-center gap-2 pointer-events-auto">
-            <button id="btn-open-map" class="hidden noir-btn p-2.5 sm:p-3 rounded-full text-xs font-semibold bg-black/80 backdrop-blur-md border border-white/35 hover:border-white/80 shadow-[0_4px_20px_rgba(0,0,0,0.9)]" aria-label="Peta">
+        <!-- Tombol Peta Stage & Fullscreen di Pojok Kanan Atas Layar Game -->
+        <div class="absolute top-3.5 right-4 sm:top-5 sm:right-6 z-40 flex items-center gap-2 sm:gap-2.5 pointer-events-auto">
+            <button id="btn-open-map" class="hidden noir-btn p-2.5 sm:p-3 rounded-full text-xs font-semibold bg-black/80 backdrop-blur-md border border-white/35 hover:border-white/80 shadow-[0_4px_20px_rgba(0,0,0,0.9)]" aria-label="Peta" title="Peta Stage">
                 <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                </svg>
+            </button>
+            <button id="btn-fullscreen" class="noir-btn p-2.5 sm:p-3 rounded-full text-xs font-semibold bg-black/80 backdrop-blur-md border border-white/35 hover:border-white/80 shadow-[0_4px_20px_rgba(0,0,0,0.9)]" aria-label="Layar Penuh" title="Layar Penuh (Fullscreen)">
+                <!-- Ikon Masuk Fullscreen -->
+                <svg id="icon-fs-enter" class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4h4m12 4V4h-4M4 16v4h4m12-4v4h-4"/>
+                </svg>
+                <!-- Ikon Keluar Fullscreen -->
+                <svg id="icon-fs-exit" class="hidden w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m11-5v5h5M9 20v-5H4m11 5v-5h5"/>
                 </svg>
             </button>
         </div>
@@ -863,6 +874,8 @@
                     <path d="M 410 85 Q 416 78 422 84 Q 428 78 434 85 Q 422 82 410 85 Z"/>
                     <path d="M 438 72 Q 443 66 448 71 Q 453 66 458 72 Q 448 69 438 72 Z"/>
                     <path d="M 455 94 Q 460 89 465 93 Q 470 89 475 94 Q 465 91 455 94 Z"/>
+                </g>
+
                 <!-- Jalur Jejak Cahaya Putus-Putus (Stage 1 -> 2 -> 3 -> 4 -> Raja 1 -> 5 -> 6 -> 7 -> 8 -> Raja 2) -->
                 <path d="M 248 242
                          C 365 242, 465 308, 592 308
@@ -9657,9 +9670,99 @@ function setupControls() {
     bindHoldButton('touch-right', 'right');
     bindHoldButton('touch-jump', 'up');
 
+    // Fungsi Layar Penuh (Fullscreen) Lintas Perangkat: PC, Tablet & HP (Android / iOS)
+    const fsBtn = document.getElementById('btn-fullscreen');
+    const iconFsEnter = document.getElementById('icon-fs-enter');
+    const iconFsExit = document.getElementById('icon-fs-exit');
+    const gameWrapper = document.getElementById('game-wrapper');
+
+    const getFullscreenElement = () => {
+        return document.fullscreenElement ||
+               document.webkitFullscreenElement ||
+               document.mozFullScreenElement ||
+               document.msFullscreenElement;
+    };
+
+    const updateFullscreenUI = () => {
+        const isFs = !!getFullscreenElement() || document.body.classList.contains('pseudo-fullscreen');
+        if (iconFsEnter && iconFsExit) {
+            iconFsEnter.classList.toggle('hidden', isFs);
+            iconFsExit.classList.toggle('hidden', !isFs);
+        }
+    };
+
+    const requestGameFullscreen = async () => {
+        const el = gameWrapper || document.documentElement;
+        try {
+            if (el.requestFullscreen) {
+                await el.requestFullscreen();
+            } else if (el.webkitRequestFullscreen) {
+                await el.webkitRequestFullscreen();
+            } else if (el.mozRequestFullScreen) {
+                await el.mozRequestFullScreen();
+            } else if (el.msRequestFullscreen) {
+                await el.msRequestFullscreen();
+            } else {
+                // Fallback untuk iPhone/iOS Safari yang tidak mendukung Fullscreen API standar pada div
+                document.body.classList.add('pseudo-fullscreen');
+                window.scrollTo(0, 1);
+            }
+            // Kunci orientasi landscape pada HP/Tablet jika didukung browser
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock('landscape').catch(() => {});
+            }
+        } catch (err) {
+            document.body.classList.add('pseudo-fullscreen');
+        }
+        updateFullscreenUI();
+    };
+
+    const exitGameFullscreen = async () => {
+        try {
+            if (getFullscreenElement()) {
+                if (document.exitFullscreen) {
+                    await document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    await document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    await document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    await document.msExitFullscreen();
+                }
+            }
+        } catch (err) {
+            // Abaikan jika gagal keluar fullscreen native
+        }
+        document.body.classList.remove('pseudo-fullscreen');
+        updateFullscreenUI();
+    };
+
+    const toggleGameFullscreen = () => {
+        const isFs = !!getFullscreenElement() || document.body.classList.contains('pseudo-fullscreen');
+        if (isFs) {
+            exitGameFullscreen();
+        } else {
+            requestGameFullscreen();
+        }
+    };
+
+    if (fsBtn) {
+        fsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            audio.init();
+            audio.playStep();
+            toggleGameFullscreen();
+        });
+    }
+
+    ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
+        document.addEventListener(evt, updateFullscreenUI);
+    });
+
     document.getElementById('btn-start-game').addEventListener('click', () => {
         audio.init();
         audio.playMechanism();
+        requestGameFullscreen();
         const titleScreen = document.getElementById('title-screen');
         titleScreen.style.opacity = '0';
         setTimeout(() => titleScreen.classList.add('hidden'), 550);
