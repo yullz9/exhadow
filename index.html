@@ -34,11 +34,12 @@
             font-family: 'Cinzel', serif;
             letter-spacing: 0.35em;
         }
-        /* Film Grain & Vignette Effects - 16:9 Responsive */
+        /* Film Grain & Vignette Effects - Adaptive & Fullscreen Ready */
         #game-wrapper {
             position: relative;
             width: 100vw;
             height: 100vh;
+            height: 100dvh;
             overflow: hidden;
             background: #000;
             display: flex;
@@ -47,12 +48,36 @@
         }
         #canvas-container {
             position: relative;
-            width: min(100vw, calc(100vh * 16 / 9));
-            height: min(100vh, calc(100vw * 9 / 16));
-            aspect-ratio: 16 / 9;
+            width: 100%;
+            height: 100%;
             background: #0a0a0a;
             overflow: hidden;
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.95);
+        }
+        /* Saat mode Fullscreen aktif (Native maupun Pseudo-Fullscreen di HP/Tab/Laptop), bentangkan 100% memenuhi layar */
+        #game-wrapper:fullscreen,
+        #game-wrapper:-webkit-full-screen,
+        #game-wrapper:-moz-full-screen,
+        body.is-fullscreen #game-wrapper,
+        body.pseudo-fullscreen #game-wrapper {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            z-index: 9999;
+        }
+        #game-wrapper:fullscreen #canvas-container,
+        #game-wrapper:-webkit-full-screen #canvas-container,
+        #game-wrapper:-moz-full-screen #canvas-container,
+        body.is-fullscreen #canvas-container,
+        body.pseudo-fullscreen #canvas-container {
+            width: 100vw !important;
+            height: 100vh !important;
+            height: 100dvh !important;
+            max-width: none !important;
+            max-height: none !important;
+            aspect-ratio: unset !important;
         }
         canvas {
             display: block;
@@ -594,12 +619,12 @@
         <div class="flicker-overlay"></div>
 
         <!-- -->
-        <!-- HUD Nyawa Pemain (Pojok Kiri Atas: Wajah Karakter dalam Lingkaran + Progress Bar Besar & Pendek) -->
-        <div id="lives-hud" class="hidden absolute top-3.5 left-4 sm:top-5 sm:left-6 z-30 flex flex-col gap-1.5 pointer-events-none select-none">
-            <div class="flex items-center gap-2.5 sm:gap-3 bg-black/75 backdrop-blur-md border border-white/25 pl-2 pr-3.5 py-1.5 sm:pl-2.5 sm:pr-4 sm:py-2 rounded-full shadow-[0_4px_25px_rgba(0,0,0,0.85)]">
-                <!-- Ikon Wajah/Kepala Karakter Bocah Limbo dalam Lingkaran (Menggantikan Hati) -->
-                <div id="player-head-icon" class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-neutral-900/95 border-2 border-white/30 flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.18)] shrink-0 transition-transform duration-200 overflow-hidden">
-                    <svg class="w-7 h-7 sm:w-8 sm:h-8 overflow-visible" viewBox="0 0 36 36" fill="none">
+        <!-- HUD Nyawa Pemain (Pojok Kiri Atas: Ukuran Ringkas & Proporsional agar tidak bertumpuk) -->
+        <div id="lives-hud" class="hidden absolute top-2.5 left-2.5 sm:top-3.5 sm:left-4 z-30 flex flex-col pointer-events-none select-none">
+            <div class="flex items-center gap-1.5 sm:gap-2 bg-black/75 backdrop-blur-md border border-white/25 pl-1.5 pr-2.5 py-1 sm:pl-2 sm:pr-3 sm:py-1.5 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.85)]">
+                <!-- Ikon Wajah/Kepala Karakter Bocah Limbo dalam Lingkaran -->
+                <div id="player-head-icon" class="relative w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-neutral-900/95 border border-white/30 flex items-center justify-center shadow-[0_0_10px_rgba(255,255,255,0.18)] shrink-0 transition-transform duration-200 overflow-hidden">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 overflow-visible" viewBox="0 0 36 36" fill="none">
                         <!-- Pendaran kabut tipis di belakang siluet kepala -->
                         <circle cx="18" cy="19" r="13" fill="rgba(255,255,255,0.08)" />
                         <!-- Leher & Bahu Atas -->
@@ -612,17 +637,17 @@
                     </svg>
                 </div>
 
-                <!-- Kontainer Progress Bar Besar & Lebih Pendek (Lebar proporsional) -->
-                <div class="flex flex-col justify-center min-w-[100px] sm:min-w-[130px]">
-                    <div class="flex items-center justify-end mb-1">
-                        <div class="flex items-center gap-1">
-                            <span id="lives-count-label" class="font-bold text-white text-xs sm:text-sm tabular-nums">100%</span>
-                            <span id="lives-delta" class="text-[10px] sm:text-xs font-extrabold"></span>
+                <!-- Kontainer Progress Bar Ringkas -->
+                <div class="flex flex-col justify-center w-16 sm:w-24">
+                    <div class="flex items-center justify-end mb-0.5 leading-none">
+                        <div class="flex items-center gap-0.5">
+                            <span id="lives-count-label" class="font-bold text-white text-[10px] sm:text-xs tabular-nums">100%</span>
+                            <span id="lives-delta" class="text-[9px] sm:text-[10px] font-extrabold"></span>
                         </div>
                     </div>
-                    <!-- Track Bar Lebih Besar & Lebih Pendek dengan 10 Segmen (Tema Noir Limbo) -->
-                    <div class="relative w-full h-3.5 sm:h-4 bg-neutral-950/95 rounded-full border border-white/25 p-0.5 overflow-hidden shadow-inner">
-                        <div id="lives-bar-fill" class="h-full rounded-full transition-all duration-300 ease-out bg-gradient-to-r from-red-700 via-red-500 to-rose-400 shadow-[0_0_12px_rgba(239,68,68,0.75)]" style="width: 100%;"></div>
+                    <!-- Track Bar Ringkas dengan 10 Segmen -->
+                    <div class="relative w-full h-2 sm:h-2.5 bg-neutral-950/95 rounded-full border border-white/25 p-[1px] overflow-hidden shadow-inner">
+                        <div id="lives-bar-fill" class="h-full rounded-full transition-all duration-300 ease-out bg-gradient-to-r from-red-700 via-red-500 to-rose-400 shadow-[0_0_10px_rgba(239,68,68,0.75)]" style="width: 100%;"></div>
                         <!-- Garis Sekat Tiap 10% -->
                         <div class="absolute inset-0 grid grid-cols-10 pointer-events-none">
                             <div class="border-r border-black/50"></div>
@@ -641,36 +666,36 @@
             </div>
         </div>
 
-        <!-- HUD Darah Raja (100% HP) di Bagian Atas Tengah Layar Saat Melawan Raja -->
-        <div id="boss-hud" class="hidden absolute top-3.5 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center pointer-events-none select-none w-64 sm:w-80">
-            <div class="w-full bg-black/80 backdrop-blur-md border border-white/30 px-3.5 py-2 rounded-xl shadow-[0_4px_25px_rgba(0,0,0,0.9)]">
-                <div class="flex items-center justify-between mb-1">
-                    <div class="flex items-center gap-1.5">
-                        <span class="text-xs sm:text-sm">👑</span>
-                        <span id="boss-name-label" class="title-font text-[10px] sm:text-xs font-bold text-white tracking-widest">RAJA BAYANGAN</span>
+        <!-- HUD Darah Raja (100% HP) di Bagian Atas Tengah Layar - Ukuran Lebih Kecil & Tidak Bertumpuk -->
+        <div id="boss-hud" class="hidden absolute top-2.5 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center pointer-events-none select-none w-36 sm:w-52 md:w-60">
+            <div class="w-full bg-black/80 backdrop-blur-md border border-white/30 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.9)]">
+                <div class="flex items-center justify-between mb-0.5 leading-none">
+                    <div class="flex items-center gap-1 truncate pr-1">
+                        <span class="text-[10px] sm:text-xs shrink-0">👑</span>
+                        <span id="boss-name-label" class="title-font text-[8px] sm:text-[10px] font-bold text-white tracking-wider truncate">RAJA BAYANGAN</span>
                     </div>
-                    <span id="boss-hp-label" class="font-extrabold text-white text-xs sm:text-sm tabular-nums">100% HP</span>
+                    <span id="boss-hp-label" class="font-extrabold text-white text-[9px] sm:text-[11px] tabular-nums shrink-0">100% HP</span>
                 </div>
-                <div class="relative w-full h-3 sm:h-3.5 bg-neutral-950 rounded-full border border-white/30 p-0.5 overflow-hidden">
-                    <div id="boss-hp-fill" class="h-full rounded-full transition-all duration-500 ease-out bg-gradient-to-r from-neutral-400 via-white to-neutral-200 shadow-[0_0_15px_rgba(255,255,255,0.9)]" style="width: 100%;"></div>
+                <div class="relative w-full h-1.5 sm:h-2 bg-neutral-950 rounded-full border border-white/30 p-[1px] overflow-hidden">
+                    <div id="boss-hp-fill" class="h-full rounded-full transition-all duration-500 ease-out bg-gradient-to-r from-neutral-400 via-white to-neutral-200 shadow-[0_0_12px_rgba(255,255,255,0.9)]" style="width: 100%;"></div>
                 </div>
             </div>
         </div>
 
         <!-- Tombol Peta Stage & Fullscreen di Pojok Kanan Atas Layar Game -->
-        <div class="absolute top-3.5 right-4 sm:top-5 sm:right-6 z-40 flex items-center gap-2 sm:gap-2.5 pointer-events-auto">
-            <button id="btn-open-map" class="hidden noir-btn p-2.5 sm:p-3 rounded-full text-xs font-semibold bg-black/80 backdrop-blur-md border border-white/35 hover:border-white/80 shadow-[0_4px_20px_rgba(0,0,0,0.9)]" aria-label="Peta" title="Peta Stage">
-                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-4 z-40 flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
+            <button id="btn-open-map" class="hidden noir-btn p-2 sm:p-2.5 rounded-full text-xs font-semibold bg-black/80 backdrop-blur-md border border-white/35 hover:border-white/80 shadow-[0_4px_16px_rgba(0,0,0,0.9)]" aria-label="Peta" title="Peta Stage">
+                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
                 </svg>
             </button>
-            <button id="btn-fullscreen" class="noir-btn p-2.5 sm:p-3 rounded-full text-xs font-semibold bg-black/80 backdrop-blur-md border border-white/35 hover:border-white/80 shadow-[0_4px_20px_rgba(0,0,0,0.9)]" aria-label="Layar Penuh" title="Layar Penuh (Fullscreen)">
+            <button id="btn-fullscreen" class="noir-btn p-2 sm:p-2.5 rounded-full text-xs font-semibold bg-black/80 backdrop-blur-md border border-white/35 hover:border-white/80 shadow-[0_4px_16px_rgba(0,0,0,0.9)]" aria-label="Layar Penuh" title="Layar Penuh (Fullscreen)">
                 <!-- Ikon Masuk Fullscreen -->
-                <svg id="icon-fs-enter" class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg id="icon-fs-enter" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4h4m12 4V4h-4M4 16v4h4m12-4v4h-4"/>
                 </svg>
                 <!-- Ikon Keluar Fullscreen -->
-                <svg id="icon-fs-exit" class="hidden w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg id="icon-fs-exit" class="hidden w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m11-5v5h5M9 20v-5H4m11 5v-5h5"/>
                 </svg>
             </button>
@@ -9684,7 +9709,9 @@ function setupControls() {
     };
 
     const updateFullscreenUI = () => {
-        const isFs = !!getFullscreenElement() || document.body.classList.contains('pseudo-fullscreen');
+        const isNativeFs = !!getFullscreenElement();
+        const isFs = isNativeFs || document.body.classList.contains('pseudo-fullscreen');
+        document.body.classList.toggle('is-fullscreen', isNativeFs);
         if (iconFsEnter && iconFsExit) {
             iconFsEnter.classList.toggle('hidden', isFs);
             iconFsExit.classList.toggle('hidden', !isFs);
@@ -9703,7 +9730,7 @@ function setupControls() {
             } else if (el.msRequestFullscreen) {
                 await el.msRequestFullscreen();
             } else {
-                // Fallback untuk iPhone/iOS Safari yang tidak mendukung Fullscreen API standar pada div
+                // Fallback untuk iPhone/iOS Safari atau iframe yang membatasi Fullscreen API
                 document.body.classList.add('pseudo-fullscreen');
                 window.scrollTo(0, 1);
             }
