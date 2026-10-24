@@ -671,6 +671,16 @@
 
         <!-- Tombol Peta Stage & Fullscreen di Pojok Kanan Atas Layar Game -->
         <div class="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-4 z-40 flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
+            <button id="btn-audio-toggle" class="noir-btn p-2 sm:p-2.5 rounded-full text-xs font-semibold bg-black/80 backdrop-blur-md border border-white/35 hover:border-white/80 shadow-[0_4px_16px_rgba(0,0,0,0.9)]" aria-label="Suara" title="Aktifkan / Matikan Suara">
+                <!-- Ikon Suara Aktif -->
+                <svg id="icon-audio-on" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/>
+                </svg>
+                <!-- Ikon Suara Mati -->
+                <svg id="icon-audio-off" class="hidden w-3.5 h-3.5 sm:w-4 sm:h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>
+                </svg>
+            </button>
             <button id="btn-open-map" class="hidden noir-btn p-2 sm:p-2.5 rounded-full text-xs font-semibold bg-black/80 backdrop-blur-md border border-white/35 hover:border-white/80 shadow-[0_4px_16px_rgba(0,0,0,0.9)]" aria-label="Peta" title="Peta Stage">
                 <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
@@ -740,7 +750,10 @@
         </div>
 
         <!-- Interactive World Map Overlay (Peta Pulau Stage Bergaya Monokrom Realistis LIMBO) -->
-        <div id="map-screen" class="hidden absolute inset-0 z-25 bg-[#050505] select-none overflow-hidden">
+        <div id="map-screen" class="hidden absolute inset-0 z-25 bg-[#060606] select-none overflow-hidden">
+            <!-- Kanvas Latar Belakang Peta (Sama Persis dengan Halaman Utama) -->
+            <canvas id="mapBgCanvas" width="1280" height="720" class="absolute inset-0 w-full h-full object-cover pointer-events-none"></canvas>
+
             <!-- Header Judul XHADOW Tanpa Progress Bar & Tanpa Tombol Peta Stage -->
             <div class="absolute top-2 sm:top-3.5 inset-x-0 z-30 flex items-center justify-center px-4 sm:px-7 pointer-events-none">
                 <!-- Judul Tengah XHADOW dengan Ornamen Garis & Berlian -->
@@ -754,31 +767,9 @@
                 </div>
             </div>
 
-            <!-- Latar Belakang Panorama Pegunungan Berkabut, Lembah, Air Terjun & Jembatan Gantung -->
-            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1600 900" preserveAspectRatio="none">
+            <!-- Jalur Jejak Cahaya Putus-Putus Antar Pulau di Atas Latar Belakang Utama -->
+            <svg class="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 1600 900" preserveAspectRatio="none">
                 <defs>
-                    <linearGradient id="noirSkyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#050505"/>
-                        <stop offset="22%" stop-color="#262626"/>
-                        <stop offset="48%" stop-color="#525252"/>
-                        <stop offset="72%" stop-color="#2e2e2e"/>
-                        <stop offset="100%" stop-color="#040404"/>
-                    </linearGradient>
-                    <radialGradient id="mistGlow1" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="rgba(255,255,255,0.38)"/>
-                        <stop offset="55%" stop-color="rgba(210,210,210,0.14)"/>
-                        <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-                    </radialGradient>
-                    <radialGradient id="mistGlowStrong" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="rgba(255,255,255,0.65)"/>
-                        <stop offset="45%" stop-color="rgba(225,225,225,0.24)"/>
-                        <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-                    </radialGradient>
-                    <linearGradient id="waterfallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="rgba(255,255,255,0.75)"/>
-                        <stop offset="60%" stop-color="rgba(220,220,220,0.45)"/>
-                        <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-                    </linearGradient>
                     <filter id="pathGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
                         <feGaussianBlur stdDeviation="5" result="blur"/>
                         <feMerge>
@@ -787,119 +778,6 @@
                         </feMerge>
                     </filter>
                 </defs>
-
-                <!-- Langit Gelap Berkabut -->
-                <rect width="1600" height="900" fill="url(#noirSkyGrad)"/>
-
-                <!-- Pendaran Cahaya Kabut Mengikuti Pola Zigzag Pulau -->
-                <ellipse cx="184" cy="195" rx="200" ry="135" fill="url(#mistGlowStrong)"/>
-                <ellipse cx="488" cy="350" rx="230" ry="140" fill="url(#mistGlow1)"/>
-                <ellipse cx="800" cy="195" rx="250" ry="140" fill="url(#mistGlow1)"/>
-                <ellipse cx="1112" cy="350" rx="230" ry="140" fill="url(#mistGlow1)"/>
-                <ellipse cx="1416" cy="210" rx="210" ry="140" fill="url(#mistGlowStrong)"/>
-                <ellipse cx="1416" cy="575" rx="210" ry="135" fill="url(#mistGlow1)"/>
-                <ellipse cx="1112" cy="730" rx="230" ry="135" fill="url(#mistGlow1)"/>
-                <ellipse cx="800" cy="565" rx="250" ry="145" fill="url(#mistGlowStrong)"/>
-                <ellipse cx="488" cy="730" rx="230" ry="135" fill="url(#mistGlow1)"/>
-                <ellipse cx="184" cy="575" rx="210" ry="140" fill="url(#mistGlowStrong)"/>
-
-                <!-- Kanopi Hutan Belantara Kiri Atas (Membingkai Area Stage 1) -->
-                <g opacity="0.92">
-                    <!-- Pepohonan Latar Belakang Samar dengan Batang Mengecil ke Atas -->
-                    <path d="M 110 250 C 115 180, 118 90, 120 0 L 124 0 C 125 90, 128 180, 136 250 Z" fill="#2c2c2c" opacity="0.55"/>
-                    <path d="M 154 245 C 160 175, 165 85, 168 0 L 173 0 C 175 85, 180 175, 188 245 Z" fill="#252525" opacity="0.65"/>
-                    <path d="M 260 240 C 266 175, 270 85, 273 0 L 277 0 C 279 85, 282 175, 288 240 Z" fill="#292929" opacity="0.5"/>
-                    <!-- Deretan Pohon Cemara & Hutan Rimbun di Lereng Kanan Stage 1 -->
-                    <path d="M 295 245 L 302 198 L 310 245 L 316 192 L 324 245 L 332 184 L 341 245 L 349 188 L 357 245 L 365 196 L 374 245 L 382 204 L 390 245 Z"
-                          fill="#171717" opacity="0.88"/>
-                    <!-- Batang Pohon Tua Kiri (Pangkal Bawah Besar, Mengecil ke Atas & Ranting Kecil) -->
-                    <path d="M 48 255 C 62 195, 68 115, 70 0 L 82 0 C 84 115, 92 195, 112 255 Z" fill="#0c0c0c"/>
-                    <path d="M 78 92 C 125 68, 178 46, 245 24 C 178 52, 126 76, 80 104 Z" fill="#0c0c0c"/>
-                    <path d="M 304 245 C 314 175, 320 95, 326 0 L 336 0 C 332 95, 338 175, 354 245 Z" fill="#111111"/>
-                    <path d="M 328 96 C 280 70, 232 54, 182 52 C 232 48, 282 62, 330 84 Z" fill="#111111"/>
-                    <!-- Ranting-Ranting Halus & Sulur Lumut Menjuntai -->
-                    <g stroke="#141414" stroke-linecap="round" fill="none" opacity="0.78">
-                        <path d="M 145 58 C 165 44, 188 34, 212 28" stroke-width="1.4"/>
-                        <path d="M 175 44 C 192 32, 208 22, 224 16" stroke-width="0.85"/>
-                        <path d="M 255 64 C 232 52, 210 44, 190 40" stroke-width="1.2"/>
-                        <path d="M 145 52 Q 143 95 146 135" stroke-width="1.1"/>
-                        <path d="M 182 42 Q 185 88 181 128" stroke-width="1.0"/>
-                        <path d="M 225 46 Q 223 92 226 142" stroke-width="1.1"/>
-                        <path d="M 258 50 Q 260 86 257 122" stroke-width="0.9"/>
-                    </g>
-                </g>
-
-                <!-- Lapisan Pegunungan Jauh (Siluet Melandai Alami & Tidak Runcing) -->
-                <path d="M 0 370
-                         C 65 350, 115 285, 180 290
-                         C 245 295, 275 335, 335 315
-                         C 405 290, 465 185, 550 185
-                         C 635 185, 675 265, 745 255
-                         C 815 245, 865 165, 950 170
-                         C 1035 175, 1085 260, 1165 255
-                         C 1245 250, 1300 180, 1385 185
-                         C 1465 190, 1525 250, 1600 225
-                         L 1600 900 L 0 900 Z"
-                      fill="#222222" opacity="0.62"/>
-
-                <!-- Lapisan Perbukitan & Pegunungan Menengah (Lekukan Halus Berkabut) -->
-                <path d="M 0 420
-                         C 85 395, 145 340, 225 350
-                         C 305 360, 355 395, 430 365
-                         C 510 330, 560 265, 645 275
-                         C 725 285, 775 345, 855 325
-                         C 935 305, 995 235, 1085 245
-                         C 1175 255, 1235 335, 1325 330
-                         C 1415 325, 1505 275, 1600 285
-                         L 1600 900 L 0 900 Z"
-                      fill="#151515" opacity="0.82"/>
-
-                <!-- Siluet Kanopi Hutan Rimbun di Lembah Atas & Tengah (Tidak Runcing) -->
-                <g fill="#0e0e0e" opacity="0.88">
-                    <path d="M 315 315 Q 328 278 345 288 Q 362 265 382 282 Q 400 268 418 286 Q 432 280 442 315 Z"/>
-                    <path d="M 760 500 Q 778 448 800 462 Q 822 435 845 458 Q 865 444 882 500 Z"/>
-                </g>
-
-                <!-- Air Terjun Bertingkat di Jurang Kanan (Di Bawah Stage 4) -->
-                <g opacity="0.82">
-                    <path d="M 1094 385 L 1130 385 L 1142 615 L 1082 615 Z" fill="url(#waterfallGrad)"/>
-                    <path d="M 1106 385 L 1118 385 L 1124 600 L 1100 600 Z" fill="rgba(255,255,255,0.6)"/>
-                    <ellipse cx="1112" cy="610" rx="75" ry="26" fill="url(#mistGlowStrong)"/>
-                </g>
-
-                <!-- Jembatan Kayu Gantung Antar Pulau (Mengikuti Kemiringan Zigzag) -->
-                <!-- Jembatan Atas 1 (Stage 1 ke 2) -->
-                <g stroke="#080808" fill="none">
-                    <path d="M 260 228 Q 335 315 412 355" stroke-width="2.6"/>
-                    <path d="M 260 242 Q 335 329 412 369" stroke-width="3.6"/>
-                    <line x1="290" y1="255" x2="290" y2="275" stroke-width="2.2"/><line x1="325" y1="286" x2="325" y2="306" stroke-width="2.2"/>
-                    <line x1="360" y1="316" x2="360" y2="336" stroke-width="2.2"/><line x1="390" y1="338" x2="390" y2="358" stroke-width="2.2"/>
-                </g>
-                <!-- Jembatan Gantung Kanan Atas (Stage 3 ke 4) -->
-                <g stroke="#080808" fill="none">
-                    <path d="M 876 228 Q 955 315 1036 355" stroke-width="2.5"/>
-                    <path d="M 876 242 Q 955 329 1036 369" stroke-width="3.5"/>
-                    <line x1="908" y1="256" x2="908" y2="276" stroke-width="2.2"/><line x1="944" y1="288" x2="944" y2="308" stroke-width="2.2"/>
-                    <line x1="980" y1="318" x2="980" y2="338" stroke-width="2.2"/><line x1="1012" y1="340" x2="1012" y2="360" stroke-width="2.2"/>
-                </g>
-                <!-- Jembatan Kayu Bawah (Stage 7 ke 6) -->
-                <g stroke="#070707" fill="none">
-                    <path d="M 876 600 Q 955 688 1036 732" stroke-width="2.6"/>
-                    <path d="M 876 614 Q 955 702 1036 746" stroke-width="3.6"/>
-                    <line x1="908" y1="628" x2="908" y2="648" stroke-width="2.2"/><line x1="944" y1="660" x2="944" y2="680" stroke-width="2.2"/>
-                    <line x1="980" y1="690" x2="980" y2="710" stroke-width="2.2"/><line x1="1012" y1="714" x2="1012" y2="734" stroke-width="2.2"/>
-                </g>
-
-                <!-- Sambaran Petir di Langit Pabrik (Stage 7) -->
-                <path class="map-lightning" d="M 815 415 L 801 460 L 817 467 L 797 520 L 810 527 L 793 568"
-                      fill="none" stroke="#ffffff" stroke-width="2.8" filter="url(#pathGlowFilter)"/>
-
-                <!-- Siluet Burung Gagak Terbang di Kejauhan -->
-                <g fill="#050505">
-                    <path d="M 410 85 Q 416 78 422 84 Q 428 78 434 85 Q 422 82 410 85 Z"/>
-                    <path d="M 438 72 Q 443 66 448 71 Q 453 66 458 72 Q 448 69 438 72 Z"/>
-                    <path d="M 455 94 Q 460 89 465 93 Q 470 89 475 94 Q 465 91 455 94 Z"/>
-                </g>
 
                 <!-- Jalur Jejak Cahaya Putus-Putus Zigzag Proporsional (Stage 1 -> 2 -> 3 -> 4 -> Raja 1 -> 5 -> 6 -> 7 -> 8 -> Raja 2) -->
                 <path d="M 184 212
@@ -926,10 +804,6 @@
                          C 685 585, 600 747, 488 747
                          C 375 747, 295 594, 184 594"
                       fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" filter="url(#pathGlowFilter)"/>
-
-                <!-- Siluet Foreground Bingkai Pohon & Pagar Rusak di Sudut Peta -->
-                <path d="M 0 0 L 95 0 C 60 120, 42 290, 28 520 L 65 560 L 22 590 C 18 710, 35 820, 55 900 L 0 900 Z" fill="#020202"/>
-                <path d="M 1525 0 L 1600 0 L 1600 900 L 1540 900 C 1565 740, 1575 520, 1555 280 C 1545 140, 1535 60, 1525 0 Z" fill="#020202"/>
             </svg>
 
             <!-- Kontainer Pulau-Pulau Stage Interaktif (Stage 1 - 8) -->
@@ -995,61 +869,1286 @@
 
 <script>
 /**
- * PROCEDURAL DARK AMBIENT SOUND ENGINE (Web Audio API)
+ * PROCEDURAL DARK AMBIENT & SPATIAL PROXIMITY SOUND ENGINE (Web Audio API)
  */
 class NoirAudioEngine {
     constructor() {
         this.ctx = null;
         this.enabled = true;
         this.initialized = false;
+        this.masterGain = null;
         this.droneGain = null;
+        this.noiseBuffer = null;
+        this.ambientTimer = null;
+        this.channels = {};
+        this.lastSplashTime = 0;
     }
 
     init() {
-        if (this.initialized) return;
+        if (this.initialized) {
+            if (this.ctx && this.ctx.state === 'suspended') {
+                this.ctx.resume().catch(() => {});
+            }
+            return;
+        }
         try {
             const AudioCtx = window.AudioContext || window.webkitAudioContext;
             this.ctx = new AudioCtx();
+            this.masterGain = this.ctx.createGain();
+            this.masterGain.gain.value = this.enabled ? 1.0 : 0.0;
+            this.masterGain.connect(this.ctx.destination);
+
+            this.noiseBuffer = this.createNoiseBuffer(4.0);
             this.initialized = true;
+
             this.startAmbientDrone();
+            this.initProximityChannels();
         } catch (e) {
             console.warn("Web Audio API tidak didukung:", e);
+        }
+    }
+
+    createNoiseBuffer(durationSec = 4.0) {
+        const sampleRate = this.ctx.sampleRate;
+        const length = Math.floor(sampleRate * durationSec);
+        const buffer = this.ctx.createBuffer(1, length, sampleRate);
+        const data = buffer.getChannelData(0);
+        let b0 = 0, b1 = 0, b2 = 0;
+        for (let i = 0; i < length; i++) {
+            const white = Math.random() * 2 - 1;
+            b0 = 0.99765 * b0 + white * 0.0990460;
+            b1 = 0.96300 * b1 + white * 0.2965164;
+            b2 = 0.57000 * b2 + white * 1.0526913;
+            data[i] = (b0 + b1 + b2 + white * 0.1848) * 0.18;
+        }
+        return buffer;
+    }
+
+    createLoopingNoise() {
+        const src = this.ctx.createBufferSource();
+        src.buffer = this.noiseBuffer;
+        src.loop = true;
+        return src;
+    }
+
+    createPanner() {
+        if (this.ctx.createStereoPanner) {
+            return this.ctx.createStereoPanner();
+        }
+        return this.ctx.createGain();
+    }
+
+    setPan(pannerNode, panValue) {
+        if (pannerNode && pannerNode.pan) {
+            const clamped = Math.max(-1, Math.min(1, panValue));
+            pannerNode.pan.setTargetAtTime(clamped, this.ctx.currentTime, 0.08);
         }
     }
 
     toggle() {
         if (!this.initialized) this.init();
         this.enabled = !this.enabled;
-        if (this.droneGain && this.ctx) {
-            this.droneGain.gain.setTargetAtTime(this.enabled ? 0.14 : 0, this.ctx.currentTime, 0.3);
+        if (this.ctx && this.ctx.state === 'suspended') {
+            this.ctx.resume().catch(() => {});
+        }
+        if (this.masterGain && this.ctx) {
+            this.masterGain.gain.setTargetAtTime(this.enabled ? 1.0 : 0.0, this.ctx.currentTime, 0.15);
         }
         return this.enabled;
     }
 
     startAmbientDrone() {
         if (!this.ctx) return;
+
+        // 1. Sub-Bass Dark Drone berlapis dengan modulasi LFO lambat khas atmosfer Limbo
         const osc1 = this.ctx.createOscillator();
         const osc2 = this.ctx.createOscillator();
-        const filter = this.ctx.createBiquadFilter();
+        const osc3 = this.ctx.createOscillator();
+        const droneFilter = this.ctx.createBiquadFilter();
         this.droneGain = this.ctx.createGain();
 
         osc1.type = 'sawtooth';
-        osc1.frequency.value = 46.25;
+        osc1.frequency.value = 43.65; // F1
         osc2.type = 'triangle';
-        osc2.frequency.value = 69.30;
+        osc2.frequency.value = 65.41; // C2
+        osc3.type = 'sine';
+        osc3.frequency.value = 87.31; // F2
 
-        filter.type = 'lowpass';
-        filter.frequency.value = 140;
+        droneFilter.type = 'lowpass';
+        droneFilter.frequency.value = 135;
+        droneFilter.Q.value = 2.2;
 
-        this.droneGain.gain.value = this.enabled ? 0.14 : 0;
+        const filterLfo = this.ctx.createOscillator();
+        const filterLfoGain = this.ctx.createGain();
+        filterLfo.type = 'sine';
+        filterLfo.frequency.value = 0.09;
+        filterLfoGain.gain.value = 45;
+        filterLfo.connect(filterLfoGain);
+        filterLfoGain.connect(droneFilter.frequency);
 
-        osc1.connect(filter);
-        osc2.connect(filter);
-        filter.connect(this.droneGain);
-        this.droneGain.connect(this.ctx.destination);
+        this.droneGain.gain.value = 0.16;
+
+        osc1.connect(droneFilter);
+        osc2.connect(droneFilter);
+        osc3.connect(droneFilter);
+        droneFilter.connect(this.droneGain);
+        this.droneGain.connect(this.masterGain);
 
         osc1.start();
         osc2.start();
+        osc3.start();
+        filterLfo.start();
+
+        // 2. Desau Angin Hutan Sunyi (Filtered Pink Noise + LFO)
+        const windNoise = this.createLoopingNoise();
+        const windFilter = this.ctx.createBiquadFilter();
+        const windGain = this.ctx.createGain();
+
+        windFilter.type = 'bandpass';
+        windFilter.frequency.value = 260;
+        windFilter.Q.value = 3.2;
+        windGain.gain.value = 0.09;
+
+        const windLfo = this.ctx.createOscillator();
+        const windLfoGain = this.ctx.createGain();
+        windLfo.type = 'sine';
+        windLfo.frequency.value = 0.14;
+        windLfoGain.gain.value = 110;
+        windLfo.connect(windLfoGain);
+        windLfoGain.connect(windFilter.frequency);
+
+        windNoise.connect(windFilter);
+        windFilter.connect(windGain);
+        windGain.connect(this.masterGain);
+
+        windNoise.start();
+        windLfo.start();
+
+        // 3. Nada-nada Piano/Pad Ambient Misterius yang muncul perlahan secara berkala
+        const darkScale = [174.61, 207.65, 233.08, 261.63, 311.13, 349.23, 415.30]; // F Minor
+        const playHauntingNote = () => {
+            if (!this.ctx || !this.enabled || this.ctx.state !== 'running') return;
+            const now = this.ctx.currentTime;
+            const freq = darkScale[Math.floor(Math.random() * darkScale.length)];
+
+            const oscMain = this.ctx.createOscillator();
+            const oscSub = this.ctx.createOscillator();
+            const noteFilter = this.ctx.createBiquadFilter();
+            const noteGain = this.ctx.createGain();
+
+            oscMain.type = 'sine';
+            oscMain.frequency.setValueAtTime(freq, now);
+            oscSub.type = 'triangle';
+            oscSub.frequency.setValueAtTime(freq * 0.5, now);
+            oscSub.detune.setValueAtTime(6, now);
+
+            noteFilter.type = 'lowpass';
+            noteFilter.frequency.setValueAtTime(520, now);
+
+            noteGain.gain.setValueAtTime(0.0001, now);
+            noteGain.gain.linearRampToValueAtTime(0.045, now + 1.4);
+            noteGain.gain.exponentialRampToValueAtTime(0.0001, now + 5.2);
+
+            oscMain.connect(noteFilter);
+            oscSub.connect(noteFilter);
+            noteFilter.connect(noteGain);
+            noteGain.connect(this.masterGain);
+
+            oscMain.start(now);
+            oscSub.start(now);
+            oscMain.stop(now + 5.4);
+            oscSub.stop(now + 5.4);
+        };
+
+        setTimeout(playHauntingNote, 1200);
+        this.ambientTimer = setInterval(playHauntingNote, 5200);
+    }
+
+    initProximityChannels() {
+        if (!this.ctx) return;
+
+        // A. KANAL GERGAJI MESIN (SAW & BANDUL BERDURI)
+        const sawGain = this.ctx.createGain();
+        const sawPan = this.createPanner();
+        sawGain.gain.value = 0;
+
+        const sawOsc1 = this.ctx.createOscillator();
+        const sawOsc2 = this.ctx.createOscillator();
+        const sawNoise = this.createLoopingNoise();
+        const sawFilter = this.ctx.createBiquadFilter();
+        const sawNoiseFilter = this.ctx.createBiquadFilter();
+
+        sawOsc1.type = 'sawtooth';
+        sawOsc1.frequency.value = 118;
+        sawOsc2.type = 'square';
+        sawOsc2.frequency.value = 236;
+        sawOsc2.detune.value = 14;
+
+        sawFilter.type = 'bandpass';
+        sawFilter.frequency.value = 640;
+        sawFilter.Q.value = 2.8;
+
+        sawNoiseFilter.type = 'bandpass';
+        sawNoiseFilter.frequency.value = 2350;
+        sawNoiseFilter.Q.value = 4.5;
+
+        const sawLfo = this.ctx.createOscillator();
+        const sawLfoGain = this.ctx.createGain();
+        sawLfo.type = 'triangle';
+        sawLfo.frequency.value = 16; // Putaran gerigi besi
+        sawLfoGain.gain.value = 190;
+        sawLfo.connect(sawLfoGain);
+        sawLfoGain.connect(sawFilter.frequency);
+
+        const sawNoiseGain = this.ctx.createGain();
+        sawNoiseGain.gain.value = 0.55;
+
+        sawOsc1.connect(sawFilter);
+        sawOsc2.connect(sawFilter);
+        sawFilter.connect(sawGain);
+        sawNoise.connect(sawNoiseFilter);
+        sawNoiseFilter.connect(sawNoiseGain);
+        sawNoiseGain.connect(sawGain);
+
+        sawGain.connect(sawPan);
+        sawPan.connect(this.masterGain);
+
+        sawOsc1.start();
+        sawOsc2.start();
+        sawNoise.start();
+        sawLfo.start();
+        this.channels.saw = { gain: sawGain, pan: sawPan, filter: sawFilter, osc1: sawOsc1 };
+
+        // B. KANAL BATU (BOULDER MENGGELINDING, CRUSHER & LANTAI BATU RETAK)
+        const stoneGain = this.ctx.createGain();
+        const stonePan = this.createPanner();
+        stoneGain.gain.value = 0;
+
+        const stoneNoise = this.createLoopingNoise();
+        const stoneOsc = this.ctx.createOscillator();
+        const stoneFilter = this.ctx.createBiquadFilter();
+
+        stoneOsc.type = 'sawtooth';
+        stoneOsc.frequency.value = 44;
+
+        stoneFilter.type = 'lowpass';
+        stoneFilter.frequency.value = 115;
+        stoneFilter.Q.value = 2.4;
+
+        const stoneLfo = this.ctx.createOscillator();
+        const stoneLfoGain = this.ctx.createGain();
+        stoneLfo.type = 'sine';
+        stoneLfo.frequency.value = 6.5;
+        stoneLfoGain.gain.value = 38;
+        stoneLfo.connect(stoneLfoGain);
+        stoneLfoGain.connect(stoneFilter.frequency);
+
+        stoneNoise.connect(stoneFilter);
+        stoneOsc.connect(stoneFilter);
+        stoneFilter.connect(stoneGain);
+        stoneGain.connect(stonePan);
+        stonePan.connect(this.masterGain);
+
+        stoneNoise.start();
+        stoneOsc.start();
+        stoneLfo.start();
+        this.channels.stone = { gain: stoneGain, pan: stonePan, filter: stoneFilter, osc: stoneOsc };
+
+        // C. KANAL AIR (DANAU BAWAH TANAH & ARUS AIR)
+        const waterGain = this.ctx.createGain();
+        const waterPan = this.createPanner();
+        waterGain.gain.value = 0;
+
+        const waterNoise = this.createLoopingNoise();
+        const waterFilter = this.ctx.createBiquadFilter();
+        const waterLowpass = this.ctx.createBiquadFilter();
+
+        waterFilter.type = 'bandpass';
+        waterFilter.frequency.value = 440;
+        waterFilter.Q.value = 1.6;
+
+        waterLowpass.type = 'lowpass';
+        waterLowpass.frequency.value = 900;
+
+        const waterLfo = this.ctx.createOscillator();
+        const waterLfoGain = this.ctx.createGain();
+        waterLfo.type = 'sine';
+        waterLfo.frequency.value = 0.42; // Riak gelombang air
+        waterLfoGain.gain.value = 180;
+        waterLfo.connect(waterLfoGain);
+        waterLfoGain.connect(waterFilter.frequency);
+
+        waterNoise.connect(waterFilter);
+        waterFilter.connect(waterLowpass);
+        waterLowpass.connect(waterGain);
+        waterGain.connect(waterPan);
+        waterPan.connect(this.masterGain);
+
+        waterNoise.start();
+        waterLfo.start();
+        this.channels.water = { gain: waterGain, pan: waterPan, filter: waterFilter, lowpass: waterLowpass };
+
+        // D. KANAL SINAR LASER PEMINDAI
+        const laserGain = this.ctx.createGain();
+        const laserPan = this.createPanner();
+        laserGain.gain.value = 0;
+
+        const laserOsc1 = this.ctx.createOscillator();
+        const laserOsc2 = this.ctx.createOscillator();
+        const laserFilter = this.ctx.createBiquadFilter();
+
+        laserOsc1.type = 'sawtooth';
+        laserOsc1.frequency.value = 148;
+        laserOsc2.type = 'sine';
+        laserOsc2.frequency.value = 888;
+
+        laserFilter.type = 'bandpass';
+        laserFilter.frequency.value = 760;
+        laserFilter.Q.value = 3.5;
+
+        const laserLfo = this.ctx.createOscillator();
+        const laserLfoGain = this.ctx.createGain();
+        laserLfo.type = 'sine';
+        laserLfo.frequency.value = 22; // Denyut sinar laser
+        laserLfoGain.gain.value = 180;
+        laserLfo.connect(laserLfoGain);
+        laserLfoGain.connect(laserFilter.frequency);
+
+        laserOsc1.connect(laserFilter);
+        laserOsc2.connect(laserFilter);
+        laserFilter.connect(laserGain);
+        laserGain.connect(laserPan);
+        laserPan.connect(this.masterGain);
+
+        laserOsc1.start();
+        laserOsc2.start();
+        laserLfo.start();
+        this.channels.laser = { gain: laserGain, pan: laserPan, osc1: laserOsc1, osc2: laserOsc2, filter: laserFilter };
+
+        // E. KANAL BUSUR LISTRIK TEGANGAN TINGGI (ELECTRIC ARCS)
+        const electricGain = this.ctx.createGain();
+        const electricPan = this.createPanner();
+        electricGain.gain.value = 0;
+
+        const elecHumOsc = this.ctx.createOscillator();
+        const elecBuzzOsc = this.ctx.createOscillator();
+        const elecNoise = this.createLoopingNoise();
+        const elecNoiseFilter = this.ctx.createBiquadFilter();
+        const elecHumFilter = this.ctx.createBiquadFilter();
+
+        elecHumOsc.type = 'sawtooth';
+        elecHumOsc.frequency.value = 60; // Dengung trafo 60Hz
+        elecBuzzOsc.type = 'square';
+        elecBuzzOsc.frequency.value = 180;
+
+        elecHumFilter.type = 'bandpass';
+        elecHumFilter.frequency.value = 420;
+        elecHumFilter.Q.value = 2.0;
+
+        elecNoiseFilter.type = 'bandpass';
+        elecNoiseFilter.frequency.value = 2800; // Percikan bunga api listrik
+        elecNoiseFilter.Q.value = 3.2;
+
+        const elecNoiseGain = this.ctx.createGain();
+        elecNoiseGain.gain.value = 0.85;
+
+        elecHumOsc.connect(elecHumFilter);
+        elecBuzzOsc.connect(elecHumFilter);
+        elecHumFilter.connect(electricGain);
+
+        elecNoise.connect(elecNoiseFilter);
+        elecNoiseFilter.connect(elecNoiseGain);
+        elecNoiseGain.connect(electricGain);
+
+        electricGain.connect(electricPan);
+        electricPan.connect(this.masterGain);
+
+        elecHumOsc.start();
+        elecBuzzOsc.start();
+        elecNoise.start();
+        this.channels.electric = {
+            gain: electricGain,
+            pan: electricPan,
+            noiseFilter: elecNoiseFilter,
+            buzzOsc: elecBuzzOsc
+        };
+
+        // F. KANAL GESEKAN KOTAK KAYU & RODA GEROBAK TANGGA (PUSH / PULL SCRAPE)
+        const scrapeGain = this.ctx.createGain();
+        const scrapePan = this.createPanner();
+        scrapeGain.gain.value = 0;
+
+        const scrapeNoise = this.createLoopingNoise();
+        const scrapeFilter = this.ctx.createBiquadFilter();
+        const scrapeOsc = this.ctx.createOscillator();
+        const scrapeOscGain = this.ctx.createGain();
+
+        scrapeFilter.type = 'bandpass';
+        scrapeFilter.frequency.value = 320;
+        scrapeFilter.Q.value = 2.4;
+
+        scrapeOsc.type = 'sawtooth';
+        scrapeOsc.frequency.value = 68;
+        scrapeOscGain.gain.value = 0.35;
+
+        const scrapeLfo = this.ctx.createOscillator();
+        const scrapeLfoGain = this.ctx.createGain();
+        scrapeLfo.type = 'triangle';
+        scrapeLfo.frequency.value = 5.5;
+        scrapeLfoGain.gain.value = 85;
+        scrapeLfo.connect(scrapeLfoGain);
+        scrapeLfoGain.connect(scrapeFilter.frequency);
+
+        scrapeNoise.connect(scrapeFilter);
+        scrapeOsc.connect(scrapeOscGain);
+        scrapeOscGain.connect(scrapeFilter);
+        scrapeFilter.connect(scrapeGain);
+        scrapeGain.connect(scrapePan);
+        scrapePan.connect(this.masterGain);
+
+        scrapeNoise.start();
+        scrapeOsc.start();
+        scrapeLfo.start();
+        this.channels.scrape = {
+            gain: scrapeGain,
+            pan: scrapePan,
+            filter: scrapeFilter,
+            osc: scrapeOsc,
+            lfo: scrapeLfo
+        };
+    }
+
+    silenceProximityChannels() {
+        if (!this.initialized || !this.ctx) return;
+        const now = this.ctx.currentTime;
+        Object.values(this.channels).forEach(ch => {
+            if (ch && ch.gain) {
+                ch.gain.gain.setTargetAtTime(0, now, 0.12);
+            }
+        });
+    }
+
+    updateProximity(player, env) {
+        if (!this.initialized || !this.enabled || !this.ctx) return;
+        if (this.ctx.state === 'suspended') {
+            this.ctx.resume().catch(() => {});
+        }
+
+        const now = this.ctx.currentTime;
+        const px = player.x + player.w * 0.5;
+        const py = player.y + player.h * 0.5;
+
+        // 1. PROXIMITY GERGAJI & BANDUL BERDURI
+        let minSawDist = Infinity;
+        let sawDx = 0;
+        const MAX_SAW_DIST = 520;
+
+        for (const s of (env.saws || [])) {
+            const d = Math.hypot(px - s.x, py - s.y);
+            if (d < minSawDist) {
+                minSawDist = d;
+                sawDx = s.x - px;
+            }
+        }
+        for (const pd of (env.pendulums || [])) {
+            const d = Math.hypot(px - pd.bobX, py - pd.bobY);
+            if (d < minSawDist) {
+                minSawDist = d;
+                sawDx = pd.bobX - px;
+            }
+        }
+
+        if (this.channels.saw) {
+            if (minSawDist < MAX_SAW_DIST) {
+                const prox = Math.pow(1 - minSawDist / MAX_SAW_DIST, 1.75);
+                this.channels.saw.gain.gain.setTargetAtTime(prox * 0.22, now, 0.06);
+                this.setPan(this.channels.saw.pan, sawDx / 350);
+                this.channels.saw.osc1.frequency.setTargetAtTime(115 + prox * 28, now, 0.08);
+            } else {
+                this.channels.saw.gain.gain.setTargetAtTime(0, now, 0.1);
+            }
+        }
+
+        // 2. PROXIMITY BATU (BOULDER MENGGELINDING, CRUSHER & PLATFORM RETAK)
+        let maxStoneIntensity = 0;
+        let stoneDx = 0;
+        let boulderMod = 0;
+        const MAX_STONE_DIST = 720;
+
+        if (env.boulder && env.boulder.active && env.boulder.triggered) {
+            const d = Math.hypot(px - env.boulder.x, py - env.boulder.y);
+            if (d < MAX_STONE_DIST) {
+                const prox = Math.pow(1 - d / MAX_STONE_DIST, 1.35);
+                const intensity = prox * 1.15;
+                boulderMod = Math.sin((env.boulder.angle || 0) * 4) * 35;
+                if (intensity > maxStoneIntensity) {
+                    maxStoneIntensity = intensity;
+                    stoneDx = env.boulder.x - px;
+                }
+            }
+        }
+        for (const cr of (env.crushers || [])) {
+            const cx = cr.x + cr.w * 0.5;
+            const cy = cr.y + cr.h * 0.5;
+            const d = Math.hypot(px - cx, py - cy);
+            if (d < 480) {
+                const prox = Math.pow(1 - d / 480, 1.6);
+                const stateFactor = (cr.state === 'slam' || cr.state === 'rise') ? 0.85 : 0.0;
+                const intensity = prox * stateFactor;
+                if (intensity > maxStoneIntensity) {
+                    maxStoneIntensity = intensity;
+                    stoneDx = cx - px;
+                }
+            }
+        }
+        for (const cp of (env.crumblingPlatforms || [])) {
+            if (cp.state === 'shaking') {
+                const cx = cp.x + cp.w * 0.5;
+                const d = Math.hypot(px - cx, py - cp.y);
+                if (d < 360) {
+                    const intensity = Math.pow(1 - d / 360, 1.4) * 0.9;
+                    if (intensity > maxStoneIntensity) {
+                        maxStoneIntensity = intensity;
+                        stoneDx = cx - px;
+                    }
+                }
+            }
+        }
+
+        if (this.channels.stone) {
+            this.channels.stone.gain.gain.setTargetAtTime(Math.min(0.45, maxStoneIntensity * 0.38), now, 0.06);
+            this.setPan(this.channels.stone.pan, stoneDx / 380);
+            this.channels.stone.filter.frequency.setTargetAtTime(Math.max(60, 105 + maxStoneIntensity * 110 + boulderMod), now, 0.06);
+            if (this.channels.stone.osc) {
+                this.channels.stone.osc.frequency.setTargetAtTime(42 + maxStoneIntensity * 18 + boulderMod * 0.2, now, 0.06);
+            }
+        }
+
+        // 3. SUARA AIR (HANYA AKTIF SAAT KARAKTER BERENANG DI DALAM AIR)
+        if (this.channels.water) {
+            if (player.inWater) {
+                const swimSpeed = Math.hypot(player.vx, player.vy);
+                const isSwimming = swimSpeed > 0.25;
+                const targetWaterGain = isSwimming
+                    ? Math.min(0.36, 0.14 + swimSpeed * 0.045)
+                    : 0.07;
+                const strokeRipple = isSwimming ? Math.sin(now * 7.5) * 95 : 0;
+
+                this.channels.water.gain.gain.setTargetAtTime(targetWaterGain, now, 0.06);
+                this.setPan(this.channels.water.pan, Math.max(-0.35, Math.min(0.35, player.vx * 0.08)));
+                this.channels.water.filter.frequency.setTargetAtTime(380 + swimSpeed * 75 + strokeRipple, now, 0.07);
+                this.channels.water.lowpass.frequency.setTargetAtTime(isSwimming ? 820 : 480, now, 0.08);
+            } else {
+                this.channels.water.gain.gain.setTargetAtTime(0, now, 0.08);
+            }
+        }
+
+        // 4. PROXIMITY SINAR LASER PEMINDAI
+        let maxLaserIntensity = 0;
+        let laserDx = 0;
+        let nearestLaserActive = false;
+        const MAX_LASER_DIST = 480;
+
+        for (const lb of (env.laserBeams || [])) {
+            const midX = (lb.x1 + lb.x2) * 0.5;
+            const clampedY = Math.max(Math.min(lb.y1, lb.y2), Math.min(py, Math.max(lb.y1, lb.y2)));
+            const d = Math.hypot(px - midX, py - clampedY);
+            if (d < MAX_LASER_DIST) {
+                const prox = Math.pow(1 - d / MAX_LASER_DIST, 1.65);
+                const stateMult = lb.active ? 1.0 : (lb.warning ? 0.55 : 0.15);
+                const intensity = prox * stateMult;
+                if (intensity > maxLaserIntensity) {
+                    maxLaserIntensity = intensity;
+                    laserDx = midX - px;
+                    nearestLaserActive = lb.active;
+                }
+            }
+        }
+
+        if (this.channels.laser) {
+            this.channels.laser.gain.gain.setTargetAtTime(maxLaserIntensity * 0.18, now, 0.05);
+            this.setPan(this.channels.laser.pan, laserDx / 320);
+            this.channels.laser.osc2.frequency.setTargetAtTime(nearestLaserActive ? 888 : 540, now, 0.06);
+        }
+
+        // 5. PROXIMITY BUSUR LISTRIK TEGANGAN TINGGI (ELECTRIC ARCS)
+        let maxElecIntensity = 0;
+        let elecDx = 0;
+        let nearestElecActive = false;
+        const MAX_ELEC_DIST = 500;
+
+        for (const arc of (env.electricArcs || [])) {
+            const midX = (arc.x1 + arc.x2) * 0.5;
+            const clampedY = Math.max(Math.min(arc.y1, arc.y2), Math.min(py, Math.max(arc.y1, arc.y2)));
+            const d = Math.hypot(px - midX, py - clampedY);
+            if (d < MAX_ELEC_DIST) {
+                const prox = Math.pow(1 - d / MAX_ELEC_DIST, 1.65);
+                const stateMult = arc.active ? 1.0 : (arc.warning ? 0.48 : 0.14);
+                const intensity = prox * stateMult;
+                if (intensity > maxElecIntensity) {
+                    maxElecIntensity = intensity;
+                    elecDx = midX - px;
+                    nearestElecActive = arc.active;
+                }
+            }
+        }
+
+        if (this.channels.electric) {
+            // Efek percikan listrik acak (crackle jitter) saat busur listrik aktif di dekat karakter
+            const crackleJitter = nearestElecActive ? (0.75 + Math.random() * 0.5) : 0.6;
+            this.channels.electric.gain.gain.setTargetAtTime(maxElecIntensity * 0.22 * crackleJitter, now, 0.04);
+            this.setPan(this.channels.electric.pan, elecDx / 320);
+            if (nearestElecActive) {
+                this.channels.electric.noiseFilter.frequency.setTargetAtTime(2200 + Math.random() * 1400, now, 0.03);
+                this.channels.electric.buzzOsc.frequency.setTargetAtTime(160 + Math.random() * 60, now, 0.03);
+            } else {
+                this.channels.electric.buzzOsc.frequency.setTargetAtTime(120, now, 0.08);
+            }
+        }
+
+        // 6. EFEK SUARA MENDORONG / MENARIK KOTAK KAYU & GEROBAK TANGGA
+        if (this.channels.scrape) {
+            const isMovingObject = (player.isPushing || player.isPulling) && Math.abs(player.vx) > 0.15 && player.onGround;
+            if (isMovingObject) {
+                let onCart = false;
+                for (const lc of (env.ladderCarts || [])) {
+                    if (Math.abs((player.x + player.w * 0.5) - (lc.x + lc.w * 0.5)) < lc.w + 36) {
+                        onCart = true;
+                        break;
+                    }
+                }
+                const speedFactor = Math.min(1.2, Math.abs(player.vx) / 2.2);
+                this.channels.scrape.gain.gain.setTargetAtTime(0.24 * speedFactor, now, 0.05);
+                this.setPan(this.channels.scrape.pan, player.facing * 0.15);
+                if (onCart) {
+                    // Suara roda besi gerobak tangga berputar & berderit di atas tanah
+                    this.channels.scrape.filter.frequency.setTargetAtTime(420 + Math.sin(now * 14) * 90, now, 0.05);
+                    this.channels.scrape.osc.frequency.setTargetAtTime(92 + (now * 25 % 18), now, 0.05);
+                } else {
+                    // Suara gesekan berat peti kayu diseret di atas tanah/batu
+                    this.channels.scrape.filter.frequency.setTargetAtTime(240 + Math.random() * 60, now, 0.05);
+                    this.channels.scrape.osc.frequency.setTargetAtTime(58 + Math.random() * 12, now, 0.05);
+                }
+            } else {
+                this.channels.scrape.gain.gain.setTargetAtTime(0, now, 0.08);
+            }
+        }
+    }
+
+    playRopeCreak(intensity = 0.16) {
+        if (!this.enabled || !this.ctx) return;
+        const nowMs = performance.now();
+        if (this.lastRopeTime && nowMs - this.lastRopeTime < 220) return;
+        this.lastRopeTime = nowMs;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const mod = this.ctx.createOscillator();
+        const modGain = this.ctx.createGain();
+        const filter = this.ctx.createBiquadFilter();
+        const gain = this.ctx.createGain();
+
+        // Suara derit serat tali menegang saat digenggam & berayun
+        osc.type = 'sawtooth';
+        const baseFreq = 190 + Math.random() * 45;
+        osc.frequency.setValueAtTime(baseFreq, now);
+        osc.frequency.linearRampToValueAtTime(baseFreq * 1.28, now + 0.09);
+        osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.82, now + 0.24);
+
+        mod.type = 'sine';
+        mod.frequency.setValueAtTime(28, now);
+        modGain.gain.setValueAtTime(35, now);
+        mod.connect(modGain);
+        modGain.connect(osc.frequency);
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(520, now);
+        filter.Q.value = 4.2;
+
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(intensity, now + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.masterGain);
+
+        osc.start(now);
+        mod.start(now);
+        osc.stop(now + 0.26);
+        mod.stop(now + 0.26);
+    }
+
+    playCageImpact(volume = 0.22) {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // Denting resonansi jeruji besi sangkar & gemerincing rantai gantungan
+        const freqs = [285, 438, 692, 1120];
+        freqs.forEach((f, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = idx % 2 === 0 ? 'triangle' : 'square';
+            osc.frequency.setValueAtTime(f + (Math.random() - 0.5) * 18, now);
+            osc.frequency.exponentialRampToValueAtTime(f * 0.86, now + 0.32);
+
+            const partVol = (volume / (idx + 1.2)) * 0.65;
+            gain.gain.setValueAtTime(partVol, now);
+            gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.28 + idx * 0.05);
+
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(now);
+            osc.stop(now + 0.35 + idx * 0.05);
+        });
+
+        if (this.noiseBuffer) {
+            const rattle = this.ctx.createBufferSource();
+            rattle.buffer = this.noiseBuffer;
+            const filter = this.ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(2400, now);
+            filter.Q.value = 3.5;
+
+            const nGain = this.ctx.createGain();
+            nGain.gain.setValueAtTime(volume * 0.45, now);
+            nGain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+
+            rattle.connect(filter);
+            filter.connect(nGain);
+            nGain.connect(this.masterGain);
+            rattle.start(now, Math.random() * 1.5, 0.2);
+        }
+    }
+
+    playSpiderStep(distance = 200) {
+        if (!this.enabled || !this.ctx) return;
+        const maxDist = 720;
+        if (distance > maxDist) return;
+        const prox = Math.pow(1 - distance / maxDist, 1.45);
+        const now = this.ctx.currentTime;
+
+        // Hentakan kaki raksasa + tancapan cakar tajam ke tanah
+        const thudOsc = this.ctx.createOscillator();
+        const thudGain = this.ctx.createGain();
+        thudOsc.type = 'sine';
+        thudOsc.frequency.setValueAtTime(76, now);
+        thudOsc.frequency.exponentialRampToValueAtTime(26, now + 0.16);
+
+        thudGain.gain.setValueAtTime(0.24 * prox, now);
+        thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+
+        thudOsc.connect(thudGain);
+        thudGain.connect(this.masterGain);
+        thudOsc.start(now);
+        thudOsc.stop(now + 0.19);
+
+        const clickOsc = this.ctx.createOscillator();
+        const clickFilter = this.ctx.createBiquadFilter();
+        const clickGain = this.ctx.createGain();
+        clickOsc.type = 'sawtooth';
+        clickOsc.frequency.setValueAtTime(480 + Math.random() * 110, now);
+        clickOsc.frequency.exponentialRampToValueAtTime(140, now + 0.065);
+
+        clickFilter.type = 'bandpass';
+        clickFilter.frequency.setValueAtTime(1350, now);
+        clickFilter.Q.value = 2.8;
+
+        clickGain.gain.setValueAtTime(0.14 * prox, now);
+        clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+
+        clickOsc.connect(clickFilter);
+        clickFilter.connect(clickGain);
+        clickGain.connect(this.masterGain);
+        clickOsc.start(now);
+        clickOsc.stop(now + 0.08);
+    }
+
+    playSpiderWarn() {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // Desisan mengancam & derit sendi cakar raksasa yang terangkat hendak menyerang
+        const osc1 = this.ctx.createOscillator();
+        const osc2 = this.ctx.createOscillator();
+        const filter = this.ctx.createBiquadFilter();
+        const gain = this.ctx.createGain();
+
+        osc1.type = 'sawtooth';
+        osc1.frequency.setValueAtTime(95, now);
+        osc1.frequency.exponentialRampToValueAtTime(290, now + 0.48);
+
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(142, now);
+        osc2.frequency.exponentialRampToValueAtTime(420, now + 0.48);
+        osc2.detune.setValueAtTime(18, now);
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(380, now);
+        filter.frequency.exponentialRampToValueAtTime(1250, now + 0.48);
+        filter.Q.value = 3.2;
+
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.22, now + 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.54);
+
+        osc1.connect(filter);
+        osc2.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.masterGain);
+
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + 0.56);
+        osc2.stop(now + 0.56);
+
+        if (this.noiseBuffer) {
+            const hiss = this.ctx.createBufferSource();
+            hiss.buffer = this.noiseBuffer;
+            const hFilter = this.ctx.createBiquadFilter();
+            hFilter.type = 'bandpass';
+            hFilter.frequency.setValueAtTime(1800, now);
+            hFilter.frequency.linearRampToValueAtTime(3200, now + 0.42);
+            hFilter.Q.value = 2.5;
+
+            const hGain = this.ctx.createGain();
+            hGain.gain.setValueAtTime(0.001, now);
+            hGain.gain.linearRampToValueAtTime(0.14, now + 0.08);
+            hGain.gain.exponentialRampToValueAtTime(0.001, now + 0.46);
+
+            hiss.connect(hFilter);
+            hFilter.connect(hGain);
+            hGain.connect(this.masterGain);
+            hiss.start(now, Math.random() * 1.5, 0.48);
+        }
+    }
+
+    playSpiderStrike() {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // Suara tebasan angin tajam diikuti hentakan kaki sabit menghunjam tanah
+        if (this.noiseBuffer) {
+            const whoosh = this.ctx.createBufferSource();
+            whoosh.buffer = this.noiseBuffer;
+            const wFilter = this.ctx.createBiquadFilter();
+            wFilter.type = 'bandpass';
+            wFilter.frequency.setValueAtTime(1600, now);
+            wFilter.frequency.exponentialRampToValueAtTime(280, now + 0.18);
+            wFilter.Q.value = 1.8;
+
+            const wGain = this.ctx.createGain();
+            wGain.gain.setValueAtTime(0.28, now);
+            wGain.gain.exponentialRampToValueAtTime(0.001, now + 0.20);
+
+            whoosh.connect(wFilter);
+            wFilter.connect(wGain);
+            wGain.connect(this.masterGain);
+            whoosh.start(now, Math.random() * 2.0, 0.22);
+        }
+
+        const slamOsc = this.ctx.createOscillator();
+        const slamGain = this.ctx.createGain();
+        slamOsc.type = 'sawtooth';
+        slamOsc.frequency.setValueAtTime(165, now);
+        slamOsc.frequency.exponentialRampToValueAtTime(28, now + 0.26);
+
+        slamGain.gain.setValueAtTime(0.32, now);
+        slamGain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+
+        slamOsc.connect(slamGain);
+        slamGain.connect(this.masterGain);
+        slamOsc.start(now);
+        slamOsc.stop(now + 0.30);
+    }
+
+    playSpiderElectrocute() {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // 1. Sambaran petir tegangan tinggi & gemeretak sengatan listrik (Electric Zap & Crackle)
+        if (this.noiseBuffer) {
+            const zapNoise = this.ctx.createBufferSource();
+            zapNoise.buffer = this.noiseBuffer;
+            const zapFilter = this.ctx.createBiquadFilter();
+            zapFilter.type = 'bandpass';
+            zapFilter.frequency.setValueAtTime(2800, now);
+            zapFilter.frequency.exponentialRampToValueAtTime(650, now + 0.65);
+            zapFilter.Q.value = 2.4;
+
+            const zapGain = this.ctx.createGain();
+            zapGain.gain.setValueAtTime(0.42, now);
+            zapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.68);
+
+            zapNoise.connect(zapFilter);
+            zapFilter.connect(zapGain);
+            zapGain.connect(this.masterGain);
+            zapNoise.start(now, Math.random() * 1.5, 0.70);
+        }
+
+        // Osilator sengatan busur listrik bergetar cepat
+        const arcOsc = this.ctx.createOscillator();
+        const arcMod = this.ctx.createOscillator();
+        const arcModGain = this.ctx.createGain();
+        const arcGain = this.ctx.createGain();
+
+        arcOsc.type = 'sawtooth';
+        arcOsc.frequency.setValueAtTime(140, now);
+        arcMod.type = 'square';
+        arcMod.frequency.setValueAtTime(48, now);
+        arcModGain.gain.setValueAtTime(110, now);
+
+        arcGain.gain.setValueAtTime(0.28, now);
+        arcGain.gain.exponentialRampToValueAtTime(0.001, now + 0.62);
+
+        arcMod.connect(arcModGain);
+        arcModGain.connect(arcOsc.frequency);
+        arcOsc.connect(arcGain);
+        arcGain.connect(this.masterGain);
+
+        arcOsc.start(now);
+        arcMod.start(now);
+        arcOsc.stop(now + 0.65);
+        arcMod.stop(now + 0.65);
+
+        // 2. Pekikan kesakitan laba-laba raksasa saat tersengat listrik
+        const screech1 = this.ctx.createOscillator();
+        const screech2 = this.ctx.createOscillator();
+        const screechFilter = this.ctx.createBiquadFilter();
+        const screechGain = this.ctx.createGain();
+
+        screech1.type = 'sawtooth';
+        screech1.frequency.setValueAtTime(620, now + 0.04);
+        screech1.frequency.exponentialRampToValueAtTime(195, now + 0.58);
+
+        screech2.type = 'triangle';
+        screech2.frequency.setValueAtTime(910, now + 0.04);
+        screech2.frequency.exponentialRampToValueAtTime(240, now + 0.58);
+        screech2.detune.setValueAtTime(25, now);
+
+        screechFilter.type = 'bandpass';
+        screechFilter.frequency.setValueAtTime(1150, now + 0.04);
+        screechFilter.frequency.exponentialRampToValueAtTime(360, now + 0.58);
+        screechFilter.Q.value = 3.0;
+
+        screechGain.gain.setValueAtTime(0.001, now);
+        screechGain.gain.linearRampToValueAtTime(0.28, now + 0.07);
+        screechGain.gain.exponentialRampToValueAtTime(0.001, now + 0.62);
+
+        screech1.connect(screechFilter);
+        screech2.connect(screechFilter);
+        screechFilter.connect(screechGain);
+        screechGain.connect(this.masterGain);
+
+        screech1.start(now + 0.04);
+        screech2.start(now + 0.04);
+        screech1.stop(now + 0.64);
+        screech2.stop(now + 0.64);
+    }
+
+    playSpiderBurnDeath() {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // 1. Desisan api & tubuh laba-laba raksasa terbakar hangus (Sizzling & Charring Crackle)
+        if (this.noiseBuffer) {
+            const burnNoise = this.ctx.createBufferSource();
+            burnNoise.buffer = this.noiseBuffer;
+            burnNoise.loop = true;
+
+            const sizzleFilter = this.ctx.createBiquadFilter();
+            sizzleFilter.type = 'bandpass';
+            sizzleFilter.frequency.setValueAtTime(1450, now);
+            sizzleFilter.frequency.exponentialRampToValueAtTime(380, now + 3.2);
+            sizzleFilter.Q.value = 1.6;
+
+            const crackleLfo = this.ctx.createOscillator();
+            const crackleLfoGain = this.ctx.createGain();
+            crackleLfo.type = 'sawtooth';
+            crackleLfo.frequency.setValueAtTime(18, now);
+            crackleLfoGain.gain.setValueAtTime(620, now);
+            crackleLfo.connect(crackleLfoGain);
+            crackleLfoGain.connect(sizzleFilter.frequency);
+
+            const burnGain = this.ctx.createGain();
+            burnGain.gain.setValueAtTime(0.01, now);
+            burnGain.gain.linearRampToValueAtTime(0.38, now + 0.18);
+            burnGain.gain.setValueAtTime(0.32, now + 1.4);
+            burnGain.gain.exponentialRampToValueAtTime(0.001, now + 3.4);
+
+            burnNoise.connect(sizzleFilter);
+            sizzleFilter.connect(burnGain);
+            burnGain.connect(this.masterGain);
+
+            burnNoise.start(now);
+            crackleLfo.start(now);
+            burnNoise.stop(now + 3.5);
+            crackleLfo.stop(now + 3.5);
+        }
+
+        // 2. Gemuruh rendah & raungan kehancuran laba-laba saat hangus menjadi abu
+        const roarOsc = this.ctx.createOscillator();
+        const subOsc = this.ctx.createOscillator();
+        const roarFilter = this.ctx.createBiquadFilter();
+        const roarGain = this.ctx.createGain();
+
+        roarOsc.type = 'sawtooth';
+        roarOsc.frequency.setValueAtTime(155, now);
+        roarOsc.frequency.exponentialRampToValueAtTime(28, now + 2.8);
+
+        subOsc.type = 'triangle';
+        subOsc.frequency.setValueAtTime(78, now);
+        subOsc.frequency.exponentialRampToValueAtTime(18, now + 2.9);
+
+        roarFilter.type = 'lowpass';
+        roarFilter.frequency.setValueAtTime(420, now);
+        roarFilter.frequency.exponentialRampToValueAtTime(85, now + 2.8);
+
+        roarGain.gain.setValueAtTime(0.34, now);
+        roarGain.gain.exponentialRampToValueAtTime(0.001, now + 3.0);
+
+        roarOsc.connect(roarFilter);
+        subOsc.connect(roarFilter);
+        roarFilter.connect(roarGain);
+        roarGain.connect(this.masterGain);
+
+        roarOsc.start(now);
+        subOsc.start(now);
+        roarOsc.stop(now + 3.1);
+        subOsc.stop(now + 3.1);
+    }
+
+    playSpiderWebShoot() {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // Suara semburan jaring lengket bertekanan tinggi dari mulut laba-laba
+        if (this.noiseBuffer) {
+            const spitNoise = this.ctx.createBufferSource();
+            spitNoise.buffer = this.noiseBuffer;
+            const filter = this.ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(2200, now);
+            filter.frequency.exponentialRampToValueAtTime(520, now + 0.24);
+            filter.Q.value = 3.2;
+
+            const gain = this.ctx.createGain();
+            gain.gain.setValueAtTime(0.26, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+
+            spitNoise.connect(filter);
+            filter.connect(gain);
+            gain.connect(this.masterGain);
+            spitNoise.start(now, Math.random() * 1.5, 0.28);
+        }
+
+        const osc = this.ctx.createOscillator();
+        const oGain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(480, now);
+        osc.frequency.exponentialRampToValueAtTime(140, now + 0.22);
+        oGain.gain.setValueAtTime(0.16, now);
+        oGain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+        osc.connect(oGain);
+        oGain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.25);
+    }
+
+    playWebTrapHit() {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // Suara lilitan jaring lengket yang mengikat tubuh karakter
+        const osc = this.ctx.createOscillator();
+        const filter = this.ctx.createBiquadFilter();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(320, now);
+        osc.frequency.exponentialRampToValueAtTime(88, now + 0.28);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(680, now);
+
+        gain.gain.setValueAtTime(0.24, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.30);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.32);
+    }
+
+    playWaterSplash(volume = 0.14) {
+        if (!this.enabled || !this.ctx || !this.noiseBuffer) return;
+        const nowMs = performance.now();
+        if (nowMs - this.lastSplashTime < 180) return;
+        this.lastSplashTime = nowMs;
+
+        const now = this.ctx.currentTime;
+        const src = this.ctx.createBufferSource();
+        src.buffer = this.noiseBuffer;
+
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(950, now);
+        filter.frequency.exponentialRampToValueAtTime(320, now + 0.26);
+        filter.Q.value = 1.8;
+
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(volume, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+
+        src.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.masterGain);
+        src.start(now, Math.random() * 2.0, 0.3);
+    }
+
+    playStoneImpact(volume = 0.22) {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(82, now);
+        osc.frequency.exponentialRampToValueAtTime(24, now + 0.28);
+
+        gain.gain.setValueAtTime(volume, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.32);
+    }
+
+    playCrusherSlam(distance = 100) {
+        if (!this.enabled || !this.ctx) return;
+        const maxDist = 720;
+        if (distance > maxDist) return;
+        const prox = Math.pow(1 - distance / maxDist, 1.35);
+        const now = this.ctx.currentTime;
+
+        // 1. Dentuman Sub-Bass Berat Saat Balok Berduri Menghantam Tanah
+        const subOsc = this.ctx.createOscillator();
+        const subGain = this.ctx.createGain();
+        subOsc.type = 'sine';
+        subOsc.frequency.setValueAtTime(98, now);
+        subOsc.frequency.exponentialRampToValueAtTime(22, now + 0.42);
+        subGain.gain.setValueAtTime(0.42 * prox, now);
+        subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+        subOsc.connect(subGain);
+        subGain.connect(this.masterGain);
+        subOsc.start(now);
+        subOsc.stop(now + 0.46);
+
+        // 2. Hentakan Batu & Gerigi Besi
+        const punchOsc = this.ctx.createOscillator();
+        const punchFilter = this.ctx.createBiquadFilter();
+        const punchGain = this.ctx.createGain();
+        punchOsc.type = 'sawtooth';
+        punchOsc.frequency.setValueAtTime(165, now);
+        punchOsc.frequency.exponentialRampToValueAtTime(34, now + 0.28);
+        punchFilter.type = 'lowpass';
+        punchFilter.frequency.setValueAtTime(360, now);
+        punchGain.gain.setValueAtTime(0.28 * prox, now);
+        punchGain.gain.exponentialRampToValueAtTime(0.001, now + 0.30);
+        punchOsc.connect(punchFilter);
+        punchFilter.connect(punchGain);
+        punchGain.connect(this.masterGain);
+        punchOsc.start(now);
+        punchOsc.stop(now + 0.32);
+
+        // 3. Gemerincing Rantai & Pecahan Debu Batu
+        if (this.noiseBuffer) {
+            const crashNoise = this.ctx.createBufferSource();
+            crashNoise.buffer = this.noiseBuffer;
+            const nFilter = this.ctx.createBiquadFilter();
+            nFilter.type = 'bandpass';
+            nFilter.frequency.setValueAtTime(520, now);
+            nFilter.frequency.exponentialRampToValueAtTime(180, now + 0.32);
+            nFilter.Q.value = 1.4;
+            const nGain = this.ctx.createGain();
+            nGain.gain.setValueAtTime(0.32 * prox, now);
+            nGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+            crashNoise.connect(nFilter);
+            nFilter.connect(nGain);
+            nGain.connect(this.masterGain);
+            crashNoise.start(now, Math.random() * 1.5, 0.36);
+        }
+    }
+
+    playBoulderRollThud(distance = 150) {
+        if (!this.enabled || !this.ctx) return;
+        const maxDist = 750;
+        if (distance > maxDist) return;
+        const prox = Math.pow(1 - distance / maxDist, 1.4);
+        const now = this.ctx.currentTime;
+
+        // Suara hentakan ritmis batu raksasa saat berputar menggilas tanah
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(68 + Math.random() * 14, now);
+        osc.frequency.exponentialRampToValueAtTime(25, now + 0.19);
+        gain.gain.setValueAtTime(0.24 * prox, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.21);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.22);
+
+        if (this.noiseBuffer) {
+            const grit = this.ctx.createBufferSource();
+            grit.buffer = this.noiseBuffer;
+            const filter = this.ctx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(280, now);
+            const gGain = this.ctx.createGain();
+            gGain.gain.setValueAtTime(0.18 * prox, now);
+            gGain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+            grit.connect(filter);
+            filter.connect(gGain);
+            gGain.connect(this.masterGain);
+            grit.start(now, Math.random() * 2.0, 0.18);
+        }
+    }
+
+    playBearTrapSnap() {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // Denting tajam rahang baja beradu cepat + hentakan pegas besi
+        const metalFreqs = [540, 1180, 1760];
+        metalFreqs.forEach((f, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = idx === 0 ? 'sawtooth' : 'square';
+            osc.frequency.setValueAtTime(f, now);
+            osc.frequency.exponentialRampToValueAtTime(f * 0.42, now + 0.14 + idx * 0.03);
+            gain.gain.setValueAtTime(0.22 / (idx + 1), now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16 + idx * 0.03);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(now);
+            osc.stop(now + 0.18 + idx * 0.03);
+        });
+
+        const thudOsc = this.ctx.createOscillator();
+        const thudGain = this.ctx.createGain();
+        thudOsc.type = 'sine';
+        thudOsc.frequency.setValueAtTime(145, now);
+        thudOsc.frequency.exponentialRampToValueAtTime(34, now + 0.18);
+        thudGain.gain.setValueAtTime(0.32, now);
+        thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.20);
+        thudOsc.connect(thudGain);
+        thudGain.connect(this.masterGain);
+        thudOsc.start(now);
+        thudOsc.stop(now + 0.21);
     }
 
     playStep() {
@@ -1065,7 +2164,7 @@ class NoirAudioEngine {
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.065);
 
         osc.connect(gain);
-        gain.connect(this.ctx.destination);
+        gain.connect(this.masterGain);
         osc.start(now);
         osc.stop(now + 0.07);
     }
@@ -1083,7 +2182,7 @@ class NoirAudioEngine {
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
 
         osc.connect(gain);
-        gain.connect(this.ctx.destination);
+        gain.connect(this.masterGain);
         osc.start(now);
         osc.stop(now + 0.16);
     }
@@ -1101,7 +2200,7 @@ class NoirAudioEngine {
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
 
         osc.connect(gain);
-        gain.connect(this.ctx.destination);
+        gain.connect(this.masterGain);
         osc.start(now);
         osc.stop(now + 0.4);
     }
@@ -1119,7 +2218,7 @@ class NoirAudioEngine {
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.48);
 
         osc.connect(gain);
-        gain.connect(this.ctx.destination);
+        gain.connect(this.masterGain);
         osc.start(now);
         osc.stop(now + 0.5);
     }
@@ -1137,7 +2236,7 @@ class NoirAudioEngine {
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
 
         osc.connect(gain);
-        gain.connect(this.ctx.destination);
+        gain.connect(this.masterGain);
         osc.start(now);
         osc.stop(now + 0.62);
     }
@@ -1155,7 +2254,7 @@ class NoirAudioEngine {
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
 
         osc.connect(gain);
-        gain.connect(this.ctx.destination);
+        gain.connect(this.masterGain);
         osc.start(now);
         osc.stop(now + 0.26);
     }
@@ -1796,94 +2895,69 @@ function getStageIslandSVG(stage) {
                     <path d="M 224 112 L 224 72 L 229 76 L 233 71 L 237 75 L 237 112 Z" fill="#0b0b0b" stroke="#2c2c2c" stroke-width="0.8"/>
                 </g>
 
-                <!-- Lapisan 3: Siluet Anatomis Raja Laba-Laba Raksasa (ARACHNE UMBRA) Khas LIMBO -->
+                <!-- Lapisan 3: Siluet Anatomis Raja Laba-Laba Tarantula Raksasa Berbulu 8 Kaki (4 Kiri & 4 Kanan) -->
                 <g class="map-sway-slow">
-                    <!-- Kaki-Kaki Lapis Belakang (4 Tungkai Beruas dengan Sendi Bertanduk) -->
-                    <g fill="#0b0b0b" stroke="#222222" stroke-width="0.6">
-                        <!-- Kaki Belakang Kiri 1 -->
-                        <path d="M 122 66 L 86 24 L 91 20 L 126 62 Z"/>
-                        <path d="M 88 22 L 58 64 L 46 112 L 50 112 L 64 66 L 92 25 Z"/>
-                        <!-- Kaki Belakang Kiri 2 -->
-                        <path d="M 128 70 L 98 38 L 103 34 L 132 66 Z"/>
-                        <path d="M 100 36 L 74 72 L 66 114 L 70 114 L 80 74 L 104 39 Z"/>
-                        <!-- Kaki Belakang Kanan 1 -->
-                        <path d="M 164 66 L 198 26 L 193 22 L 160 62 Z"/>
-                        <path d="M 196 24 L 224 64 L 236 112 L 232 112 L 218 66 L 192 27 Z"/>
-                        <!-- Kaki Belakang Kanan 2 -->
-                        <path d="M 158 70 L 186 38 L 181 34 L 154 66 Z"/>
-                        <path d="M 184 36 L 208 72 L 216 114 L 212 114 L 202 74 L 180 39 Z"/>
+                    <!-- 4 Kaki Lapis Belakang (2 di Kiri, 2 di Kanan) Lengkap dengan Bulu-Bulu Halus Tarantula -->
+                    <g fill="#0b0b0b" stroke="#1f1f1f" stroke-width="1.1" stroke-dasharray="1.5 1.2">
+                        <!-- Kaki Kiri 2 (Belakang) -->
+                        <path d="M 114 68 L 76 22 L 48 64 L 38 113 L 44 113 L 55 66 L 79 28 L 118 72 Z"/>
+                        <!-- Kaki Kiri 4 (Belakang Dalam) -->
+                        <path d="M 124 72 L 96 36 L 74 74 L 68 114 L 74 114 L 81 76 L 99 42 L 128 75 Z"/>
+                        <!-- Kaki Kanan 1 (Belakang Dalam) -->
+                        <path d="M 152 72 L 180 36 L 202 74 L 208 114 L 202 114 L 195 76 L 177 42 L 148 75 Z"/>
+                        <!-- Kaki Kanan 3 (Belakang) -->
+                        <path d="M 162 68 L 200 22 L 228 64 L 238 113 L 232 113 L 221 66 L 197 28 L 158 72 Z"/>
                     </g>
 
-                    <!-- Tubuh Utama: Abdomen Bungkuk Berduri Kasar (Opisthosoma) + Pinggang (Pedicel) + Cephalothorax -->
-                    <g fill="#030303" stroke="#292929" stroke-width="0.9">
-                        <!-- Abdomen Raksasa Bungkuk di Belakang Atas -->
-                        <path d="M 126 54
-                                 C 132 26, 174 22, 188 46
-                                 C 196 60, 184 78, 162 78
-                                 C 144 78, 124 68, 126 54 Z"/>
-                        <!-- Duri-Duri Kasar (Bristles/Spines) di Punggung Abdomen -->
-                        <path d="M 138 35 L 135 23 L 143 32
-                                 M 150 30 L 151 17 L 157 29
-                                 M 163 31 L 168 19 L 170 33
-                                 M 176 36 L 184 26 L 182 40
-                                 M 186 45 L 195 39 L 189 51"
-                              fill="#030303" stroke="#333333" stroke-width="0.7" stroke-linejoin="round"/>
+                    <!-- Tubuh Utama Tarantula: Abdomen Bungkuk Berbulu Lebat + Cephalothorax + Chelicerae -->
+                    <g fill="#030303" stroke="#222222" stroke-width="1.2" stroke-dasharray="2 1.2">
+                        <!-- Abdomen Tarantula Raksasa Berbulu di Belakang Atas -->
+                        <path d="M 124 54
+                                 C 130 24, 176 20, 190 46
+                                 C 198 62, 184 80, 160 80
+                                 C 142 80, 122 68, 124 54 Z"/>
+                        <!-- Rumpun Bulu-Bulu Kasar Tarantula (Setae) di Punggung Abdomen -->
+                        <path d="M 134 36 L 130 24 L 139 33 L 144 20 L 149 31 L 156 18 L 160 30 L 168 20 L 170 33 L 179 24 L 178 37 L 188 30 L 185 43 L 194 40 L 188 50"
+                              fill="#030303" stroke="#303030" stroke-width="0.8" stroke-dasharray="none" stroke-linejoin="round"/>
 
-                        <!-- Cephalothorax (Kepala-Dada) Meruncing Mengancam di Depan -->
-                        <path d="M 104 68
-                                 C 104 54, 128 50, 144 58
-                                 C 152 62, 152 76, 138 82
-                                 C 122 86, 104 80, 104 68 Z"/>
+                        <!-- Cephalothorax (Kepala-Dada) Berbulu Tebal -->
+                        <path d="M 102 68
+                                 C 102 52, 128 48, 146 58
+                                 C 154 62, 152 78, 138 84
+                                 C 120 88, 102 80, 102 68 Z"/>
 
-                        <!-- Mahkota Tanduk Bayangan Runcing di Atas Kepala Arachne -->
-                        <polygon points="108,58 112,34 120,50 127,24 134,49 143,32 145,56"
-                                 fill="#040404" stroke="#454545" stroke-width="0.95" stroke-linejoin="round"/>
+                        <!-- Mahkota Duri & Bulu Tarantula di Atas Kepala -->
+                        <polygon points="107,58 111,35 119,50 126,25 133,49 142,33 144,56"
+                                 fill="#040404" stroke="#424242" stroke-width="0.9" stroke-dasharray="none" stroke-linejoin="round"/>
 
-                        <!-- Taring Tajam Melengkung (Chelicerae) & Pedipalpus di Bawah Kepala -->
-                        <path d="M 106 74 Q 96 84 101 96 Q 107 86 113 78 Z"/>
-                        <path d="M 115 76 Q 107 86 112 97 Q 118 88 122 79 Z"/>
+                        <!-- Taring Berbulu Tebal (Chelicerae) & Pedipalpus -->
+                        <path d="M 104 74 Q 93 84 99 97 Q 106 87 113 78 Z" stroke-dasharray="none"/>
+                        <path d="M 114 76 Q 105 86 111 98 Q 117 88 122 79 Z" stroke-dasharray="none"/>
                     </g>
 
-                    <!-- Kluster 6 Mata Putih Menyala Tajam Menghadap Depan -->
+                    <!-- Kluster 6 Mata Putih Menyala Tajam -->
                     <g fill="#ffffff" style="filter:drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #fff)">
-                        <circle class="boy-eye" cx="113" cy="69" r="2.5"/>
-                        <circle class="boy-eye" cx="124" cy="71" r="2.7"/>
-                        <circle class="boy-eye" cx="108" cy="64" r="1.6"/>
-                        <circle class="boy-eye" cx="131" cy="67" r="1.8"/>
-                        <circle class="boy-eye" cx="117" cy="75" r="1.4"/>
-                        <circle class="boy-eye" cx="126" cy="76" r="1.4"/>
+                        <circle class="boy-eye" cx="112" cy="69" r="2.5"/>
+                        <circle class="boy-eye" cx="123" cy="71" r="2.7"/>
+                        <circle class="boy-eye" cx="107" cy="64" r="1.6"/>
+                        <circle class="boy-eye" cx="130" cy="67" r="1.8"/>
+                        <circle class="boy-eye" cx="116" cy="75" r="1.4"/>
+                        <circle class="boy-eye" cx="125" cy="76" r="1.4"/>
                     </g>
 
-                    <!-- Kaki-Kaki Sabit Lapis Depan (3 Ruas: Femur Berotot -> Tibia Berduri -> Tarsus Sabit Runcing) -->
-                    <g fill="#020202" stroke="#303030" stroke-width="0.7" stroke-linejoin="round">
-                        <!-- Kaki Sabit Depan Kiri 1 (Menjulang Tinggi & Menancap Tajam di Tebing Kiri) -->
-                        <path d="M 112 68 L 68 18 L 75 13 L 118 63 Z"/>
-                        <polygon points="66,21 71,6 77,17" fill="#020202"/>
-                        <path d="M 71 15 L 38 62 L 44 65 L 77 19 Z"/>
-                        <polygon points="36,64 27,56 42,59" fill="#020202"/>
-                        <path d="M 38 61 Q 26 86 24 114 Q 32 88 44 64 Z"/>
-
-                        <!-- Kaki Sabit Depan Kiri 2 (Siap Menghujam di Depan Kepala) -->
-                        <path d="M 118 72 L 82 32 L 88 27 L 124 67 Z"/>
-                        <polygon points="80,34 84,21 90,30" fill="#020202"/>
-                        <path d="M 84 29 L 58 70 L 64 73 L 89 33 Z"/>
-                        <path d="M 58 69 Q 52 92 54 115 Q 60 92 64 72 Z"/>
-
-                        <!-- Kaki Sabit Depan Kanan 1 -->
-                        <path d="M 148 68 L 192 22 L 186 17 L 142 63 Z"/>
-                        <polygon points="194,24 189,10 184,20" fill="#020202"/>
-                        <path d="M 190 19 L 218 64 L 212 67 L 184 23 Z"/>
-                        <path d="M 218 63 Q 226 88 224 115 Q 218 90 212 66 Z"/>
-
-                        <!-- Kaki Sabit Depan Kanan 2 (Merentang Lebar ke Ujung Tebing Kanan) -->
-                        <path d="M 156 66 L 208 16 L 201 11 L 150 61 Z"/>
-                        <polygon points="210,19 205,4 199,15" fill="#020202"/>
-                        <path d="M 206 13 L 242 60 L 236 64 L 200 18 Z"/>
-                        <polygon points="244,62 252,54 238,58" fill="#020202"/>
-                        <path d="M 242 59 Q 254 86 256 114 Q 248 88 236 63 Z"/>
+                    <!-- 4 Kaki Lapis Depan (2 di Kiri, 2 di Kanan) Beruas Tebal & Berbulu Tarantula -->
+                    <g fill="#020202" stroke="#2c2c2c" stroke-width="1.2" stroke-dasharray="1.8 1.1" stroke-linejoin="round">
+                        <!-- Kaki Kiri 1 (Depan Luar) -->
+                        <path d="M 110 66 L 64 14 L 32 58 L 20 114 L 27 114 L 41 62 L 69 22 L 116 70 Z"/>
+                        <!-- Kaki Kiri 3 (Depan Tengah) -->
+                        <path d="M 118 70 L 82 28 L 56 68 L 50 115 L 57 115 L 64 71 L 86 35 L 124 74 Z"/>
+                        <!-- Kaki Kanan 2 (Depan Tengah) -->
+                        <path d="M 150 70 L 188 28 L 214 68 L 220 115 L 213 115 L 206 71 L 184 35 L 144 74 Z"/>
+                        <!-- Kaki Kanan 4 (Depan Luar) -->
+                        <path d="M 158 66 L 206 14 L 238 58 L 252 114 L 245 114 L 230 62 L 201 22 L 152 70 Z"/>
                     </g>
 
-                    <!-- Untaian Benang Jaring Menjuntai Vertikal dari Sendi Kaki & Perut Laba-Laba -->
+                    <!-- Untaian Benang Jaring Menjuntai Vertikal -->
                     <g stroke="rgba(220,220,220,0.35)" stroke-width="0.85" stroke-linecap="round">
                         <line x1="54" y1="42" x2="54" y2="74"/>
                         <line x1="72" y1="50" x2="72" y2="82"/>
@@ -2026,48 +3100,49 @@ function getStageIslandSVG(stage) {
                     </g>
                 </g>
 
-                <!-- Lapisan 3: Siluet Kolosus Biomekanik RAJA II (LEVIATHAN AKAR) -->
+                <!-- Lapisan 3: Siluet Kolosus Tarantula Berbulu 8 Kaki RAJA II (LEVIATHAN AKAR) -->
                 <g class="map-sway-slow">
-                    <!-- Kaki-Kaki Lapis Belakang (Perpaduan Pipa Baja & Akar Berduri) -->
-                    <g fill="#0b0b0b" stroke="#262626" stroke-width="0.7">
-                        <path d="M 118 64 L 82 20 L 88 16 L 124 60 Z"/>
-                        <path d="M 85 18 L 54 62 L 44 112 L 49 112 L 60 64 L 89 22 Z"/>
-                        <path d="M 162 64 L 198 20 L 192 16 L 156 60 Z"/>
-                        <path d="M 195 18 L 226 62 L 236 112 L 231 112 L 220 64 L 191 22 Z"/>
+                    <!-- 4 Kaki Lapis Belakang (2 di Kiri, 2 di Kanan) Berbulu Tarantula -->
+                    <g fill="#0b0b0b" stroke="#242424" stroke-width="1.1" stroke-dasharray="1.6 1.1">
+                        <!-- Kaki Kiri 2 (Belakang) -->
+                        <path d="M 114 66 L 76 20 L 48 62 L 38 113 L 44 113 L 55 64 L 79 26 L 118 70 Z"/>
+                        <!-- Kaki Kiri 4 (Belakang Dalam) -->
+                        <path d="M 124 70 L 96 34 L 74 72 L 68 114 L 74 114 L 81 74 L 99 40 L 128 73 Z"/>
+                        <!-- Kaki Kanan 1 (Belakang Dalam) -->
+                        <path d="M 152 70 L 180 34 L 202 72 L 208 114 L 202 114 L 195 74 L 177 40 L 148 73 Z"/>
+                        <!-- Kaki Kanan 3 (Belakang) -->
+                        <path d="M 162 66 L 200 20 L 228 62 L 238 113 L 232 113 L 221 64 L 197 26 L 158 70 Z"/>
                     </g>
 
-                    <!-- Tubuh Utama Leviathan: Perisai Baja Berpadu Jalinan Akar & Inti Reaktor Bercahaya -->
-                    <g fill="#030303" stroke="#383838" stroke-width="1">
-                        <!-- Abdomen Biomekanik Besar -->
+                    <!-- Tubuh Utama Leviathan: Abdomen Tarantula Berbulu & Inti Reaktor Bercahaya -->
+                    <g fill="#030303" stroke="#383838" stroke-width="1.1" stroke-dasharray="2 1.2">
+                    <!-- Tubuh Utama Leviathan: Abdomen Tarantula Berbulu -->
+                    <g fill="#030303" stroke="#383838" stroke-width="1.1" stroke-dasharray="2 1.2">
+                        <!-- Abdomen Tarantula Besar (Tanpa Lingkaran Hitam di Perut) -->
                         <path d="M 122 52
                                  C 126 22, 174 18, 188 44
                                  C 196 60, 182 78, 158 78
                                  C 138 78, 120 66, 122 52 Z"/>
-                        <!-- Ornamen Pelat Besi & Tanduk Akar di Punggung Leviathan -->
-                        <path d="M 134 32 L 130 16 L 141 28
-                                 M 149 26 L 150 10 L 157 25
-                                 M 164 28 L 171 14 L 172 31
-                                 M 178 35 L 188 23 L 184 40"
-                              fill="#050505" stroke="#454545" stroke-width="0.8" stroke-linejoin="round"/>
+                        <!-- Bulu-Bulu Halus di Punggung Leviathan -->
+                        <path d="M 132 34 L 128 22 L 138 30 L 146 19 L 152 28 L 160 18 L 165 29 L 174 21 L 175 32 L 185 26 L 184 40"
+                              fill="#050505" stroke="#454545" stroke-width="0.7" stroke-dasharray="none" stroke-linejoin="round"/>
 
-                        <!-- Inti Reaktor Eksponen Bercahaya di Jantung Tubuh Leviathan -->
-                        <circle cx="156" cy="50" r="16" fill="url(#boss2CoreGlow)"/>
-                        <circle cx="156" cy="50" r="8.5" fill="#090909" stroke="#ffffff" stroke-width="1.3" stroke-dasharray="3 2"/>
-                        <circle class="boy-eye" cx="156" cy="50" r="4.2" fill="#ffffff" style="filter:drop-shadow(0 0 8px #fff)"/>
-
-                        <!-- Kepala-Dada (Cephalothorax) Berlapis Perisai Baja -->
+                        <!-- Kepala-Dada (Cephalothorax) Berbulu Tebal -->
                         <path d="M 100 66
                                  C 100 50, 126 46, 142 56
                                  C 150 62, 148 76, 134 82
                                  C 118 86, 100 78, 100 66 Z"/>
 
-                        <!-- Mahkota Tanduk Akar & Menara Reaktor di Atas Kepala -->
-                        <polygon points="104,56 108,28 117,46 125,16 133,45 142,26 144,54"
-                                 fill="#040404" stroke="#525252" stroke-width="1" stroke-linejoin="round"/>
+                        <!-- Mahkota Raja Proporsional di Atas Kepala -->
+                        <path d="M 108 53 L 106 41 L 113 46 L 118 37 L 123 46 L 130 40 L 128 53 Z"
+                              fill="#050505" stroke="#d4d4d4" stroke-width="0.9" stroke-dasharray="none" stroke-linejoin="round"/>
+                        <circle cx="106" cy="40" r="1.1" fill="#ffffff" stroke="none"/>
+                        <circle cx="118" cy="36" r="1.3" fill="#ffffff" stroke="none"/>
+                        <circle cx="130" cy="39" r="1.1" fill="#ffffff" stroke="none"/>
 
-                        <!-- Taring Sabit Baja Kembar & Capit Bawah -->
-                        <path d="M 102 72 Q 90 84 96 97 Q 103 86 110 76 Z"/>
-                        <path d="M 112 74 Q 103 86 108 98 Q 115 88 120 77 Z"/>
+                        <!-- Taring Sabit Kembar Penyembur Jaring -->
+                        <path d="M 102 72 Q 90 84 96 97 Q 103 86 110 76 Z" stroke-dasharray="none"/>
+                        <path d="M 112 74 Q 103 86 108 98 Q 115 88 120 77 Z" stroke-dasharray="none"/>
                     </g>
 
                     <!-- Kluster Mata Putih Bersinar Tajam pada Kepala Leviathan -->
@@ -2080,33 +3155,16 @@ function getStageIslandSVG(stage) {
                         <circle class="boy-eye" cx="124" cy="74" r="1.5"/>
                     </g>
 
-                    <!-- Kaki-Kaki Sabit Biomekanik Lapis Depan (Dengan Sendi Baut Baja, Duri & Sulur Akar) -->
-                    <g fill="#020202" stroke="#3a3a3a" stroke-width="0.8" stroke-linejoin="round">
-                        <!-- Kaki Sabit Depan Kiri 1 -->
-                        <path d="M 108 66 L 64 14 L 71 9 L 115 61 Z"/>
-                        <circle cx="67" cy="13" r="2.5" fill="#171717" stroke="#525252" stroke-width="0.7"/>
-                        <path d="M 67 11 L 34 60 L 40 64 L 73 16 Z"/>
-                        <polygon points="32,62 22,53 38,57" fill="#020202"/>
-                        <path d="M 34 59 Q 20 86 18 114 Q 28 88 40 63 Z"/>
-
-                        <!-- Kaki Sabit Depan Kiri 2 -->
-                        <path d="M 116 70 L 78 28 L 84 23 L 122 65 Z"/>
-                        <circle cx="81" cy="27" r="2.2" fill="#171717" stroke="#525252" stroke-width="0.7"/>
-                        <path d="M 80 25 L 54 68 L 60 72 L 86 30 Z"/>
-                        <path d="M 54 67 Q 48 92 50 115 Q 56 92 60 71 Z"/>
-
-                        <!-- Kaki Sabit Depan Kanan 1 -->
-                        <path d="M 146 68 L 190 20 L 184 15 L 140 63 Z"/>
-                        <circle cx="187" cy="19" r="2.2" fill="#171717" stroke="#525252" stroke-width="0.7"/>
-                        <path d="M 188 17 L 216 64 L 210 68 L 182 22 Z"/>
-                        <path d="M 216 63 Q 224 88 222 115 Q 216 90 210 67 Z"/>
-
-                        <!-- Kaki Sabit Depan Kanan 2 -->
-                        <path d="M 154 64 L 206 12 L 199 7 L 148 59 Z"/>
-                        <circle cx="203" cy="11" r="2.5" fill="#171717" stroke="#525252" stroke-width="0.7"/>
-                        <path d="M 204 9 L 242 58 L 236 62 L 198 14 Z"/>
-                        <polygon points="244,60 253,51 238,56" fill="#020202"/>
-                        <path d="M 242 57 Q 256 86 258 114 Q 248 88 236 61 Z"/>
+                    <!-- 4 Kaki Lapis Depan (2 di Kiri, 2 di Kanan) Beruas Tebal & Berbulu Tarantula -->
+                    <g fill="#020202" stroke="#3a3a3a" stroke-width="1.2" stroke-dasharray="1.8 1.1" stroke-linejoin="round">
+                        <!-- Kaki Kiri 1 (Depan Luar) -->
+                        <path d="M 108 66 L 62 12 L 30 58 L 18 114 L 25 114 L 39 62 L 67 20 L 114 70 Z"/>
+                        <!-- Kaki Kiri 3 (Depan Tengah) -->
+                        <path d="M 116 70 L 80 26 L 54 68 L 48 115 L 55 115 L 62 71 L 84 33 L 122 74 Z"/>
+                        <!-- Kaki Kanan 2 (Depan Tengah) -->
+                        <path d="M 148 70 L 186 26 L 212 68 L 218 115 L 211 115 L 204 71 L 182 33 L 142 74 Z"/>
+                        <!-- Kaki Kanan 4 (Depan Luar) -->
+                        <path d="M 156 66 L 204 12 L 238 58 L 254 114 L 247 114 L 230 62 L 199 20 L 150 70 Z"/>
                     </g>
                 </g>
 
@@ -3713,6 +4771,7 @@ function updateBossHUD() {
 
 function openMapScreen() {
     mapActive = true;
+    audio.silenceProximityChannels();
     keys.left = false;
     keys.right = false;
     keys.up = false;
@@ -4419,6 +5478,7 @@ const player = {
     dead: false,
     deathTimer: 0,
     impaledBySpider: false,
+    webbedTimer: 0,
     parasiteDir: 0,
     blinkTimer: 0,
     inWater: false,
@@ -4488,7 +5548,9 @@ function initWorld(fullReset = false) {
     player.vy = 0;
     player.dead = false;
     player.impaledBySpider = false;
-    player.parasiteDir = 0;
+    player.webbedTimer = 0;
+    player.trappedByBearTrap = null;
+    player.parasiteDir = 0,
     player.onRope = null;
     player.ropeCooldown = 0;
     player.onLadder = false;
@@ -4967,6 +6029,8 @@ function initWorld(fullReset = false) {
             lightningStartX: 0,
             lightningStartY: 0,
             shockwaves: [],
+            webShots: [],
+            webCooldown: 140,
             deathBurnTimer: 0,
             deathMaxTimer: 220,
             charAlpha: initialHp <= 0 ? 0 : 1,
@@ -5451,6 +6515,8 @@ function initWorld(fullReset = false) {
             lightningStartX: 0,
             lightningStartY: 0,
             shockwaves: [],
+            webShots: [],
+            webCooldown: 260,
             deathBurnTimer: 0,
             deathMaxTimer: 220,
             charAlpha: initialHp2 <= 0 ? 0 : 1,
@@ -5848,6 +6914,7 @@ function rectIntersect(ax, ay, aw, ah, bx, by, bw, bh) {
 function triggerPlayerDeath() {
     if (player.dead || gameEnded || quizActive || gameOverActive) return;
     player.dead = true;
+    audio.silenceProximityChannels();
     player.deathTimer = 75;
     deathCount++;
     playerLives = Math.max(0, playerLives - LIFE_STEP_PERCENT);
@@ -5871,7 +6938,10 @@ function triggerPlayerDeath() {
 }
 
 function updateGame(dt = 1) {
-    if (!gameRunning || gameEnded || quizActive || gameOverActive || mapActive) return;
+    if (!gameRunning || gameEnded || quizActive || gameOverActive || mapActive) {
+        audio.silenceProximityChannels();
+        return;
+    }
 
     if (fadeAlpha > 0) {
         fadeAlpha = Math.max(0, fadeAlpha - 0.025 * dt);
@@ -5881,8 +6951,24 @@ function updateGame(dt = 1) {
         if (screenShake < 0.3) screenShake = 0;
     }
 
+    // Perbarui animasi jepitan capit beruang secara mulus (termasuk saat karakter baru saja terjepit)
+    for (const bt of bearTraps) {
+        if (bt.snapProgress === undefined) bt.snapProgress = bt.closed ? 1 : 0;
+        if (bt.vibTimer === undefined) bt.vibTimer = 0;
+        if (bt.closed && bt.snapProgress < 1) {
+            bt.snapProgress = Math.min(1, bt.snapProgress + 0.26 * dt);
+        }
+        if (bt.vibTimer > 0) {
+            bt.vibTimer = Math.max(0, bt.vibTimer - dt);
+        }
+    }
+
     if (player.dead) {
         player.deathTimer -= dt;
+        if (player.trappedByBearTrap) {
+            const bt = player.trappedByBearTrap;
+            player.x = bt.x + bt.w / 2 - player.w / 2;
+        }
         if (bossEntity) {
             updateBossEntity(dt);
         }
@@ -5905,6 +6991,7 @@ function updateGame(dt = 1) {
         }
     }
 
+    const wasInWater = player.inWater;
     player.inWater = false;
     for (const wz of waterZones) {
         if (rectIntersect(player.x, player.y, player.w, player.h, wz.x, wz.y, wz.w, wz.h)) {
@@ -5912,9 +6999,37 @@ function updateGame(dt = 1) {
             break;
         }
     }
+    if (player.inWater && !wasInWater) {
+        audio.playWaterSplash(0.18);
+    }
+
+    const isWebbed = player.webbedTimer > 0;
+    if (isWebbed) {
+        player.webbedTimer = Math.max(0, player.webbedTimer - dt);
+        jumpPressedOnce = false;
+        if (player.onRope) {
+            player.onRope = null;
+            player.ropeCooldown = 25;
+        }
+        // Efek partikel serpihan benang jaring putih saat karakter meronta melepaskan diri
+        if ((keys.left || keys.right || keys.up) && Math.random() < 0.28) {
+            particles.push({
+                x: player.x + Math.random() * player.w,
+                y: player.y + 8 + Math.random() * (player.h - 14),
+                vx: (Math.random() - 0.5) * 3.2,
+                vy: -Math.random() * 2.2,
+                size: 1.8,
+                color: '#ffffff',
+                life: 18
+            });
+        }
+    }
 
     const moveSpeed = player.inWater ? 3.0 : 4.25;
-    if (player.parasiteDir !== 0) {
+    if (isWebbed) {
+        player.vx *= Math.pow(0.45, dt);
+        if (Math.abs(player.vx) < 0.1) player.vx = 0;
+    } else if (player.parasiteDir !== 0) {
         player.vx = player.parasiteDir * moveSpeed;
         player.facing = player.parasiteDir;
     } else if (!player.onRope) {
@@ -5934,10 +7049,15 @@ function updateGame(dt = 1) {
         if (player.inWater) {
             player.vy += 0.24 * dt;
             if (player.vy > 4.2) player.vy = 4.2;
-            if (jumpPressedOnce || keys.up) {
+            // Efek suara kecipak renang saat karakter bergerak horizontal di dalam air
+            if (Math.abs(player.vx) > 0.35 && Math.random() < 0.08 * dt) {
+                audio.playWaterSplash(0.08);
+            }
+            if (!isWebbed && (jumpPressedOnce || keys.up)) {
                 player.vy = -5.2;
                 player.swimStroke = 1.0;
                 jumpPressedOnce = false;
+                audio.playWaterSplash(0.14);
                 if (Math.random() < 0.35) {
                     particles.push({
                         x: player.x + player.w / 2,
@@ -5953,7 +7073,7 @@ function updateGame(dt = 1) {
         } else {
             player.vy += 0.62 * dt;
             if (player.vy > 13.5) player.vy = 13.5;
-            if (jumpPressedOnce && player.onGround) {
+            if (!isWebbed && jumpPressedOnce && player.onGround) {
                 player.vy = -12.3;
                 player.onGround = false;
                 jumpPressedOnce = false;
@@ -6022,9 +7142,21 @@ function updateGame(dt = 1) {
                 cr.vy = 0;
                 cr.state = 'pause';
                 cr.timer = 28;
-                if (Math.abs(player.x - cr.x) < 550) {
-                    screenShake = 6;
-                    audio.playStep();
+                const distToCrusher = Math.abs((player.x + player.w * 0.5) - (cr.x + cr.w * 0.5));
+                if (distToCrusher < 720) {
+                    screenShake = Math.max(screenShake, Math.round((1 - distToCrusher / 720) * 9));
+                    audio.playCrusherSlam(distToCrusher);
+                    for (let i = 0; i < 10; i++) {
+                        particles.push({
+                            x: cr.x + 6 + Math.random() * (cr.w - 12),
+                            y: cr.y + cr.h + 8,
+                            vx: (Math.random() - 0.5) * 5.5,
+                            vy: -Math.random() * 3.5 - 0.5,
+                            size: 2 + Math.random() * 3,
+                            color: i % 3 === 0 ? '#525252' : '#141414',
+                            life: 24 + Math.random() * 12
+                        });
+                    }
                 }
             }
         } else if (cr.state === 'pause') {
@@ -6077,7 +7209,7 @@ function updateGame(dt = 1) {
                 cp.state = 'fallen';
                 cp.timer = 135;
                 cp.shakeX = 0;
-                audio.playStep();
+                audio.playStoneImpact(0.18);
                 for (let i = 0; i < 12; i++) {
                     particles.push({
                         x: cp.x + Math.random() * cp.w,
@@ -6142,6 +7274,9 @@ function updateGame(dt = 1) {
                 cg.loadVy += Math.max(2.2, Math.min(6.5, player.vy * 0.55 + 2.4));
                 cg.swingVx += player.vx * 0.28;
                 cg.hasRider = true;
+                audio.playCageImpact(0.24);
+            } else if (Math.abs(player.vx) > 1.2 && Math.random() < 0.04) {
+                audio.playCageImpact(0.09);
             }
             // Posisi berdiri relatif terhadap titik tengah sangkar menimbulkan kemiringan (tilt) & ayunan
             const relPos = ((player.x + player.w / 2) - (prevX + cg.w / 2)) / (cg.w / 2);
@@ -6157,6 +7292,7 @@ function updateGame(dt = 1) {
                 // Pantulan pegas ke atas saat karakter melompat meninggalkan sangkar
                 cg.loadVy -= 2.2;
                 cg.hasRider = false;
+                audio.playCageImpact(0.12);
             }
             cg.loadVy += (0 - cg.loadY) * 0.09 * dt;
             cg.tiltVel += (0 - cg.tilt) * 0.07 * dt;
@@ -6259,7 +7395,7 @@ function updateGame(dt = 1) {
                     rp.tailVel -= player.vx * 0.03;
                     player.vx = 0;
                     player.vy = 0;
-                    audio.playStep();
+                    audio.playRopeCreak(0.22);
                     break;
                 }
             }
@@ -6268,6 +7404,9 @@ function updateGame(dt = 1) {
 
     if (player.onRope) {
         const rp = player.onRope;
+        if (Math.abs(rp.angVel) > 0.009 && Math.random() < 0.08) {
+            audio.playRopeCreak(Math.min(0.22, 0.08 + Math.abs(rp.angVel) * 4.5));
+        }
         rp.grabProgress = rp.grabProgress + (0.78 - rp.grabProgress) * 0.12 * dt;
         const endX = rp.endX || (rp.pivotX + Math.sin(rp.angle) * rp.length);
         const endY = rp.endY || (rp.pivotY + Math.cos(rp.angle) * rp.length);
@@ -6395,17 +7534,19 @@ function updateGame(dt = 1) {
             if (!bt.closed && rectIntersect(lc.x + 4, lc.y, lc.w - 8, lc.h + 6, bt.x, bt.y - 14, bt.w, 18)) {
                 bt.closed = true;
                 bt.disarmed = true;
-                screenShake = 5;
-                audio.playMechanism();
-                for (let i = 0; i < 10; i++) {
+                bt.snapProgress = 0.08;
+                bt.vibTimer = 16;
+                screenShake = 6;
+                audio.playBearTrapSnap();
+                for (let i = 0; i < 12; i++) {
                     particles.push({
                         x: bt.x + bt.w / 2,
-                        y: bt.y - 4,
-                        vx: (Math.random() - 0.5) * 5,
-                        vy: -Math.random() * 4 - 1,
+                        y: bt.y - 5,
+                        vx: (Math.random() - 0.5) * 6,
+                        vy: -Math.random() * 4.5 - 1,
                         size: 2.5,
-                        color: '#d4d4d4',
-                        life: 25
+                        color: i % 2 === 0 ? '#ffffff' : '#d4d4d4',
+                        life: 26
                     });
                 }
             }
@@ -6686,9 +7827,25 @@ function updateGame(dt = 1) {
     }
 
     for (const bt of bearTraps) {
-        if (!bt.closed && !bt.disarmed && rectIntersect(player.x + 4, player.y + 4, player.w - 8, player.h - 4, bt.x + 4, bt.y - 12, bt.w - 8, 16)) {
+        if (!bt.closed && !bt.disarmed && rectIntersect(player.x + 4, player.y + 4, player.w - 8, player.h - 4, bt.x + 2, bt.y - 14, bt.w - 4, 18)) {
             bt.closed = true;
-            audio.playMechanism();
+            bt.snapProgress = 0.08;
+            bt.vibTimer = 22;
+            player.trappedByBearTrap = bt;
+            player.x = bt.x + bt.w / 2 - player.w / 2;
+            player.vx = 0;
+            audio.playBearTrapSnap();
+            for (let i = 0; i < 16; i++) {
+                particles.push({
+                    x: bt.x + bt.w / 2 + (Math.random() - 0.5) * 14,
+                    y: bt.y - 8,
+                    vx: (Math.random() - 0.5) * 7,
+                    vy: -Math.random() * 5 - 1.5,
+                    size: i < 4 ? 3 : 2.2,
+                    color: i < 4 ? '#ffffff' : '#111111',
+                    life: 28 + Math.random() * 15
+                });
+            }
             triggerPlayerDeath();
         }
     }
@@ -6712,13 +7869,28 @@ function updateGame(dt = 1) {
 
         if (!boulder.triggered && player.x > minX && player.x < maxX) {
             boulder.triggered = true;
+            boulder.lastThudAngle = boulder.angle || 0;
             screenShake = 8;
-            audio.playMechanism();
+            audio.playStoneImpact(0.32);
         }
         if (boulder.triggered) {
             boulder.vx = bSpeed;
             boulder.x += boulder.vx;
             boulder.angle += 0.072;
+
+            const bDist = Math.hypot((player.x + player.w / 2) - boulder.x, (player.y + player.h / 2) - boulder.y);
+
+            // Suara hentakan batu raksasa saat menggelinding di atas tanah
+            if (boulder.x <= dropX) {
+                if (boulder.lastThudAngle === undefined) boulder.lastThudAngle = 0;
+                if (boulder.angle - boulder.lastThudAngle >= 0.52) {
+                    boulder.lastThudAngle = boulder.angle;
+                    audio.playBoulderRollThud(bDist);
+                    if (bDist < 520) {
+                        screenShake = Math.max(screenShake, (1 - bDist / 520) * 3.2);
+                    }
+                }
+            }
 
             // Efek serpihan kerikil & debu tanah saat batu raksasa menggelinding
             if (boulder.x <= dropX && Math.random() < 0.65) {
@@ -6738,11 +7910,10 @@ function updateGame(dt = 1) {
                 boulder.y += boulder.vy;
                 if (boulder.y > 850) boulder.active = false;
             }
-            const bDist = Math.hypot((player.x + player.w / 2) - boulder.x, (player.y + player.h / 2) - boulder.y);
-        if (bDist < boulder.r + 10) {
-            triggerPlayerDeath();
+            if (bDist < boulder.r + 10) {
+                triggerPlayerDeath();
+            }
         }
-    }
     }
 
     if (bossEntity) {
@@ -6806,6 +7977,20 @@ function updateGame(dt = 1) {
     cameraX += (targetCamX - cameraX) * 0.08;
     if (cameraX < 0) cameraX = 0;
 
+    // Perbarui efek suara spasial berdasarkan jarak karakter terhadap gergaji, batu, air, laser, listrik, serta gesekan kotak/gerobak
+    audio.updateProximity(player, {
+        saws,
+        pendulums,
+        boulder,
+        crushers,
+        crumblingPlatforms,
+        waterZones,
+        laserBeams,
+        electricArcs,
+        crates,
+        ladderCarts
+    });
+
     updateParticles();
 }
 
@@ -6820,8 +8005,9 @@ function updateBossEntity(dt = 1) {
         bossEntity.deathMaxTimer = 220;
         bossEntity.charAlpha = 1;
         bossEntity.gone = false;
+        bossEntity.webShots = [];
         screenShake = 18;
-        audio.playDeath();
+        audio.playSpiderBurnDeath();
     }
 
     // Fungsi pembantu untuk mencari permukaan tanah terdekat di koordinat X tertentu
@@ -6930,6 +8116,7 @@ function updateBossEntity(dt = 1) {
             bossEntity.attackType = 'slam';
             bossEntity.slamX = Math.max(140, Math.min(bossEntity.x - 55, player.x + player.w * 0.5));
             bossEntity.slamY = getSpiderGroundAt(bossEntity.slamX, player.y + player.h);
+            audio.playSpiderWarn();
         }
     } else if (bossEntity.state === 'warn') {
         bossEntity.timer -= dt;
@@ -6958,6 +8145,7 @@ function updateBossEntity(dt = 1) {
         if (bossEntity.timer <= 0) {
             bossEntity.state = 'strike';
             bossEntity.strikeProgress = 0;
+            audio.playSpiderStrike();
             if (bossEntity.legs && bossEntity.legs[0]) {
                 bossEntity.strikeStartX = bossEntity.legs[0].x;
                 bossEntity.strikeStartY = bossEntity.legs[0].y;
@@ -6984,7 +8172,7 @@ function updateBossEntity(dt = 1) {
             bossEntity.timer = 26;
             bossEntity.slamProgress = 1.0;
             screenShake = 11;
-            audio.playDeath();
+            audio.playStoneImpact(0.32);
 
             const impactY = bossEntity.slamY;
             for (let i = 0; i < 20; i++) {
@@ -7026,17 +8214,123 @@ function updateBossEntity(dt = 1) {
     const dxMove = bossEntity.x - prevBossX;
     bossEntity.walkPhase += Math.abs(dxMove) * 0.055 + 0.015 * dt;
 
-    // 3. Perbarui posisi keenam kaki laba-laba
+    // 2b. Serangan Tembakan Jaring Laba-Laba dari Mulut khusus pada Stage Raja 2 ketika nyawa sudah berkurang minimal 1 segel (HP <= 75%)
+    if (bossEntity.isBoss2 && bossEntity.hp <= 75 && bossEntity.hp > 0 && !player.dead) {
+        if (bossEntity.webCooldown === undefined) bossEntity.webCooldown = 260;
+        bossEntity.webCooldown -= dt;
+
+        const distToPlayerX = Math.abs((player.x + player.w * 0.5) - bossEntity.x);
+        if (bossEntity.webCooldown <= 0 && distToPlayerX < 580 && distToPlayerX > 65 && player.webbedTimer <= 0) {
+            // Jeda menembak jaring dibuat lebih lama agar pemain punya cukup waktu bergerak
+            bossEntity.webCooldown = 340 + Math.random() * 110;
+            const mouthX = bossEntity.x - 52;
+            const mouthY = bossEntity.y + 18;
+            const targetX = player.x + player.w * 0.5 + player.vx * 8;
+            const targetY = player.y + player.h * 0.48;
+            const angle = Math.atan2(targetY - mouthY, targetX - mouthX);
+            const speed = 6.8;
+
+            if (!bossEntity.webShots) bossEntity.webShots = [];
+            bossEntity.webShots.push({
+                x: mouthX,
+                y: mouthY,
+                startX: mouthX,
+                startY: mouthY,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                r: 14,
+                spin: 0,
+                life: 135
+            });
+            bossEntity.webSpitFlash = 18;
+            audio.playSpiderWebShoot();
+
+            for (let w = 0; w < 10; w++) {
+                particles.push({
+                    x: mouthX,
+                    y: mouthY,
+                    vx: Math.cos(angle + (Math.random() - 0.5) * 0.5) * (3 + Math.random() * 4),
+                    vy: Math.sin(angle + (Math.random() - 0.5) * 0.5) * (3 + Math.random() * 4),
+                    size: 2.2,
+                    color: '#ffffff',
+                    life: 20
+                });
+            }
+        }
+    }
+
+    if (bossEntity.webSpitFlash > 0) {
+        bossEntity.webSpitFlash = Math.max(0, bossEntity.webSpitFlash - dt);
+    }
+
+    // Perbarui proyektil jaring laba-laba yang ditembakkan dari mulut Raja 2
+    if (bossEntity.webShots && bossEntity.webShots.length > 0) {
+        for (let wIdx = bossEntity.webShots.length - 1; wIdx >= 0; wIdx--) {
+            const ws = bossEntity.webShots[wIdx];
+            ws.x += ws.vx * dt;
+            ws.y += ws.vy * dt;
+            ws.vy += 0.035 * dt; // Sedikit gravitasi alami pada gumpalan jaring
+            ws.spin += 0.18 * dt;
+            ws.life -= dt;
+
+            // Cek tabrakan jaring dengan tubuh karakter
+            const pCx = player.x + player.w * 0.5;
+            const pCy = player.y + player.h * 0.5;
+            if (!player.dead && Math.hypot(ws.x - pCx, ws.y - pCy) < ws.r + 14) {
+                player.webbedTimer = 145; // Karakter dililit jaring putih & tidak bisa bergerak selama beberapa saat
+                player.vx = 0;
+                jumpPressedOnce = false;
+                audio.playWebTrapHit();
+
+                for (let k = 0; k < 22; k++) {
+                    particles.push({
+                        x: pCx + (Math.random() - 0.5) * 28,
+                        y: pCy + (Math.random() - 0.5) * 40,
+                        vx: (Math.random() - 0.5) * 4.5,
+                        vy: (Math.random() - 0.5) * 4.5,
+                        size: 2.2,
+                        color: '#ffffff',
+                        life: 32
+                    });
+                }
+                bossEntity.webShots.splice(wIdx, 1);
+                continue;
+            }
+
+            // Hapus jaring jika menabrak lantai tanah atau habis waktunya
+            const groundAtWeb = getSpiderGroundAt(ws.x, 680);
+            if (ws.life <= 0 || ws.y >= groundAtWeb + 4) {
+                for (let k = 0; k < 8; k++) {
+                    particles.push({
+                        x: ws.x,
+                        y: Math.min(ws.y, groundAtWeb),
+                        vx: (Math.random() - 0.5) * 3,
+                        vy: -Math.random() * 2.5,
+                        size: 2.0,
+                        color: 'rgba(255,255,255,0.75)',
+                        life: 18
+                    });
+                }
+                bossEntity.webShots.splice(wIdx, 1);
+            }
+        }
+    }
+
+    // 3. Perbarui posisi kedelapan kaki laba-laba tarantula (4 pasang: 4 di kiri dan 4 di kanan)
     const legConfigs = [
-        { restOffset: -185, group: 0, maxSpan: 44 },
-        { restOffset: -138, group: 1, maxSpan: 42 },
-        { restOffset: -94,  group: 0, maxSpan: 38 },
-        { restOffset: -52,  group: 1, maxSpan: 36 },
-        { restOffset: 102,  group: 0, maxSpan: 40 },
-        { restOffset: 158,  group: 1, maxSpan: 44 }
+        // 4 Kaki di Sisi Kiri (Menghadap Pemain)
+        { restOffset: -195, group: 0, maxSpan: 44 },
+        { restOffset: -152, group: 1, maxSpan: 42 },
+        { restOffset: -110, group: 0, maxSpan: 38 },
+        { restOffset: -70,  group: 1, maxSpan: 36 },
+        // 4 Kaki di Sisi Kanan (Menopang Tubuh Belakang)
+        { restOffset: 74,   group: 0, maxSpan: 36 },
+        { restOffset: 114,  group: 1, maxSpan: 38 },
+        { restOffset: 154,  group: 0, maxSpan: 42 },
+        { restOffset: 196,  group: 1, maxSpan: 44 }
     ];
 
-    if (!bossEntity.legs) {
+    if (!bossEntity.legs || bossEntity.legs.length !== 8) {
         bossEntity.legs = legConfigs.map((cfg) => {
             const fx = bossEntity.x + cfg.restOffset;
             const fy = getSpiderGroundAt(fx, bossEntity.groundY || 555);
@@ -7140,8 +8434,9 @@ function updateBossEntity(dt = 1) {
             if (leg.stepT >= 1) {
                 leg.x = leg.nextX;
                 leg.y = getSpiderGroundAt(leg.x, leg.nextY);
-                if (Math.abs(player.x - bossEntity.x) < 620) {
-                    audio.playStep();
+                const distToPlayer = Math.abs(player.x - bossEntity.x);
+                if (distToPlayer < 720) {
+                    audio.playSpiderStep(distToPlayer);
                 }
             }
         } else {
@@ -7259,29 +8554,11 @@ function openQuizModal(quizGate) {
                     const actualGain = playerLives - prevLives;
                     updateLivesUI(actualGain);
 
-                    let bossDamageNote = '';
-                    if ((currentStage === 'boss1' || currentStage === 'boss2') && bossEntity) {
-                        bossEntity.hp = Math.max(0, bossEntity.hp - 25);
-                        bossEntity.hurtFlash = 45;
-                        bossEntity.lightningTimer = 42;
-                        bossEntity.lightningStartX = quizGate.x + quizGate.w / 2;
-                        bossEntity.lightningStartY = quizGate.y + quizGate.h / 2;
-                        screenShake = 16;
-                        updateBossHUD();
-                        bossDamageNote = ` <span class="font-bold text-white">[-25% HP RAJA • Sisa ${bossEntity.hp}%]</span>`;
-
-                        for (let pIdx = 0; pIdx < 28; pIdx++) {
-                            particles.push({
-                                x: bossEntity.x + (Math.random() - 0.5) * 90,
-                                y: bossEntity.y + (Math.random() - 0.5) * 60,
-                                vx: (Math.random() - 0.5) * 9,
-                                vy: (Math.random() - 0.5) * 9,
-                                size: 3.5,
-                                color: '#ffffff',
-                                life: 45
-                            });
-                        }
-                    }
+                    const isBossFight = (currentStage === 'boss1' || currentStage === 'boss2') && bossEntity;
+                    const projectedBossHp = isBossFight ? Math.max(0, bossEntity.hp - 25) : 0;
+                    const bossDamageNote = isBossFight
+                        ? ` <span class="font-bold text-white">[-25% HP RAJA • Sisa ${projectedBossHp}%]</span>`
+                        : '';
 
                     const lifeNote = prevLives >= 100
                         ? '[+10% Nyawa • Maks 100%]'
@@ -7289,6 +8566,7 @@ function openQuizModal(quizGate) {
 
                     feedbackEl.className = 'text-center text-xs sm:text-sm font-medium mt-2 shrink-0 text-emerald-400';
                     feedbackEl.innerHTML = `<span class="font-bold text-emerald-300 mr-1.5">${lifeNote}</span>${bossDamageNote} ` + formatMathHTML(quizData.explanation || 'Jawaban benar! Gerbang terbuka.');
+                    // Saat menjawab benar di dalam modal, hanya putar sound efek standar seperti stage lainnya
                     audio.playCleanse();
                     setTimeout(() => {
                         quizGate.solved = true;
@@ -7296,6 +8574,30 @@ function openQuizModal(quizGate) {
                         document.getElementById('quiz-modal').classList.add('hidden');
                         quizActive = false;
                         activeQuizGate = null;
+
+                        // Efek petir & suara laba-laba tersengat listrik baru berbunyi saat efek listrik menyambar di layar
+                        if (isBossFight) {
+                            bossEntity.hp = Math.max(0, bossEntity.hp - 25);
+                            bossEntity.hurtFlash = 45;
+                            bossEntity.lightningTimer = 45;
+                            bossEntity.lightningStartX = quizGate.x + quizGate.w / 2;
+                            bossEntity.lightningStartY = quizGate.y + quizGate.h / 2;
+                            screenShake = 16;
+                            audio.playSpiderElectrocute();
+                            updateBossHUD();
+
+                            for (let pIdx = 0; pIdx < 28; pIdx++) {
+                                particles.push({
+                                    x: bossEntity.x + (Math.random() - 0.5) * 90,
+                                    y: bossEntity.y + (Math.random() - 0.5) * 60,
+                                    vx: (Math.random() - 0.5) * 9,
+                                    vy: (Math.random() - 0.5) * 9,
+                                    size: 3.5,
+                                    color: '#ffffff',
+                                    life: 45
+                                });
+                            }
+                        }
                     }, 950);
                 } else {
                     attemptsLeft--;
@@ -8389,27 +9691,123 @@ function renderGame() {
 
     for (const bt of bearTraps) {
         ctx.save();
-        const cx = bt.x + bt.w / 2;
+        const vibX = bt.vibTimer ? Math.sin(bt.vibTimer * 2.6) * (bt.vibTimer * 0.18) : 0;
+        const cx = bt.x + bt.w / 2 + vibX;
         const cy = bt.y;
-        ctx.fillStyle = '#080808';
-        ctx.strokeStyle = '#2e2e2e';
-        ctx.lineWidth = 2;
+        const snap = bt.snapProgress !== undefined ? bt.snapProgress : (bt.closed ? 1 : 0);
+        // Kurva akselerasi cepat dengan sedikit efek hentakan di akhir jepitan
+        const easeSnap = snap < 1 ? Math.pow(snap, 0.55) : 1;
 
-        if (!bt.closed) {
-            ctx.fillRect(bt.x, cy - 5, bt.w, 5);
+        ctx.translate(cx, cy);
+
+        // 1. Rantai Penambat & Pasak Besi di Bawah Tanah
+        ctx.strokeStyle = '#1f1f1f';
+        ctx.lineWidth = 2.0;
+        ctx.beginPath();
+        for (let ly = 0; ly < 10; ly += 4) {
+            ctx.strokeRect(-2, ly, 4, 4);
+        }
+        ctx.stroke();
+
+        // 2. Pegas Daun Baja Melengkung di Sisi Kiri & Kanan (Leaf Springs)
+        const springLift = easeSnap * 5.5;
+        ctx.strokeStyle = '#2d2d2d';
+        ctx.fillStyle = '#070707';
+        ctx.lineWidth = 2.2;
+        ctx.lineCap = 'round';
+        for (const side of [-1, 1]) {
             ctx.beginPath();
-            for (let gx = bt.x + 4; gx < bt.x + bt.w - 4; gx += 8) {
-                ctx.moveTo(gx, cy - 5);
-                ctx.lineTo(gx + 4, cy - 14);
-                ctx.lineTo(gx + 8, cy - 5);
-            }
+            ctx.moveTo(side * 12, -2);
+            ctx.quadraticCurveTo(side * 28, -2 - springLift * 0.4, side * 26, -7 - springLift);
+            ctx.quadraticCurveTo(side * 19, -8 - springLift * 0.8, side * 10, -4 - easeSnap * 2);
+            ctx.stroke();
+
+            // Cincin engsel pegas
+            ctx.fillStyle = '#1a1a1a';
+            ctx.beginPath();
+            ctx.arc(side * 13, -3.5, 2.4, 0, Math.PI * 2);
             ctx.fill();
-        } else {
+        }
+
+        // 3. Rangka Dasar Besi Capit Beruang (Base Bar)
+        ctx.fillStyle = '#050505';
+        ctx.strokeStyle = '#383838';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.roundRect(-22, -4.5, 44, 4.5, 1.5);
+        ctx.fill();
+        ctx.stroke();
+
+        // 4. Pelat Pemicu Tengah (Central Pressure Pan) yang Turun Saat Diinjak
+        const panDrop = easeSnap * 4.2;
+        ctx.fillStyle = '#141414';
+        ctx.strokeStyle = '#4a4a4a';
+        ctx.lineWidth = 1.3;
+        ctx.fillRect(-2, -8.5 + panDrop, 4, 5 - panDrop * 0.6);
+        ctx.beginPath();
+        ctx.ellipse(0, -8.5 + panDrop, 8.5, 2.2, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // 5. Sepasang Rahang Baja Bergerigi Tajam (Kiri & Kanan) yang Mengayun Menjepit ke Atas
+        // Saat terbuka (easeSnap = 0): rahang membentang mendatar (~8 derajat).
+        // Saat menjepit (easeSnap = 1): kedua rahang terangkat (~82 derajat) dan saling mengunci di tengah!
+        const jawAngle = 0.14 + easeSnap * 1.30;
+        const jawRadius = 21;
+
+        for (const side of [-1, 1]) {
+            ctx.save();
+            // Titik poros engsel sedikit bergeser ke dalam mengikuti tarikan pegas
+            ctx.translate(side * (2.5 - easeSnap * 1.5), -4);
+            ctx.scale(side, 1);
+            ctx.rotate(-jawAngle);
+
+            // Lengan lengkung rahang baja
+            ctx.fillStyle = '#040404';
+            ctx.strokeStyle = easeSnap > 0.8 ? '#5c5c5c' : '#404040';
+            ctx.lineWidth = 1.6;
+            ctx.lineJoin = 'round';
+
             ctx.beginPath();
-            ctx.arc(cx, cy - 4, 14, Math.PI, 0);
+            ctx.moveTo(0, 1.5);
+            ctx.quadraticCurveTo(jawRadius * 0.48, -6.5, jawRadius, -1.5);
+            ctx.lineTo(jawRadius + 1.5, -4.8);
+            ctx.quadraticCurveTo(jawRadius * 0.48, -11.5, -1, -2.5);
+            ctx.closePath();
             ctx.fill();
             ctx.stroke();
+
+            // Deretan Gigi Gergaji Runcing (Serrated Fangs) Menghadap ke Dalam Rahang
+            ctx.fillStyle = '#090909';
+            ctx.strokeStyle = '#6e6e6e';
+            ctx.lineWidth = 1.1;
+            const toothCount = 5;
+            for (let tIdx = 0; tIdx < toothCount; tIdx++) {
+                const frac = (tIdx + 0.65) / (toothCount + 0.5);
+                const tx = frac * (jawRadius - 1.5);
+                const archY = -4.5 - Math.sin(frac * Math.PI) * 4.2;
+                const toothH = (tIdx === toothCount - 1) ? 7.2 : 5.8;
+                // Gigi miring ke arah dalam agar mencengkeram kuat
+                ctx.beginPath();
+                ctx.moveTo(tx - 2.1, archY);
+                ctx.lineTo(tx - 0.8, archY - toothH);
+                ctx.lineTo(tx + 2.1, archY + 0.4);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            }
+            ctx.restore();
         }
+
+        // 6. Baut Poros Utama di Tengah Engsel (Pivot Bolt)
+        ctx.fillStyle = '#262626';
+        ctx.strokeStyle = '#737373';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(0, -4, 3.0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
         ctx.restore();
     }
 
@@ -8821,82 +10219,129 @@ function renderGame() {
         const isFlashing = bossEntity.hurtFlash > 0 && Math.floor(bossEntity.hurtFlash) % 2 === 0;
         const mainColor = isFlashing ? '#ffffff' : '#020202';
         const backLegColor = isFlashing ? '#e5e5e5' : '#0a0a0a';
+        const furColor = isFlashing ? '#ffffff' : '#0c0c0c';
 
-        // Fungsi menggambar segmen tungkai laba-laba organik berotot yang meruncing & berduri kasar (Khas LIMBO)
-        const drawOrganicLimbSegment = (x1, y1, x2, y2, wStart, wMid, wEnd, color, barbSide = -1) => {
+        // Fungsi menggambar ruas tungkai Laba-Laba Tarantula Raksasa dengan Bulu Lebat, Tipis & Melambai Selang-Seling Mengikuti Gerakan Kaki
+        const drawOrganicLimbSegment = (x1, y1, x2, y2, wStart, wMid, wEnd, color, barbSide = -1, seedOffset = 0, legMovePhase = 0) => {
             const dx = x2 - x1;
             const dy = y2 - y1;
             const len = Math.hypot(dx, dy);
             if (len < 1) return;
-            const nx = -dy / len;
-            const ny = dx / len;
-            const mx = (x1 + x2) * 0.5 + nx * (wMid * 0.18 * barbSide);
-            const my = (y1 + y2) * 0.5 + ny * (wMid * 0.18 * barbSide);
+            const ux = dx / len;
+            const uy = dy / len;
+            const nx = -uy;
+            const ny = ux;
+            const mx = (x1 + x2) * 0.5 + nx * (wMid * 0.16 * barbSide);
+            const my = (y1 + y2) * 0.5 + ny * (wMid * 0.16 * barbSide);
 
+            // Inti segmen kaki tarantula yang kekar dan berotot
             ctx.fillStyle = color;
             ctx.beginPath();
             ctx.moveTo(x1 + nx * wStart * 0.5, y1 + ny * wStart * 0.5);
-            ctx.quadraticCurveTo(mx + nx * wMid * 0.55, my + ny * wMid * 0.55, x2 + nx * wEnd * 0.5, y2 + ny * wEnd * 0.5);
+            ctx.quadraticCurveTo(mx + nx * wMid * 0.58, my + ny * wMid * 0.58, x2 + nx * wEnd * 0.5, y2 + ny * wEnd * 0.5);
             ctx.lineTo(x2 - nx * wEnd * 0.5, y2 - ny * wEnd * 0.5);
-            ctx.quadraticCurveTo(mx - nx * wMid * 0.45, my - ny * wMid * 0.45, x1 - nx * wStart * 0.5, y1 - ny * wStart * 0.5);
+            ctx.quadraticCurveTo(mx - nx * wMid * 0.48, my - ny * wMid * 0.48, x1 - nx * wStart * 0.5, y1 - ny * wStart * 0.5);
             ctx.closePath();
             ctx.fill();
 
-            // Duri-duri tajam (barbs/bristles) mencuat dari tepi ruas kaki
+            // Lapisan 1: Bulu lebat tipis utama yang melambai selang-seling mengikuti ayunan langkah kaki
+            ctx.save();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 0.42;
+            ctx.lineCap = 'round';
             ctx.beginPath();
-            for (const frac of [0.28, 0.56, 0.78]) {
-                const bx0 = x1 + dx * frac;
-                const by0 = y1 + dy * frac;
-                const side = (frac === 0.56) ? -barbSide : barbSide;
-                const bLen = (1 - frac * 0.35) * 11;
-                const bTipX = bx0 + (dx / len) * (bLen * 0.65) + nx * side * bLen;
-                const bTipY = by0 + (dy / len) * (bLen * 0.65) + ny * side * bLen;
-                ctx.moveTo(bx0 - (dx / len) * 2.5, by0 - (dy / len) * 2.5);
-                ctx.lineTo(bTipX, bTipY);
-                ctx.lineTo(bx0 + (dx / len) * 2.5, by0 + (dy / len) * 2.5);
+            const hairSteps = Math.max(28, Math.floor(len / 1.55));
+            for (let h = 1; h < hairSteps; h++) {
+                const frac = h / hairSteps;
+                const inv = 1 - frac;
+                const cx = inv * inv * x1 + 2 * inv * frac * mx + frac * frac * x2;
+                const cy = inv * inv * y1 + 2 * inv * frac * my + frac * frac * y2;
+                const curW = (wStart * inv + wEnd * frac) * 0.5 + Math.sin(frac * Math.PI) * (wMid * 0.22);
+
+                const altDir = (h % 2 === 0) ? 1 : -1;
+                const waveSway = Math.sin(legMovePhase * 2.4 + h * 1.35 + seedOffset) * 2.8 * altDir +
+                                 Math.cos(t * 2.2 - h * 0.7) * 1.1;
+                const hairLen = (4.2 + Math.abs(Math.cos(h * 7.3 + seedOffset)) * 5.2) * (1 - frac * 0.2);
+
+                for (const s of [-1, 1]) {
+                    const rootX = cx + nx * s * (curW - 0.5);
+                    const rootY = cy + ny * s * (curW - 0.5);
+                    const sideSway = waveSway * (s === 1 ? 1 : -0.85);
+                    const ctrlX = rootX + ux * (hairLen * 0.22 - sideSway * 0.35) + nx * s * (hairLen * 0.62);
+                    const ctrlY = rootY + uy * (hairLen * 0.22 - sideSway * 0.35) + ny * s * (hairLen * 0.62);
+                    const tipX = rootX + ux * (hairLen * 0.68 + sideSway) + nx * s * (hairLen + altDir * 0.9);
+                    const tipY = rootY + uy * (hairLen * 0.68 + sideSway) + ny * s * (hairLen + altDir * 0.9);
+                    ctx.moveTo(rootX, rootY);
+                    ctx.quadraticCurveTo(ctrlX, ctrlY, tipX, tipY);
+                }
             }
-            ctx.fill();
+            ctx.stroke();
+
+            // Lapisan 2: Serabut bulu mikro ekstra tipis berselang-seling arah untuk efek beludru lebat
+            ctx.lineWidth = 0.28;
+            ctx.beginPath();
+            for (let h = 1; h < hairSteps; h++) {
+                const frac = (h + 0.48) / hairSteps;
+                if (frac >= 0.98) continue;
+                const inv = 1 - frac;
+                const cx = inv * inv * x1 + 2 * inv * frac * mx + frac * frac * x2;
+                const cy = inv * inv * y1 + 2 * inv * frac * my + frac * frac * y2;
+                const curW = (wStart * inv + wEnd * frac) * 0.5 + Math.sin(frac * Math.PI) * (wMid * 0.22);
+
+                const altDir2 = (h % 2 === 0) ? -1 : 1;
+                const microWave = Math.cos(legMovePhase * 2.8 - h * 1.6 + seedOffset) * 3.1 * altDir2;
+                const fineLen = (5.0 + Math.abs(Math.sin(h * 9.1 + seedOffset)) * 5.5) * (1 - frac * 0.18);
+
+                for (const s of [-1, 1]) {
+                    const rootX = cx + nx * s * (curW - 0.4);
+                    const rootY = cy + ny * s * (curW - 0.4);
+                    const ctrlX = rootX + ux * (fineLen * 0.3 + microWave * 0.4) + nx * s * (fineLen * 0.55);
+                    const ctrlY = rootY + uy * (fineLen * 0.3 + microWave * 0.4) + ny * s * (fineLen * 0.55);
+                    const tipX = rootX + ux * (fineLen * 0.55 + microWave) + nx * s * fineLen;
+                    const tipY = rootY + uy * (fineLen * 0.55 + microWave) + ny * s * fineLen;
+                    ctx.moveTo(rootX, rootY);
+                    ctx.quadraticCurveTo(ctrlX, ctrlY, tipX, tipY);
+                }
+            }
+            ctx.stroke();
+            ctx.restore();
         };
 
-        // Fungsi menggambar satu kaki laba-laba utuh 3 ruas (Femur -> Tibia -> Tarsus Sabit Runcing) dengan Inverse Kinematics alami
-        const drawRealisticSpiderLeg = (hipX, hipY, footX, footY, archHeight, isForeground = true, hasWeb = false, isAttackingLeg = false) => {
+        // Fungsi menggambar satu kaki tarantula raksasa utuh 3 ruas berbulu tipis (Femur -> Patella/Tibia -> Metatarsus/Tarsus)
+        const drawRealisticSpiderLeg = (hipX, hipY, footX, footY, archHeight, isForeground = true, hasWeb = false, isAttackingLeg = false, legIdx = 0, legStepT = 1) => {
             const color = isForeground ? mainColor : backLegColor;
             const dir = footX < hipX ? -1 : 1;
             const spanX = footX - hipX;
+            const stepMotion = legStepT < 1 ? Math.sin(legStepT * Math.PI * 2) * 2.4 : 0;
+            const legMovePhase = (bossEntity.walkPhase || 0) * 3.2 + stepMotion + legIdx * 0.9 + (isAttackingLeg ? t * 3.5 : 0);
 
-            // Sendi 1: Lutut Atas (Femur-Patella) menjulang tinggi membentuk siluet lengkungan tajam khas Limbo
+            // Sendi 1: Lutut Atas (Femur-Patella) menjulang tinggi membentuk siluet lengkungan tarantula raksasa
             const kneeX = hipX + spanX * 0.38 + dir * 8;
             const kneeY = Math.min(hipY, footY) - archHeight;
 
-            // Sendi 2: Sendi Tengah (Tibia-Metatarsus) menekuk tajam di atas target agar ruas cakar menghujam curam ke bawah
+            // Sendi 2: Sendi Tengah (Tibia-Metatarsus) menekuk tajam di atas target
             const ankleX = hipX + spanX * (isAttackingLeg ? 0.88 : 0.82) + dir * 8;
             const ankleY = kneeY * 0.34 + footY * 0.66 - (isAttackingLeg ? 18 : 6);
 
             ctx.save();
-            // Ruas 1: Pangkal Paha ke Lutut Atas
-            drawOrganicLimbSegment(hipX, hipY, kneeX, kneeY, 13, 15, 9.5, color, dir);
+            // Ruas 1: Pangkal Paha (Femur) ke Lutut Atas
+            drawOrganicLimbSegment(hipX, hipY, kneeX, kneeY, 14.5, 16.5, 11.0, color, dir, legIdx * 3.1, legMovePhase);
 
-            // Tonjolan tanduk sendi lutut atas
+            // Sendi lutut atas (Patella) dengan bulu-bulu tipis halus
             ctx.fillStyle = color;
             ctx.beginPath();
-            ctx.moveTo(kneeX - 5, kneeY + 4);
-            ctx.lineTo(kneeX + dir * 5, kneeY - 14);
-            ctx.lineTo(kneeX + 5, kneeY + 4);
-            ctx.closePath();
+            ctx.arc(kneeX, kneeY, 5.6, 0, Math.PI * 2);
             ctx.fill();
 
-            // Ruas 2: Lutut Atas ke Sendi Betis
-            drawOrganicLimbSegment(kneeX, kneeY, ankleX, ankleY, 10, 8.8, 7.2, color, -dir);
+            // Ruas 2: Lutut Atas ke Sendi Betis (Tibia)
+            drawOrganicLimbSegment(kneeX, kneeY, ankleX, ankleY, 11.5, 10.5, 8.4, color, -dir, legIdx * 5.7, legMovePhase + 1.2);
 
-            // Tonjolan duri pada sendi betis
+            // Sendi betis
             ctx.beginPath();
-            ctx.moveTo(ankleX - 3.5, ankleY + 2);
-            ctx.lineTo(ankleX + dir * 9, ankleY - 9);
-            ctx.lineTo(ankleX + 3.5, ankleY + 3);
-            ctx.closePath();
+            ctx.arc(ankleX, ankleY, 4.2, 0, Math.PI * 2);
             ctx.fill();
 
-            // Ruas 3: Ujung Kaki Sabit Runcing (Tarsus) menggunakan vektor normal tegak lurus agar selalu tebal, kokoh, dan meruncing tajam
+            // Ruas 3: Ujung Kaki Tarantula & Cakar Runcing (Metatarsus & Tarsus)
             const cdx = footX - ankleX;
             const cdy = footY - ankleY;
             const clen = Math.max(1, Math.hypot(cdx, cdy));
@@ -8905,8 +10350,8 @@ function renderGame() {
             const nx = -uy;
             const ny = ux;
 
-            const wAnkle = isAttackingLeg ? 4.4 : 3.6;
-            const wMid = isAttackingLeg ? 3.2 : 2.5;
+            const wAnkle = isAttackingLeg ? 5.0 : 4.2;
+            const wMid = isAttackingLeg ? 3.6 : 2.9;
             const curveBow = dir * (isAttackingLeg ? 5.5 : 3.5);
             const midClawX = (ankleX + footX) * 0.5 + nx * curveBow;
             const midClawY = (ankleY + footY) * 0.5 + ny * curveBow;
@@ -8920,15 +10365,42 @@ function renderGame() {
             ctx.closePath();
             ctx.fill();
 
+            // Bulu-bulu lebat tipis melambai selang-seling sepanjang ruas bawah kaki (Metatarsus)
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 0.36;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            const lowerHairCount = 28;
+            for (let lh = 1; lh < lowerHairCount; lh++) {
+                const frac = lh / lowerHairCount;
+                const lx = ankleX + cdx * frac;
+                const ly = ankleY + cdy * frac;
+                const altSide = (lh % 2 === 0) ? 1 : -1;
+                const swayL = Math.sin(legMovePhase * 2.6 + lh * 1.4) * 2.2 * altSide;
+                const hLen = (1 - frac * 0.42) * (5.2 + (lh % 3) * 1.4);
+                for (const s of [-1, 1]) {
+                    const ctrlX = lx + ux * (hLen * 0.22 - swayL * 0.3) + nx * s * (hLen * 0.62);
+                    const ctrlY = ly + uy * (hLen * 0.22 - swayL * 0.3) + ny * s * (hLen * 0.62);
+                    ctx.moveTo(lx, ly);
+                    ctx.quadraticCurveTo(
+                        ctrlX,
+                        ctrlY,
+                        lx + ux * (hLen * 0.65 + swayL) + nx * s * hLen,
+                        ly + uy * (hLen * 0.65 + swayL) + ny * s * hLen
+                    );
+                }
+            }
+            ctx.stroke();
+
             // Bayangan kontak pijakan di tanah saat kaki menapak
             if (Math.abs(footY - groundY) < 45) {
                 ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
                 ctx.beginPath();
-                ctx.ellipse(footX, footY + 1, 7, 2.2, 0, 0, Math.PI * 2);
+                ctx.ellipse(footX, footY + 1, 7.5, 2.4, 0, 0, Math.PI * 2);
                 ctx.fill();
             }
 
-            // Untaian benang jaring / lendir tipis menjuntai vertikal dari ruas kaki seperti gambar referensi
+            // Untaian benang jaring / lendir tipis menjuntai vertikal dari ruas kaki
             if (hasWeb) {
                 ctx.strokeStyle = 'rgba(12, 12, 12, 0.8)';
                 ctx.lineWidth = 1.25;
@@ -8947,18 +10419,23 @@ function renderGame() {
         };
 
         const legs = bossEntity.legs || [];
-        const archHeights = [138, 122, 106, 92, 114, 128];
+        // 8 Kaki Tarantula: 0,1,2,3 di sisi kiri (menghadap karakter) dan 4,5,6,7 di sisi kanan
+        const archHeights = [142, 126, 110, 96, 98, 112, 128, 140];
         const hipOffsets = [
-            { dx: -32, dy: 4 },
-            { dx: -20, dy: 2 },
-            { dx: -8,  dy: 0 },
-            { dx: 4,   dy: 2 },
-            { dx: 24,  dy: 0 },
-            { dx: 38,  dy: 4 }
+            // 4 Pangkal Kaki Sisi Kiri (Coxa Kiri)
+            { dx: -34, dy: 4 },
+            { dx: -24, dy: 3 },
+            { dx: -14, dy: 1 },
+            { dx: -4,  dy: 2 },
+            // 4 Pangkal Kaki Sisi Kanan (Coxa Kanan)
+            { dx: 12,  dy: 2 },
+            { dx: 22,  dy: 1 },
+            { dx: 32,  dy: 3 },
+            { dx: 42,  dy: 5 }
         ];
 
-        // 1. Gambar kaki-kaki lapis belakang terlebih dahulu (untuk efek kedalaman 3D)
-        for (const i of [1, 3, 5]) {
+        // 1. Gambar 4 kaki lapis belakang terlebih dahulu (2 di kiri: indeks 1 & 3, 2 di kanan: indeks 4 & 6)
+        for (const i of [1, 3, 4, 6]) {
             if (!legs[i]) continue;
             drawRealisticSpiderLeg(
                 bx + hipOffsets[i].dx,
@@ -8967,80 +10444,158 @@ function renderGame() {
                 legs[i].y,
                 archHeights[i],
                 false,
-                i === 1,
-                false
+                i === 1 || i === 6,
+                false,
+                i,
+                legs[i].stepT
             );
         }
 
-        // 2. Gambar Tubuh Laba-Laba Raksasa (Abdomen Bungkuk Berbulu Kasar, Pinggang Sempit, Cephalothorax & Taring)
+        // 2. Gambar Tubuh Laba-Laba Tarantula Raksasa Berbulu Lebat
         ctx.save();
         ctx.fillStyle = mainColor;
 
-        // Abdomen (Perut Besar Bungkuk di Belakang)
+        // Abdomen (Perut Besar Bungkuk Berbulu Halus di Belakang - Tanpa Lingkaran Hitam)
         ctx.beginPath();
         ctx.ellipse(bx + 62, by - 22, 74, 52, 0.24, 0, Math.PI * 2);
         ctx.fill();
 
-        // Ornamen Roda Gigi Mekanik & Inti Reaktor Bercahaya khusus untuk Raja II (Leviathan Akar)
-        if (bossEntity.isBoss2 && !isFlashing) {
+        // Lapisan bulu tipis & halus tarantula di sekeliling kontur abdomen yang ikut bergetar halus
+        ctx.strokeStyle = mainColor;
+        ctx.lineWidth = 0.48;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        const abdHairCount = 84;
+        for (let ah = 0; ah < abdHairCount; ah++) {
+            const ang = (ah / abdHairCount) * Math.PI * 2;
+            const cosA = Math.cos(ang);
+            const sinA = Math.sin(ang);
+            const rot = 0.24;
+            const localX = cosA * 73;
+            const localY = sinA * 51;
+            const rx = bx + 62 + localX * Math.cos(rot) - localY * Math.sin(rot);
+            const ry = by - 22 + localX * Math.sin(rot) + localY * Math.cos(rot);
+            const hLen = 4.8 + (ah % 3) * 2.8;
+            const altSway = ((ah % 2 === 0) ? 1 : -1) * Math.sin((bossEntity.walkPhase || 0) * 2.5 + ah * 0.9) * 0.14;
+            const outAng = ang + rot + 0.22 + altSway;
+            ctx.moveTo(rx, ry);
+            ctx.lineTo(rx + Math.cos(outAng) * hLen, ry + Math.sin(outAng) * hLen);
+        }
+        ctx.stroke();
+
+        // Rumpun bulu halus di punggung atas abdomen
+        ctx.fillStyle = mainColor;
+        ctx.beginPath();
+        for (let bIdx = 0; bIdx < 11; bIdx++) {
+            const ang = -2.35 + bIdx * 0.20;
+            const px = bx + 62 + Math.cos(ang) * 70;
+            const py = by - 22 + Math.sin(ang) * 48;
+            ctx.moveTo(px - 5, py + 4);
+            ctx.lineTo(px + Math.cos(ang - 0.2) * 12, py + Math.sin(ang - 0.2) * 14);
+            ctx.lineTo(px + 5, py + 4);
+        }
+        ctx.fill();
+
+        // Pinggang penghubung (Pedicel) & Kepala-Dada (Cephalothorax) Berbulu Tarantula
+        ctx.beginPath();
+        ctx.ellipse(bx - 12, by + 6, 45, 31, -0.12, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Bulu-bulu tipis halus di sekeliling Cephalothorax
+        ctx.strokeStyle = mainColor;
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        for (let ch = 0; ch < 42; ch++) {
+            const ang = (ch / 42) * Math.PI * 2;
+            const rx = bx - 12 + Math.cos(ang) * 43;
+            const ry = by + 6 + Math.sin(ang) * 29;
+            const hLen = 4.0 + (ch % 2) * 2.4;
+            ctx.moveTo(rx, ry);
+            ctx.lineTo(rx + Math.cos(ang) * hLen, ry + Math.sin(ang) * hLen);
+        }
+        ctx.stroke();
+
+        // Taring Depan Berbulu (Chelicerae) & Pedipalpus yang bergerak mengancam (membuka saat menyemburkan jaring di Raja 2)
+        const spitSpread = (bossEntity.webSpitFlash || 0) * 0.65;
+        const fangTwitch = Math.sin(t * 3.2) * 3 - spitSpread;
+        ctx.fillStyle = mainColor;
+        ctx.beginPath();
+        ctx.moveTo(bx - 46, by + 12);
+        ctx.quadraticCurveTo(bx - 66, by + 22, bx - 56 + fangTwitch, by + 42);
+        ctx.quadraticCurveTo(bx - 46, by + 28, bx - 36, by + 18);
+        ctx.moveTo(bx - 36, by + 16);
+        ctx.quadraticCurveTo(bx - 54, by + 26, bx - 44 - fangTwitch * 0.6, by + 44);
+        ctx.quadraticCurveTo(bx - 36, by + 30, bx - 28, by + 20);
+        ctx.fill();
+
+        // Kilatan putih di mulut saat menyemburkan jaring (Raja 2)
+        if (bossEntity.webSpitFlash > 0) {
             ctx.save();
-            ctx.translate(bx + 66, by - 24);
-            ctx.rotate(t * 0.45);
-            ctx.strokeStyle = '#262626';
-            ctx.lineWidth = 4.5;
-            ctx.setLineDash([7, 5]);
-            ctx.beginPath();
-            ctx.arc(0, 0, 28, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.setLineDash([]);
             ctx.fillStyle = '#ffffff';
             ctx.shadowColor = '#ffffff';
-            ctx.shadowBlur = 12;
+            ctx.shadowBlur = 16;
             ctx.beginPath();
-            ctx.arc(0, 0, 5.5, 0, Math.PI * 2);
+            ctx.arc(bx - 52, by + 22, 4 + bossEntity.webSpitFlash * 0.4, 0, Math.PI * 2);
             ctx.fill();
             ctx.restore();
         }
 
-        // Bulu-bulu duri kasar di punggung atas abdomen
-        ctx.beginPath();
-        for (let bIdx = 0; bIdx < 9; bIdx++) {
-            const ang = -2.3 + bIdx * 0.24;
-            const px = bx + 62 + Math.cos(ang) * 70;
-            const py = by - 22 + Math.sin(ang) * 48;
-            ctx.moveTo(px - 6, py + 4);
-            ctx.lineTo(px + Math.cos(ang - 0.2) * 16, py + Math.sin(ang - 0.2) * 18);
-            ctx.lineTo(px + 6, py + 4);
+        // Mahkota Proporsional di Atas Kepala (Khusus Stage Raja 2 memiliki Mahkota Kerajaan Proporsional)
+        if (bossEntity.isBoss2) {
+            ctx.save();
+            ctx.translate(bx - 18, by - 20);
+            ctx.rotate(-0.12);
+
+            // Badan Mahkota Raja yang Proporsional & Pas di Atas Kepala
+            ctx.fillStyle = mainColor;
+            ctx.strokeStyle = isFlashing ? '#ffffff' : '#525252';
+            ctx.lineWidth = 1.4;
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            ctx.moveTo(-18, 2);
+            ctx.lineTo(-21, -12);
+            ctx.lineTo(-11, -5);
+            ctx.lineTo(-6, -15);
+            ctx.lineTo(0, -6);
+            ctx.lineTo(5, -18);
+            ctx.lineTo(10, -6);
+            ctx.lineTo(16, -14);
+            ctx.lineTo(20, 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Sabuk Dasar Mahkota & Permata Cahaya Kecil
+            ctx.strokeStyle = isFlashing ? '#ffffff' : '#737373';
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.moveTo(-17, -1);
+            ctx.lineTo(19, -1);
+            ctx.stroke();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = '#ffffff';
+            ctx.shadowBlur = 8;
+            for (const [cxGem, cyGem, rGem] of [[-21, -13, 1.5], [-6, -16, 1.6], [5, -19, 2.0], [16, -15, 1.5], [1, -3.5, 1.5]]) {
+                ctx.beginPath();
+                ctx.arc(cxGem, cyGem, rGem, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
+        } else {
+            // Jambul Bulu Halus Proporsional untuk Raja 1
+            ctx.fillStyle = mainColor;
+            ctx.beginPath();
+            ctx.moveTo(bx - 30, by - 16);
+            ctx.lineTo(bx - 24, by - 29);
+            ctx.lineTo(bx - 15, by - 19);
+            ctx.lineTo(bx - 7, by - 33);
+            ctx.lineTo(bx + 2, by - 19);
+            ctx.lineTo(bx + 11, by - 28);
+            ctx.lineTo(bx + 18, by - 16);
+            ctx.closePath();
+            ctx.fill();
         }
-        ctx.fill();
-
-        // Pinggang penghubung (Pedicel) & Kepala-Dada (Cephalothorax)
-        ctx.beginPath();
-        ctx.ellipse(bx - 12, by + 6, 44, 30, -0.12, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Taring Depan (Chelicerae) & Pedipalpus pendek yang bergerak mengancam di bawah kepala
-        const fangTwitch = Math.sin(t * 3.2) * 3;
-        ctx.beginPath();
-        ctx.moveTo(bx - 46, by + 12);
-        ctx.quadraticCurveTo(bx - 64, by + 22, bx - 56 + fangTwitch, by + 40);
-        ctx.quadraticCurveTo(bx - 46, by + 28, bx - 36, by + 18);
-        ctx.moveTo(bx - 36, by + 16);
-        ctx.quadraticCurveTo(bx - 52, by + 26, bx - 44 - fangTwitch * 0.6, by + 42);
-        ctx.quadraticCurveTo(bx - 36, by + 30, bx - 28, by + 20);
-        ctx.fill();
-
-        // Mahkota Duri Bayangan di atas Cephalothorax
-        ctx.beginPath();
-        ctx.moveTo(bx - 38, by - 14);
-        ctx.lineTo(bx - 28, by - 46);
-        ctx.lineTo(bx - 14, by - 20);
-        ctx.lineTo(bx - 2, by - 56);
-        ctx.lineTo(bx + 10, by - 20);
-        ctx.lineTo(bx + 24, by - 48);
-        ctx.lineTo(bx + 36, by - 14);
-        ctx.closePath();
-        ctx.fill();
 
         // Untaian benang jaring menggantung halus di bawah perut laba-laba
         ctx.strokeStyle = 'rgba(15, 15, 15, 0.75)';
@@ -9060,14 +10615,12 @@ function renderGame() {
             ctx.shadowColor = '#ffffff';
             ctx.shadowBlur = 16;
             ctx.beginPath();
-            // Retakan bara pada abdomen
             ctx.moveTo(bx + 20, by - 35);
             ctx.lineTo(bx + 45, by - 18);
             ctx.lineTo(bx + 78, by - 28);
             ctx.lineTo(bx + 105, by - 8);
             ctx.moveTo(bx + 45, by - 18);
             ctx.lineTo(bx + 58, by + 8);
-            // Retakan bara pada kepala-dada
             ctx.moveTo(bx - 32, by - 4);
             ctx.lineTo(bx - 12, by + 8);
             ctx.lineTo(bx + 10, by - 2);
@@ -9086,8 +10639,8 @@ function renderGame() {
         }
         ctx.restore();
 
-        // 3. Gambar kaki-kaki lapis depan (termasuk kaki ke-0 yang mengangkat tinggi & menusuk pemain)
-        for (const i of [0, 2, 4]) {
+        // 3. Gambar 4 kaki lapis depan (2 di kiri: indeks 0 & 2, 2 di kanan: indeks 5 & 7)
+        for (const i of [0, 2, 5, 7]) {
             if (!legs[i]) continue;
             const isAttacking = (i === 0 && (bossEntity.state === 'warn' || bossEntity.state === 'strike' || bossEntity.state === 'slam' || bossEntity.state === 'recover'));
             drawRealisticSpiderLeg(
@@ -9095,11 +10648,59 @@ function renderGame() {
                 by + hipOffsets[i].dy,
                 legs[i].x,
                 legs[i].y,
-                isAttacking ? 148 : archHeights[i],
+                isAttacking ? 150 : archHeights[i],
                 true,
-                i === 0 || i === 2,
-                isAttacking
+                i === 0 || i === 2 || i === 7,
+                isAttacking,
+                i,
+                legs[i].stepT
             );
+        }
+
+        // 4. Gambar proyektil tembakan jaring laba-laba dari mulut Raja 2
+        if (bossEntity.webShots && bossEntity.webShots.length > 0) {
+            for (const ws of bossEntity.webShots) {
+                ctx.save();
+                // Benang sutra tipis yang menghubungkan tembakan jaring ke mulut laba-laba saat baru ditembakkan
+                const distFromMouth = Math.hypot(ws.x - ws.startX, ws.y - ws.startY);
+                if (distFromMouth < 260) {
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${Math.max(0, 0.55 - distFromMouth / 480)})`;
+                    ctx.lineWidth = 1.4;
+                    ctx.beginPath();
+                    ctx.moveTo(bx - 50, by + 20);
+                    ctx.quadraticCurveTo((bx - 50 + ws.x) * 0.5, (by + 20 + ws.y) * 0.5 + 8, ws.x, ws.y);
+                    ctx.stroke();
+                }
+
+                // Gumpalan jaring laba-laba berputar yang siap menjerat karakter
+                ctx.translate(ws.x, ws.y);
+                ctx.rotate(ws.spin);
+                ctx.strokeStyle = '#ffffff';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+                ctx.shadowColor = '#ffffff';
+                ctx.shadowBlur = 12;
+                ctx.lineWidth = 1.6;
+
+                // Jari-jari jaring
+                ctx.beginPath();
+                for (let s = 0; s < 6; s++) {
+                    const ang = (s / 6) * Math.PI * 2;
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(Math.cos(ang) * ws.r, Math.sin(ang) * ws.r);
+                }
+                ctx.stroke();
+
+                // Cincin spiral jaring
+                ctx.beginPath();
+                ctx.arc(0, 0, ws.r * 0.45, 0, Math.PI * 2);
+                ctx.arc(0, 0, ws.r * 0.85, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(0, 0, 3.2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
         }
 
         ctx.restore();
@@ -9115,7 +10716,7 @@ function renderGame() {
     ctx.fill();
     ctx.restore();
 
-    if (!player.dead) {
+    if (!player.dead || player.trappedByBearTrap) {
         drawLimboBoy(player);
     }
 
@@ -9150,7 +10751,8 @@ function renderGame() {
 
 function drawLimboBoy(p) {
     ctx.save();
-    const cx = p.x + p.w / 2;
+    const struggleJitter = p.webbedTimer > 0 ? Math.sin(performance.now() * 0.045) * 1.4 : 0;
+    const cx = p.x + p.w / 2 + struggleJitter;
     const cy = p.y;
     const dir = p.facing || 1;
     const speedRatio = Math.min(1, Math.abs(p.vx) / 4.25);
@@ -9212,6 +10814,72 @@ function drawLimboBoy(p) {
             ctx.fill();
             ctx.restore();
         }
+    };
+
+    // Fungsi bantu menggambar kepompong lilitan jaring-jaring putih saat karakter terkena tembakan jaring laba-laba
+    const drawWebCocoonOverlay = () => {
+        if (p.webbedTimer <= 0) return;
+        ctx.save();
+        const webAlpha = Math.min(1, p.webbedTimer / 25);
+        const pulseGlow = 8 + Math.sin(performance.now() * 0.015) * 3;
+
+        // 1. Selubung kepompong sutra putih semi-transparan yang membungkus badan karakter
+        ctx.fillStyle = `rgba(255, 255, 255, ${0.18 * webAlpha})`;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy + 29, 12.5, 17.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 2. Lilitan benang jaring putih tebal & tipis yang mengikat dada, lengan, pinggang, hingga kaki
+        ctx.strokeStyle = `rgba(255, 255, 255, ${0.95 * webAlpha})`;
+        ctx.shadowColor = '#ffffff';
+        ctx.shadowBlur = pulseGlow;
+        ctx.lineCap = 'round';
+        ctx.lineWidth = 1.65;
+
+        ctx.beginPath();
+        // Lilitan horizontal melengkung berlapis di sekujur tubuh
+        const wrapRings = [16, 20, 24, 28, 32, 36, 40, 44];
+        for (let rIdx = 0; rIdx < wrapRings.length; rIdx++) {
+            const wy = cy + wrapRings[rIdx];
+            const halfSpan = (rIdx >= 2 && rIdx <= 5) ? 12.2 : 9.8;
+            const curveDip = (rIdx % 2 === 0 ? 3.5 : -2.8);
+            ctx.moveTo(cx - halfSpan, wy);
+            ctx.quadraticCurveTo(cx, wy + curveDip, cx + halfSpan, wy - 0.8);
+        }
+        ctx.stroke();
+
+        // 3. Anyaman benang jaring menyilang (crisscross silk mesh) & penambat ke tanah
+        ctx.lineWidth = 1.15;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${0.82 * webAlpha})`;
+        ctx.beginPath();
+        ctx.moveTo(cx - 11, cy + 17);
+        ctx.lineTo(cx + 11, cy + 31);
+        ctx.moveTo(cx + 11, cy + 17);
+        ctx.lineTo(cx - 11, cy + 31);
+        ctx.moveTo(cx - 11, cy + 27);
+        ctx.lineTo(cx + 10, cy + 43);
+        ctx.moveTo(cx + 11, cy + 27);
+        ctx.lineTo(cx - 10, cy + 43);
+
+        // Tarikan benang jaring lengket yang menambat tubuh karakter ke tanah di kiri & kanan
+        ctx.moveTo(cx - 9, cy + 26);
+        ctx.quadraticCurveTo(cx - 15, cy + 39, cx - 20, cy + p.h);
+        ctx.moveTo(cx + 9, cy + 26);
+        ctx.quadraticCurveTo(cx + 15, cy + 39, cx + 20, cy + p.h);
+        ctx.moveTo(cx - 7, cy + 36);
+        ctx.lineTo(cx - 13, cy + p.h);
+        ctx.moveTo(cx + 7, cy + 36);
+        ctx.lineTo(cx + 13, cy + p.h);
+        ctx.stroke();
+
+        // 4. Titik-titik simpul benang sutra putih di sekitar tubuh
+        ctx.fillStyle = `rgba(255, 255, 255, ${0.95 * webAlpha})`;
+        for (const [nx, ny] of [[-10, 20], [10, 23], [-9, 32], [9, 35], [0, 27], [-6, 41], [6, 40]]) {
+            ctx.beginPath();
+            ctx.arc(cx + nx, cy + ny, 1.4, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.restore();
     };
 
     // 1. ANIMASI MENGGANTUNG & BERAYUN DI TALI (ROPE HANGING - UTUH, NATURAL & REALISTIS)
@@ -9443,6 +11111,7 @@ function drawLimboBoy(p) {
         drawBoyHead(headX, headY, headCounterTilt, dir);
 
         ctx.restore();
+        drawWebCocoonOverlay();
         ctx.restore();
         return;
     }
@@ -9646,11 +11315,15 @@ function drawLimboBoy(p) {
 
     drawBoyHead(headX, headY, headTilt, dir);
 
+    // 5. Visual Lilitan Jaring Laba-Laba Putih jika Karakter Terkena Tembakan Jaring Raja 2
+    drawWebCocoonOverlay();
+
     ctx.restore();
 }
 
 function setupControls() {
     window.addEventListener('keydown', (e) => {
+        audio.init();
         if (['ArrowLeft', 'KeyA'].includes(e.code)) keys.left = true;
         if (['ArrowRight', 'KeyD'].includes(e.code)) keys.right = true;
         if (['ArrowUp', 'KeyW', 'Space'].includes(e.code)) {
@@ -9694,6 +11367,21 @@ function setupControls() {
     bindHoldButton('touch-left', 'left');
     bindHoldButton('touch-right', 'right');
     bindHoldButton('touch-jump', 'up');
+
+    // Tombol Aktifkan / Matikan Suara (Backsound & Sound Effects)
+    const audioToggleBtn = document.getElementById('btn-audio-toggle');
+    const iconAudioOn = document.getElementById('icon-audio-on');
+    const iconAudioOff = document.getElementById('icon-audio-off');
+    if (audioToggleBtn) {
+        audioToggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const isEnabled = audio.toggle();
+            if (iconAudioOn && iconAudioOff) {
+                iconAudioOn.classList.toggle('hidden', !isEnabled);
+                iconAudioOff.classList.toggle('hidden', isEnabled);
+            }
+        });
+    }
 
     // Fungsi Layar Penuh (Fullscreen) Lintas Perangkat: PC, Tablet & HP (Android / iOS)
     const fsBtn = document.getElementById('btn-fullscreen');
@@ -9858,7 +11546,11 @@ let lastFrameTime = performance.now();
 
 function renderTitleScreenBackground(now) {
     const titleScreen = document.getElementById('title-screen');
-    if (!titleScreen || titleScreen.classList.contains('hidden')) return;
+    const mapScreen = document.getElementById('map-screen');
+    const titleVisible = titleScreen && !titleScreen.classList.contains('hidden');
+    const mapVisible = mapScreen && !mapScreen.classList.contains('hidden');
+    if (!titleVisible && !mapVisible) return;
+
     const tCanvas = document.getElementById('titleBgCanvas');
     if (!tCanvas) return;
     const tCtx = tCanvas.getContext('2d');
@@ -11096,302 +12788,270 @@ function renderTitleScreenBackground(now) {
     drawWispyGrassLayer(0, W, 2.2, pathTopFn, 0.52, 9, false, 9);
 
     // =========================================================================
-    // LAPISAN 8: KARAKTER UTAMA DENGAN NUANSA CAHAYA PADA BADAN (SESUAI GAMBAR)
+    // LAPISAN 8: KARAKTER UTAMA (HANYA DIGAMBAR DI HALAMAN AWAL, TIDAK DI BACKGROUND MAP)
     // =========================================================================
-    const boyX = 265;
-    const boyY = pathCenterFn(boyX) + 4;
-    const boyScale = 0.96;
-    const slopeAngle = -0.255;
+    if (!mapVisible) {
+        const boyX = 265;
+        const boyY = pathCenterFn(boyX) + 4;
+        const boyScale = 0.96;
+        const slopeAngle = -0.255;
 
-    // Lingkaran elips cahaya di permukaan tanah tempat karakter berpijak (seperti pada gambar referensi)
-    tCtx.save();
-    const footLightGrad = tCtx.createRadialGradient(boyX + 10, boyY - 1, 4, boyX + 10, boyY - 1, 78);
-    footLightGrad.addColorStop(0, 'rgba(215, 215, 215, 0.42)');
-    footLightGrad.addColorStop(0.55, 'rgba(155, 155, 155, 0.24)');
-    footLightGrad.addColorStop(0.85, 'rgba(90, 90, 90, 0.08)');
-    footLightGrad.addColorStop(1, 'rgba(40, 40, 40, 0)');
-    tCtx.fillStyle = footLightGrad;
-    tCtx.beginPath();
-    tCtx.ellipse(boyX + 10, boyY - 1, 76, 14, slopeAngle * 0.85, 0, Math.PI * 2);
-    tCtx.fill();
-    tCtx.restore();
-
-    const breath = Math.sin(t * 1.65);
-    const weightShift = Math.sin(t * 0.82);
-    const breeze = Math.sin(t * 3.1) * 0.65 + Math.cos(t * 4.7) * 0.35;
-
-    const poiseX = 1.8 + weightShift * 2.1;
-    const chestLift = breath * 1.25;
-
-    // Bayangan Panjang Karakter Jatuh ke Kiri Bawah & Bayangan Kontak Pekat Tepat di Bawah Sepatu
-    tCtx.save();
-    tCtx.translate(boyX, boyY);
-    tCtx.scale(boyScale, boyScale);
-    tCtx.rotate(slopeAngle);
-    const shadowLen = 195 + breath * 5;
-    const shGrad = tCtx.createLinearGradient(14, 0, -shadowLen, 18);
-    shGrad.addColorStop(0, 'rgba(4, 4, 4, 0.92)');
-    shGrad.addColorStop(0.38, 'rgba(10, 10, 10, 0.65)');
-    shGrad.addColorStop(0.75, 'rgba(18, 18, 18, 0.25)');
-    shGrad.addColorStop(1, 'rgba(24, 24, 24, 0)');
-    tCtx.fillStyle = shGrad;
-    tCtx.beginPath();
-    tCtx.moveTo(-12, -2);
-    tCtx.lineTo(18, 1.5);
-    tCtx.lineTo(-shadowLen, 22);
-    tCtx.lineTo(-shadowLen - 14, 5);
-    tCtx.closePath();
-    tCtx.fill();
-
-    // Ambient occlusion kontak sepatu dengan tanah
-    tCtx.fillStyle = '#020202';
-    tCtx.beginPath();
-    tCtx.ellipse(-5, 1.5, 10, 3.0, 0, 0, Math.PI * 2);
-    tCtx.ellipse(14, 0.5, 10, 3.0, 0, 0, Math.PI * 2);
-    tCtx.fill();
-    tCtx.restore();
-
-    const hipX = poiseX * 0.55;
-    const hipY = -46 + Math.abs(weightShift) * 0.6;
-    const shoulderX = 4.5 + poiseX + breath * 0.45;
-    const shoulderY = -88 + chestLift;
-    const neckX = shoulderX + 1.2;
-    const neckY = shoulderY - 6.5;
-    const headX = neckX + 1.8 + weightShift * 0.4;
-    const headY = neckY - 17.5 + chestLift * 0.5;
-
-    const traceSmoothLegPath = (ctxTarget, hX, hY, kX, kY, aX, aY, footTilt, heelRaise) => {
-        ctxTarget.beginPath();
-        ctxTarget.moveTo(hX - 4.4, hY);
-        ctxTarget.bezierCurveTo(
-            hX - 4.8, hY + (kY - hY) * 0.5,
-            kX - 4.2, kY - 3,
-            kX - 3.5, kY + 1
-        );
-        ctxTarget.bezierCurveTo(
-            kX - 4.8, kY + (aY - kY) * 0.38,
-            aX - 3.6, aY - 6,
-            aX - 3.2, aY - heelRaise
-        );
-        const cosF = Math.cos(footTilt);
-        const sinF = Math.sin(footTilt);
-        const toeX = aX + cosF * 11.5;
-        const toeY = (aY - heelRaise) + sinF * 11.5;
-        ctxTarget.quadraticCurveTo(
-            aX + cosF * 5 - sinF * 2.5, (aY - heelRaise) + sinF * 5 + cosF * 2.5,
-            toeX, toeY + 1.8
-        );
-        ctxTarget.bezierCurveTo(
-            toeX + 2.2, toeY + 0.5,
-            toeX + 1.2, toeY - 2.8,
-            aX + 3.0, aY - 2.2 - heelRaise * 0.6
-        );
-        ctxTarget.bezierCurveTo(
-            aX + 2.8, kY + (aY - kY) * 0.55,
-            kX + 3.6, kY + 3,
-            kX + 3.8, kY - 1
-        );
-        ctxTarget.bezierCurveTo(
-            kX + 4.2, hY + (kY - hY) * 0.45,
-            hX + 4.8, hY + 4,
-            hX + 4.4, hY - 1
-        );
-        ctxTarget.closePath();
-    };
-
-    const traceSmoothArmPath = (ctxTarget, sX, sY, eX, eY, wrX, wrY) => {
-        ctxTarget.beginPath();
-        ctxTarget.moveTo(sX - 3.4, sY);
-        ctxTarget.bezierCurveTo(
-            sX - 3.8, (sY + eY) * 0.5,
-            eX - 3.6, eY - 2,
-            eX - 3.2, eY + 1
-        );
-        ctxTarget.bezierCurveTo(
-            eX - 2.8, (eY + wrY) * 0.52,
-            wrX - 2.6, wrY - 2,
-            wrX - 2.2, wrY + 2
-        );
-        ctxTarget.bezierCurveTo(
-            wrX - 1.2, wrY + 5.2,
-            wrX + 3.2, wrY + 4.8,
-            wrX + 3.0, wrY + 1.0
-        );
-        ctxTarget.bezierCurveTo(
-            wrX + 2.6, (eY + wrY) * 0.5,
-            eX + 3.0, eY + 1,
-            eX + 3.2, eY - 1.5
-        );
-        ctxTarget.bezierCurveTo(
-            eX + 3.4, (sY + eY) * 0.48,
-            sX + 3.6, sY + 3,
-            sX + 3.2, sY
-        );
-        ctxTarget.closePath();
-    };
-
-    const traceTorsoPath = (ctxTarget, chestB, hemF) => {
-        ctxTarget.beginPath();
-        ctxTarget.moveTo(neckX - 3.8, neckY - 3);
-        ctxTarget.quadraticCurveTo(neckX - 4.2, shoulderY - 2, shoulderX - 7.8, shoulderY + 2.5);
-        ctxTarget.bezierCurveTo(
-            shoulderX - 11.2, shoulderY + 14,
-            hipX - 9.8, hipY - 14,
-            hipX - 9.2 + hemF * 0.5, hipY + 2.5
-        );
-        ctxTarget.bezierCurveTo(
-            hipX - 3.5, hipY + 6.2,
-            hipX + 4.5, hipY + 5.8,
-            hipX + 8.6 + hemF, hipY + 1.8
-        );
-        ctxTarget.bezierCurveTo(
-            hipX + 9.2 + chestB * 0.5, hipY - 14,
-            shoulderX + 10.4 + chestB, shoulderY + 14,
-            shoulderX + 6.2 + chestB * 0.4, shoulderY + 1.5
-        );
-        ctxTarget.quadraticCurveTo(neckX + 3.6, shoulderY - 2, neckX + 3.4, neckY - 3);
-        ctxTarget.closePath();
-    };
-
-    const traceHeadPath = (ctxTarget) => {
-        ctxTarget.beginPath();
-        ctxTarget.moveTo(-4.5, 14.5);
-        ctxTarget.quadraticCurveTo(3.5, 16.5, 11.2, 14.2);
-        ctxTarget.bezierCurveTo(16.8, 12.2, 19.2, 6.2, 18.8, 0.5);
-        ctxTarget.quadraticCurveTo(19.6, -4.5, 17.5, -10.5);
-        ctxTarget.quadraticCurveTo(22.5 + breeze * 0.8, -12.8, 24.2 + breeze, -16.8);
-        ctxTarget.quadraticCurveTo(19.8, -17.8, 21.8 + breeze * 0.7, -21.2);
-        ctxTarget.bezierCurveTo(13.5, -24.5, 1.5, -25.2, -9.5, -21.5);
-        ctxTarget.quadraticCurveTo(-15.5, -19.5, -18.5 + breeze * 0.4, -15.5);
-        ctxTarget.quadraticCurveTo(-22.2 + breeze * 0.5, -12.5, -19.2, -8.5);
-        ctxTarget.quadraticCurveTo(-22.8 + breeze * 0.4, -4.5, -18.5, -1.2);
-        ctxTarget.bezierCurveTo(-19.5, 5.5, -14.2, 11.8, -4.5, 14.5);
-        ctxTarget.closePath();
-    };
-
-    // Fungsi menggambar bagian tubuh lengkap dengan pendaran cahaya tepi (rim-light & aura putih lembut)
-    const drawLitBodyPart = (traceFn) => {
-        // Lapis 1: Pendaran aura cahaya putih lembut di sekeliling siluet badan
+        // Lingkaran elips cahaya di permukaan tanah tempat karakter berpijak (seperti pada gambar referensi)
         tCtx.save();
-        tCtx.shadowColor = 'rgba(255, 255, 255, 0.72)';
-        tCtx.shadowBlur = 14;
-        tCtx.shadowOffsetX = 1.5;
-        tCtx.fillStyle = '#050505';
-        traceFn();
+        const footLightGrad = tCtx.createRadialGradient(boyX + 10, boyY - 1, 4, boyX + 10, boyY - 1, 78);
+        footLightGrad.addColorStop(0, 'rgba(215, 215, 215, 0.42)');
+        footLightGrad.addColorStop(0.55, 'rgba(155, 155, 155, 0.24)');
+        footLightGrad.addColorStop(0.85, 'rgba(90, 90, 90, 0.08)');
+        footLightGrad.addColorStop(1, 'rgba(40, 40, 40, 0)');
+        tCtx.fillStyle = footLightGrad;
+        tCtx.beginPath();
+        tCtx.ellipse(boyX + 10, boyY - 1, 76, 14, slopeAngle * 0.85, 0, Math.PI * 2);
         tCtx.fill();
         tCtx.restore();
 
-        // Lapis 2: Isi inti siluet dengan gradasi nuansa cahaya lembut di tepi yang menghadap cahaya
+        const breath = Math.sin(t * 1.65);
+        const weightShift = Math.sin(t * 0.82);
+        const breeze = Math.sin(t * 3.1) * 0.65 + Math.cos(t * 4.7) * 0.35;
+
+        const poiseX = 1.8 + weightShift * 2.1;
+        const chestLift = breath * 1.25;
+
+        // Bayangan Panjang Karakter Jatuh ke Kiri Bawah & Bayangan Kontak Pekat Tepat di Bawah Sepatu
         tCtx.save();
-        traceFn();
-        tCtx.clip();
-        const bodyGrad = tCtx.createLinearGradient(-18, -110, 24, 10);
-        bodyGrad.addColorStop(0, '#030303');
-        bodyGrad.addColorStop(0.62, '#090909');
-        bodyGrad.addColorStop(0.88, '#242424');
-        bodyGrad.addColorStop(1, '#525252');
-        tCtx.quadraticCurveTo(-22.8 + breeze * 0.4, -4.5, -18.5, -1.2);
-        tCtx.bezierCurveTo(-19.5, 5.5, -14.2, 11.8, -4.5, 14.5);
+        tCtx.translate(boyX, boyY);
+        tCtx.scale(boyScale, boyScale);
+        tCtx.rotate(slopeAngle);
+        const shadowLen = 195 + breath * 5;
+        const shGrad = tCtx.createLinearGradient(14, 0, -shadowLen, 18);
+        shGrad.addColorStop(0, 'rgba(4, 4, 4, 0.92)');
+        shGrad.addColorStop(0.38, 'rgba(10, 10, 10, 0.65)');
+        shGrad.addColorStop(0.75, 'rgba(18, 18, 18, 0.25)');
+        shGrad.addColorStop(1, 'rgba(24, 24, 24, 0)');
+        tCtx.fillStyle = shGrad;
+        tCtx.beginPath();
+        tCtx.moveTo(-12, -2);
+        tCtx.lineTo(18, 1.5);
+        tCtx.lineTo(-shadowLen, 22);
+        tCtx.lineTo(-shadowLen - 14, 5);
         tCtx.closePath();
-    };
-
-    tCtx.save();
-    tCtx.translate(boyX, boyY);
-    tCtx.scale(boyScale, boyScale);
-    tCtx.lineCap = 'round';
-    tCtx.lineJoin = 'round';
-
-    const backArmSwing = Math.sin(t * 1.65 - 0.5) * 1.5 - weightShift * 1.2;
-    const chestBreath = 1.0 + breath * 1.15;
-    const hemFlutter = breeze * 0.9;
-    const frontStepRaise = Math.max(0, weightShift) * 1.4;
-    const frontArmSwing = Math.sin(t * 1.65) * 1.8 + weightShift * 1.5;
-
-    const drawAllBodyParts = () => {
-        // Lengan Belakang & Kaki Belakang
-        traceSmoothArmPath(
-            tCtx,
-            shoulderX - 1.8, shoulderY + 3,
-            shoulderX - 6.2 + backArmSwing * 0.5, shoulderY + 20,
-            shoulderX - 2.5 + backArmSwing, shoulderY + 37
-        );
         tCtx.fill();
 
-        traceSmoothLegPath(
-            tCtx,
-            hipX - 2.6, hipY,
-            hipX - 4.8 + poiseX * 0.25, hipY + 23,
-            -9.5, 2.2,
-            -0.20, 0
-        );
+        // Ambient occlusion kontak sepatu dengan tanah
+        tCtx.fillStyle = '#020202';
+        tCtx.beginPath();
+        tCtx.ellipse(-5, 1.5, 10, 3.0, 0, 0, Math.PI * 2);
+        tCtx.ellipse(14, 0.5, 10, 3.0, 0, 0, Math.PI * 2);
         tCtx.fill();
+        tCtx.restore();
 
-        // Torso & Leher
-        traceTorsoPath(tCtx, chestBreath, hemFlutter);
-        tCtx.fill();
+        const hipX = poiseX * 0.55;
+        const hipY = -46 + Math.abs(weightShift) * 0.6;
+        const shoulderX = 4.5 + poiseX + breath * 0.45;
+        const shoulderY = -88 + chestLift;
+        const neckX = shoulderX + 1.2;
+        const neckY = shoulderY - 6.5;
+        const headX = neckX + 1.8 + weightShift * 0.4;
+        const headY = neckY - 17.5 + chestLift * 0.5;
 
-        // Kaki Depan
-        traceSmoothLegPath(
-            tCtx,
-            hipX + 2.4, hipY - 1,
-            hipX + 10.8 + poiseX * 0.4, hipY + 19 - frontStepRaise * 0.6,
-            12.8 + poiseX * 0.25, -4.4,
-            -0.26, 0.6 + frontStepRaise
-        );
-        tCtx.fill();
+        const traceSmoothLegPath = (ctxTarget, hX, hY, kX, kY, aX, aY, footTilt, heelRaise) => {
+            ctxTarget.beginPath();
+            ctxTarget.moveTo(hX - 4.4, hY);
+            ctxTarget.bezierCurveTo(
+                hX - 4.8, hY + (kY - hY) * 0.5,
+                kX - 4.2, kY - 3,
+                kX - 3.5, kY + 1
+            );
+            ctxTarget.bezierCurveTo(
+                kX - 4.8, kY + (aY - kY) * 0.38,
+                aX - 3.6, aY - 6,
+                aX - 3.2, aY - heelRaise
+            );
+            const cosF = Math.cos(footTilt);
+            const sinF = Math.sin(footTilt);
+            const toeX = aX + cosF * 11.5;
+            const toeY = (aY - heelRaise) + sinF * 11.5;
+            ctxTarget.quadraticCurveTo(
+                aX + cosF * 5 - sinF * 2.5, (aY - heelRaise) + sinF * 5 + cosF * 2.5,
+                toeX, toeY + 1.8
+            );
+            ctxTarget.bezierCurveTo(
+                toeX + 2.2, toeY + 0.5,
+                toeX + 1.2, toeY - 2.8,
+                aX + 3.0, aY - 2.2 - heelRaise * 0.6
+            );
+            ctxTarget.bezierCurveTo(
+                aX + 2.8, kY + (aY - kY) * 0.55,
+                kX + 3.6, kY + 3,
+                kX + 3.8, kY - 1
+            );
+            ctxTarget.bezierCurveTo(
+                kX + 4.2, hY + (kY - hY) * 0.45,
+                hX + 4.8, hY + 4,
+                hX + 4.4, hY - 1
+            );
+            ctxTarget.closePath();
+        };
 
-        // Kepala & Rambut
+        const traceSmoothArmPath = (ctxTarget, sX, sY, eX, eY, wrX, wrY) => {
+            ctxTarget.beginPath();
+            ctxTarget.moveTo(sX - 3.4, sY);
+            ctxTarget.bezierCurveTo(
+                sX - 3.8, (sY + eY) * 0.5,
+                eX - 3.6, eY - 2,
+                eX - 3.2, eY + 1
+            );
+            ctxTarget.bezierCurveTo(
+                eX - 2.8, (eY + wrY) * 0.52,
+                wrX - 2.6, wrY - 2,
+                wrX - 2.2, wrY + 2
+            );
+            ctxTarget.bezierCurveTo(
+                wrX - 1.2, wrY + 5.2,
+                wrX + 3.2, wrY + 4.8,
+                wrX + 3.0, wrY + 1.0
+            );
+            ctxTarget.bezierCurveTo(
+                wrX + 2.6, (eY + wrY) * 0.5,
+                eX + 3.0, eY + 1,
+                eX + 3.2, eY - 1.5
+            );
+            ctxTarget.bezierCurveTo(
+                eX + 3.4, (sY + eY) * 0.48,
+                sX + 3.6, sY + 3,
+                sX + 3.2, sY
+            );
+            ctxTarget.closePath();
+        };
+
+        const traceTorsoPath = (ctxTarget, chestB, hemF) => {
+            ctxTarget.beginPath();
+            ctxTarget.moveTo(neckX - 3.8, neckY - 3);
+            ctxTarget.quadraticCurveTo(neckX - 4.2, shoulderY - 2, shoulderX - 7.8, shoulderY + 2.5);
+            ctxTarget.bezierCurveTo(
+                shoulderX - 11.2, shoulderY + 14,
+                hipX - 9.8, hipY - 14,
+                hipX - 9.2 + hemF * 0.5, hipY + 2.5
+            );
+            ctxTarget.bezierCurveTo(
+                hipX - 3.5, hipY + 6.2,
+                hipX + 4.5, hipY + 5.8,
+                hipX + 8.6 + hemF, hipY + 1.8
+            );
+            ctxTarget.bezierCurveTo(
+                hipX + 9.2 + chestB * 0.5, hipY - 14,
+                shoulderX + 10.4 + chestB, shoulderY + 14,
+                shoulderX + 6.2 + chestB * 0.4, shoulderY + 1.5
+            );
+            ctxTarget.quadraticCurveTo(neckX + 3.6, shoulderY - 2, neckX + 3.4, neckY - 3);
+            ctxTarget.closePath();
+        };
+
+        const traceHeadPath = (ctxTarget) => {
+            ctxTarget.beginPath();
+            ctxTarget.moveTo(-4.5, 14.5);
+            ctxTarget.quadraticCurveTo(3.5, 16.5, 11.2, 14.2);
+            ctxTarget.bezierCurveTo(16.8, 12.2, 19.2, 6.2, 18.8, 0.5);
+            ctxTarget.quadraticCurveTo(19.6, -4.5, 17.5, -10.5);
+            ctxTarget.quadraticCurveTo(22.5 + breeze * 0.8, -12.8, 24.2 + breeze, -16.8);
+            ctxTarget.quadraticCurveTo(19.8, -17.8, 21.8 + breeze * 0.7, -21.2);
+            ctxTarget.bezierCurveTo(13.5, -24.5, 1.5, -25.2, -9.5, -21.5);
+            ctxTarget.quadraticCurveTo(-15.5, -19.5, -18.5 + breeze * 0.4, -15.5);
+            ctxTarget.quadraticCurveTo(-22.2 + breeze * 0.5, -12.5, -19.2, -8.5);
+            ctxTarget.quadraticCurveTo(-22.8 + breeze * 0.4, -4.5, -18.5, -1.2);
+            ctxTarget.bezierCurveTo(-19.5, 5.5, -14.2, 11.8, -4.5, 14.5);
+            ctxTarget.closePath();
+        };
+
+        tCtx.save();
+        tCtx.translate(boyX, boyY);
+        tCtx.scale(boyScale, boyScale);
+        tCtx.lineCap = 'round';
+        tCtx.lineJoin = 'round';
+
+        const backArmSwing = Math.sin(t * 1.65 - 0.5) * 1.5 - weightShift * 1.2;
+        const chestBreath = 1.0 + breath * 1.15;
+        const hemFlutter = breeze * 0.9;
+        const frontStepRaise = Math.max(0, weightShift) * 1.4;
+        const frontArmSwing = Math.sin(t * 1.65) * 1.8 + weightShift * 1.5;
+
+        const drawAllBodyParts = () => {
+            traceSmoothArmPath(
+                tCtx,
+                shoulderX - 1.8, shoulderY + 3,
+                shoulderX - 6.2 + backArmSwing * 0.5, shoulderY + 20,
+                shoulderX - 2.5 + backArmSwing, shoulderY + 37
+            );
+            tCtx.fill();
+
+            traceSmoothLegPath(
+                tCtx,
+                hipX - 2.6, hipY,
+                hipX - 4.8 + poiseX * 0.25, hipY + 23,
+                -9.5, 2.2,
+                -0.20, 0
+            );
+            tCtx.fill();
+
+            traceTorsoPath(tCtx, chestBreath, hemFlutter);
+            tCtx.fill();
+
+            traceSmoothLegPath(
+                tCtx,
+                hipX + 2.4, hipY - 1,
+                hipX + 10.8 + poiseX * 0.4, hipY + 19 - frontStepRaise * 0.6,
+                12.8 + poiseX * 0.25, -4.4,
+                -0.26, 0.6 + frontStepRaise
+            );
+            tCtx.fill();
+
+            tCtx.save();
+            tCtx.translate(headX, headY);
+            tCtx.rotate(-0.09 + breath * 0.018);
+            traceHeadPath(tCtx);
+            tCtx.fill();
+            tCtx.restore();
+
+            traceSmoothArmPath(
+                tCtx,
+                shoulderX + 0.8, shoulderY + 3.5,
+                shoulderX + 2.2 + frontArmSwing * 0.45, shoulderY + 21,
+                shoulderX + 9.2 + frontArmSwing, shoulderY + 35 - chestLift * 0.35
+            );
+            tCtx.fill();
+        };
+
+        tCtx.save();
+        tCtx.fillStyle = '#030303';
+        tCtx.shadowColor = 'rgba(255, 255, 255, 0.68)';
+        tCtx.shadowBlur = 14;
+        tCtx.shadowOffsetX = 2.5;
+        tCtx.shadowOffsetY = 0;
+        drawAllBodyParts();
+        tCtx.restore();
+
+        tCtx.save();
+        tCtx.fillStyle = '#030303';
+        tCtx.shadowColor = 'transparent';
+        tCtx.shadowBlur = 0;
+        drawAllBodyParts();
+        tCtx.restore();
+
         tCtx.save();
         tCtx.translate(headX, headY);
         tCtx.rotate(-0.09 + breath * 0.018);
-        traceHeadPath(tCtx);
+        const blinkPhase = t % 5.4;
+        const eyeOpen = (blinkPhase > 5.15 && blinkPhase < 5.30) ? 0.12 : 1.0;
+        tCtx.shadowColor = '#ffffff';
+        tCtx.shadowBlur = 10;
+        tCtx.fillStyle = '#ffffff';
+        tCtx.beginPath();
+        tCtx.ellipse(9.8, 1.2, 2.0, 1.8 * eyeOpen, -0.04, 0, Math.PI * 2);
+        tCtx.ellipse(15.2, 0.6, 1.65, 1.55 * eyeOpen, -0.04, 0, Math.PI * 2);
         tCtx.fill();
         tCtx.restore();
 
-        // Lengan Depan
-        traceSmoothArmPath(
-            tCtx,
-            shoulderX + 0.8, shoulderY + 3.5,
-            shoulderX + 2.2 + frontArmSwing * 0.45, shoulderY + 21,
-            shoulderX + 9.2 + frontArmSwing, shoulderY + 35 - chestLift * 0.35
-        );
-        tCtx.fill();
-    };
-
-    // Pass 1: Pendaran cahaya tepi luar (outer glow) lembut mengikuti siluet utuh
-    tCtx.save();
-    tCtx.fillStyle = '#030303';
-    tCtx.shadowColor = 'rgba(255, 255, 255, 0.68)';
-    tCtx.shadowBlur = 14;
-    tCtx.shadowOffsetX = 2.5;
-    tCtx.shadowOffsetY = 0;
-    drawAllBodyParts();
-    tCtx.restore();
-
-    // Pass 2: Siluet hitam pekat menyatu tanpa garis anatomi di dalam tubuh
-    tCtx.save();
-    tCtx.fillStyle = '#030303';
-    tCtx.shadowColor = 'transparent';
-    tCtx.shadowBlur = 0;
-    drawAllBodyParts();
-    tCtx.restore();
-
-    // Pass 3: Sepasang Mata Putih Bersinar Lembut Memandang ke Arah Cahaya
-    tCtx.save();
-    tCtx.translate(headX, headY);
-    tCtx.rotate(-0.09 + breath * 0.018);
-    const blinkPhase = t % 5.4;
-    const eyeOpen = (blinkPhase > 5.15 && blinkPhase < 5.30) ? 0.12 : 1.0;
-    tCtx.shadowColor = '#ffffff';
-    tCtx.shadowBlur = 10;
-    tCtx.fillStyle = '#ffffff';
-    tCtx.beginPath();
-    tCtx.ellipse(9.8, 1.2, 2.0, 1.8 * eyeOpen, -0.04, 0, Math.PI * 2);
-    tCtx.ellipse(15.2, 0.6, 1.65, 1.55 * eyeOpen, -0.04, 0, Math.PI * 2);
-    tCtx.fill();
-    tCtx.restore();
-
-    tCtx.restore(); // Selesai menggambar karakter
+        tCtx.restore(); // Selesai menggambar karakter
+    }
 
     // =========================================================================
     // LAPISAN 9: FOREGROUND SILUET HITAM PEKAT, BEBATUAN & RUMPUT TEBAL SOLID
@@ -11444,6 +13104,16 @@ function renderTitleScreenBackground(now) {
     tCtx.fillRect(0, 0, W, H);
 
     tCtx.restore();
+
+    // Salin hasil render latar belakang halaman utama secara identik ke kanvas latar belakang Peta
+    if (mapVisible) {
+        const mCanvas = document.getElementById('mapBgCanvas');
+        if (mCanvas) {
+            const mCtx = mCanvas.getContext('2d');
+            mCtx.clearRect(0, 0, W, H);
+            mCtx.drawImage(tCanvas, 0, 0);
+        }
+    }
 }
 
 function gameLoop(now = performance.now()) {
