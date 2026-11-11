@@ -173,12 +173,15 @@
         .noir-btn.quiz-opt-btn {
             text-transform: none;
             letter-spacing: 0.02em;
-            font-size: 1rem;
+            font-size: clamp(0.85rem, min(1.8vw, 2.6dvh), 1.05rem);
+            min-height: clamp(2.6rem, 6.8dvh, 3.6rem);
+            padding: 0.5rem 0.85rem;
             gap: 0.35rem;
+            overflow: hidden;
         }
         .math-expr {
             display: inline-block;
-            line-height: 2.15;
+            line-height: 1.85;
             vertical-align: middle;
         }
         .math-term {
@@ -197,19 +200,19 @@
             flex-direction: column;
             align-items: center;
             vertical-align: middle;
-            margin: 0.25em 0.32rem;
-            line-height: 1.3;
-            font-size: 0.92em;
+            margin: 0.15em 0.3rem;
+            line-height: 1.25;
+            font-size: 0.9em;
         }
         .math-frac > .num {
             border-bottom: 1.5px solid currentColor;
-            padding: 0.32em 0.45rem 0.22em 0.45rem;
+            padding: 0.28em 0.45rem 0.2em 0.45rem;
             width: 100%;
             text-align: center;
             white-space: nowrap;
         }
         .math-frac > .den {
-            padding: 0.24em 0.45rem 0.3em 0.45rem;
+            padding: 0.26em 0.45rem 0.22em 0.45rem;
             width: 100%;
             text-align: center;
             white-space: nowrap;
@@ -228,7 +231,7 @@
             align-items: center;
             vertical-align: middle;
             position: relative;
-            margin: 0.2em 0.18em;
+            margin: 0.15em 0.18em;
         }
         .math-term.is-frac-base > .math-base {
             display: inline-flex;
@@ -291,7 +294,7 @@
             display: inline-flex;
             align-items: stretch;
             vertical-align: middle;
-            margin: 0.15rem 0.25rem;
+            margin: 0.12rem 0.22rem;
             white-space: nowrap;
             position: relative;
             line-height: 1.2;
@@ -318,14 +321,15 @@
         }
         .math-rad-content {
             border-top: 1.5px solid currentColor;
-            padding: 0.22em 0.32rem 0.05em 0.2rem;
+            padding: 0.2em 0.3rem 0.05em 0.2rem;
             line-height: 1.2;
             margin-top: 0.08em;
             display: inline-block;
         }
         /* Custom Scrollbar untuk Modal Materi & Soal */
         .custom-scroll::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
+            height: 5px;
         }
         .custom-scroll::-webkit-scrollbar-track {
             background: rgba(20, 20, 20, 0.85);
@@ -337,6 +341,258 @@
         }
         .custom-scroll::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.5);
+        }
+        /* Popup Modal Materi & Soal Luas, Proporsional & Responsif */
+        .quiz-popup-16-9 {
+            width: min(92vw, 900px);
+            min-height: min(78dvh, 480px);
+            max-width: 94vw;
+            max-height: 92dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(255, 255, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+        }
+        @media (max-width: 640px) {
+            .quiz-popup-16-9 {
+                width: 94vw;
+                min-height: min(82dvh, 420px);
+                max-height: 94dvh;
+            }
+        }
+        /* Elemen Drag & Drop Soal Eksponen - Proporsional & Tidak Tumpang Tindih */
+        .dnd-drop-slot {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 10, 10, 0.92);
+            border: 2px dashed rgba(255, 255, 255, 0.45);
+            border-radius: 0.45rem;
+            color: #ffffff;
+            font-weight: 700;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.85), 0 0 12px rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            flex-shrink: 0;
+        }
+        .dnd-drop-slot.slot-base {
+            width: clamp(2rem, min(4.4vw, 6.4dvh), 2.9rem);
+            height: clamp(2rem, min(4.4vw, 6.4dvh), 2.9rem);
+            font-size: clamp(0.95rem, min(2vw, 3dvh), 1.35rem);
+        }
+        .dnd-drop-slot.slot-exp {
+            width: clamp(1.5rem, min(3.2vw, 4.8dvh), 2.1rem);
+            height: clamp(1.5rem, min(3.2vw, 4.8dvh), 2.1rem);
+            font-size: clamp(0.78rem, min(1.5vw, 2.2dvh), 1rem);
+            margin-left: 0.16rem;
+            margin-bottom: clamp(0.65rem, min(1.5vw, 2.2dvh), 1rem);
+        }
+        .dnd-drop-slot.is-active-slot {
+            border-color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 0 14px rgba(255, 255, 255, 0.35), inset 0 0 8px rgba(255, 255, 255, 0.15);
+        }
+        .dnd-drop-slot.is-hover-target {
+            border-style: solid;
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.7), inset 0 0 10px rgba(255, 255, 255, 0.3);
+            transform: scale(1.08);
+        }
+        .dnd-step-grid {
+            display: inline-grid;
+            grid-template-columns: auto auto auto;
+            row-gap: clamp(0.35rem, 1.1dvh, 0.6rem);
+            column-gap: clamp(0.45rem, 1.2vw, 0.75rem);
+            align-items: center;
+            justify-content: center;
+            padding: clamp(0.25rem, 0.8dvh, 0.5rem) clamp(0.4rem, 1.2vw, 0.85rem);
+        }
+        .dnd-term-wrap {
+            display: inline-flex;
+            align-items: flex-end;
+            vertical-align: middle;
+        }
+        .dnd-exp-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.18rem;
+            margin-left: 0.15rem;
+            margin-bottom: clamp(0.6rem, min(1.4vw, 2.1dvh), 0.9rem);
+        }
+        .dnd-drop-slot.slot-step-base {
+            width: clamp(1.75rem, min(3.7vw, 5.4dvh), 2.4rem);
+            height: clamp(1.75rem, min(3.7vw, 5.4dvh), 2.4rem);
+            font-size: clamp(0.88rem, min(1.7vw, 2.5dvh), 1.2rem);
+        }
+        .dnd-drop-slot.slot-step-exp {
+            width: clamp(1.35rem, min(2.9vw, 4.3dvh), 1.85rem);
+            height: clamp(1.35rem, min(2.9vw, 4.3dvh), 1.85rem);
+            font-size: clamp(0.72rem, min(1.35vw, 2dvh), 0.95rem);
+        }
+        .dnd-slot-frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+            margin: 0.08rem 0.2rem;
+        }
+        .dnd-slot-frac-num {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.85);
+            padding: 0.2rem 0.45rem 0.25rem 0.45rem;
+            width: 100%;
+        }
+        .dnd-slot-frac-den {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0.25rem 0.45rem 0.15rem 0.45rem;
+            width: 100%;
+        }
+        .dnd-slot-frac .dnd-exp-group {
+            margin-bottom: clamp(0.5rem, min(1.2vw, 1.8dvh), 0.78rem);
+        }
+        .dnd-drop-slot.slot-frac-base {
+            width: clamp(1.6rem, min(3.3vw, 4.8dvh), 2.15rem);
+            height: clamp(1.6rem, min(3.3vw, 4.8dvh), 2.15rem);
+            font-size: clamp(0.8rem, min(1.5vw, 2.2dvh), 1.08rem);
+        }
+        .dnd-drop-slot.slot-frac-exp {
+            width: clamp(1.25rem, min(2.6vw, 3.8dvh), 1.68rem);
+            height: clamp(1.25rem, min(2.6vw, 3.8dvh), 1.68rem);
+            font-size: clamp(0.68rem, min(1.2vw, 1.8dvh), 0.88rem);
+        }
+        .dnd-drop-slot.is-filled {
+            border-style: solid;
+            border-color: rgba(255, 255, 255, 0.85);
+            background: linear-gradient(180deg, rgba(52, 52, 52, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+            box-shadow: 0 0 14px rgba(255, 255, 255, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .dnd-drop-slot.is-correct {
+            border-color: #34d399 !important;
+            background: rgba(6, 78, 59, 0.85) !important;
+            color: #ecfdf5 !important;
+            box-shadow: 0 0 18px rgba(52, 211, 153, 0.65) !important;
+        }
+        .dnd-drop-slot.is-wrong {
+            border-color: #f87171 !important;
+            background: rgba(127, 29, 29, 0.85) !important;
+            color: #fef2f2 !important;
+            box-shadow: 0 0 18px rgba(248, 113, 113, 0.65) !important;
+            animation: lockedShake 0.35s ease-in-out;
+        }
+        .dnd-number-tile {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            max-width: clamp(1.65rem, min(3.8vw, 5.4dvh), 2.45rem);
+            background: linear-gradient(180deg, rgba(48, 48, 48, 0.92) 0%, rgba(16, 16, 16, 0.98) 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.32);
+            border-radius: 0.45rem;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: clamp(0.75rem, min(1.6vw, 2.4dvh), 1.08rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            touch-action: none;
+            user-select: none;
+            transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+        .dnd-number-tile:hover {
+            transform: translateY(-2px) scale(1.05);
+            border-color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 0 14px rgba(255, 255, 255, 0.35), 0 6px 14px rgba(0, 0, 0, 0.85);
+            background: linear-gradient(180deg, rgba(72, 72, 72, 0.95) 0%, rgba(28, 28, 28, 0.98) 100%);
+        }
+        .dnd-number-tile:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+        .dnd-floating-ghost {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 0.5rem;
+            background: linear-gradient(180deg, #404040 0%, #141414 100%);
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 24px rgba(255, 255, 255, 0.85), 0 10px 25px rgba(0, 0, 0, 0.9);
+            transform: translate(-50%, -50%) scale(1.12);
+        }
+        /* Elemen Isian Model Penemuan Terbimbing (Guided Discovery) */
+        .guided-step-card {
+            background: linear-gradient(180deg, rgba(24, 24, 24, 0.92) 0%, rgba(10, 10, 10, 0.96) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 0.65rem;
+            padding: 0.45rem 0.6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+        .guided-step-card.is-active-card {
+            border-color: rgba(255, 255, 255, 0.65);
+            background: linear-gradient(180deg, rgba(38, 38, 38, 0.95) 0%, rgba(14, 14, 14, 0.98) 100%);
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .guided-input-slot {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: clamp(2.1rem, 4.6vw, 3rem);
+            height: clamp(1.75rem, 3.8vw, 2.35rem);
+            padding: 0 0.4rem;
+            background: rgba(8, 8, 8, 0.95);
+            border: 1.8px solid rgba(255, 255, 255, 0.42);
+            border-radius: 0.42rem;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: clamp(0.85rem, 1.8vw, 1.15rem);
+            cursor: pointer;
+            transition: all 0.16s ease;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.85);
+            user-select: none;
+        }
+        .guided-input-slot.slot-sup {
+            min-width: clamp(1.65rem, 3.4vw, 2.2rem);
+            height: clamp(1.45rem, 3.1vw, 1.9rem);
+            font-size: clamp(0.75rem, 1.45vw, 0.95rem);
+            transform: translateY(-0.55em);
+            margin-left: 0.12rem;
+        }
+        .guided-input-slot.is-focused {
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.14);
+            box-shadow: 0 0 14px rgba(255, 255, 255, 0.55), inset 0 0 6px rgba(255, 255, 255, 0.25);
+        }
+        .guided-input-slot.is-correct {
+            border-color: #34d399 !important;
+            background: rgba(6, 78, 59, 0.88) !important;
+            color: #ecfdf5 !important;
+            box-shadow: 0 0 14px rgba(52, 211, 153, 0.6) !important;
+        }
+        .guided-input-slot.is-wrong {
+            border-color: #f87171 !important;
+            background: rgba(127, 29, 29, 0.88) !important;
+            color: #fef2f2 !important;
+            box-shadow: 0 0 14px rgba(248, 113, 113, 0.6) !important;
+            animation: lockedShake 0.35s ease-in-out;
         }
         /* */
         /* Animasi Progress Bar & Wajah Karakter Indikator Nyawa */
@@ -426,8 +682,97 @@
         }
         .map-node-btn:hover {
             transform: translate(-50%, -53%) scale(1.06);
-            filter: drop-shadow(0 0 22px rgba(255, 255, 255, 0.32)) brightness(1.12);
+            filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.55)) brightness(1.1);
             z-index: 30;
+        }
+        .map-node-btn:active {
+            transform: translate(-50%, -50%) scale(0.97);
+        }
+        .map-island-wrap {
+            position: relative;
+            width: clamp(3.8rem, min(15.2vw, 21.5vh), 12.6rem);
+            aspect-ratio: 280 / 175;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: clamp(-1.25rem, min(-1.6vw, -2.5vh), -0.5rem);
+            filter:
+                drop-shadow(0 0 2px rgba(255, 255, 255, 0.95))
+                drop-shadow(0 0 8px rgba(255, 255, 255, 0.65))
+                drop-shadow(0 0 18px rgba(255, 255, 255, 0.35));
+            transition: transform 0.35s ease, filter 0.35s ease;
+            pointer-events: none;
+        }
+        .map-node-btn:hover .map-island-wrap {
+            transform: translateY(-4px) scale(1.03);
+            filter:
+                drop-shadow(0 0 3px #ffffff)
+                drop-shadow(0 0 12px rgba(255, 255, 255, 0.9))
+                drop-shadow(0 0 24px rgba(255, 255, 255, 0.55));
+        }
+        .map-node-btn.is-current .map-island-wrap {
+            filter:
+                drop-shadow(0 0 3px #ffffff)
+                drop-shadow(0 0 11px rgba(255, 255, 255, 0.85))
+                drop-shadow(0 0 22px rgba(255, 255, 255, 0.5));
+        }
+        .map-orb-badge {
+            position: relative;
+            width: clamp(1.25rem, min(2.9vw, 4.6vh), 2.25rem);
+            height: clamp(1.25rem, min(2.9vw, 4.6vh), 2.25rem);
+            border-radius: 9999px;
+            background: radial-gradient(circle at 35% 30%, #2a2a2a 0%, #0d0d0d 70%, #050505 100%);
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.85), 0 0 22px rgba(255, 255, 255, 0.4), 0 4px 12px rgba(0, 0, 0, 0.95), inset 0 0 8px rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: clamp(0.58rem, min(1.35vw, 2.1vh), 1rem);
+            z-index: 12;
+            transition: all 0.25s ease;
+        }
+        .map-node-btn.is-current .map-orb-badge {
+            background: radial-gradient(circle at 35% 30%, #404040 0%, #141414 65%, #050505 100%);
+            border-color: #ffffff;
+            box-shadow: 0 0 24px rgba(255, 255, 255, 1), 0 0 42px rgba(255, 255, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.45);
+            transform: scale(1.08);
+        }
+        .map-node-btn.is-completed .map-orb-badge {
+            border-color: #ffffff;
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.85), 0 0 28px rgba(255, 255, 255, 0.45), 0 4px 10px rgba(0, 0, 0, 0.9);
+        }
+        .map-node-btn.is-locked {
+            cursor: not-allowed;
+            opacity: 0.92;
+        }
+        .map-node-btn.is-locked .map-island-wrap {
+            filter:
+                brightness(0.72)
+                drop-shadow(0 0 2px rgba(255, 255, 255, 0.9))
+                drop-shadow(0 0 7px rgba(255, 255, 255, 0.55))
+                drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+        }
+        .map-node-btn.is-locked:hover {
+            transform: translate(-50%, -50%) scale(1.02);
+            z-index: 25;
+        }
+        .map-node-btn.is-locked:hover .map-island-wrap {
+            transform: none;
+            filter:
+                brightness(0.82)
+                drop-shadow(0 0 2.5px #ffffff)
+                drop-shadow(0 0 10px rgba(255, 255, 255, 0.75))
+                drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+        }
+        .map-node-btn.is-locked .map-orb-badge {
+            background: radial-gradient(circle at 35% 30%, #1f1f1f 0%, #0a0a0a 75%, #040404 100%);
+            border-color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.32), 0 4px 10px rgba(0, 0, 0, 0.95), inset 0 0 6px rgba(255, 255, 255, 0.22);
         }
         .map-node-btn:active {
             transform: translate(-50%, -50%) scale(0.97);
@@ -475,6 +820,97 @@
         .map-node-btn.is-completed .map-orb-badge {
             border-color: #e5e5e5;
             box-shadow: 0 0 18px rgba(255, 255, 255, 0.7), 0 4px 10px rgba(0, 0, 0, 0.9);
+        }
+        .map-node-btn.is-locked {
+            cursor: not-allowed;
+            filter: brightness(0.42) contrast(0.85);
+            opacity: 0.76;
+        }
+        .map-node-btn.is-locked:hover {
+            transform: translate(-50%, -50%) scale(1);
+            filter: brightness(0.5) contrast(0.9);
+            z-index: 15;
+        }
+        .map-node-btn.is-locked:hover .map-island-wrap {
+            transform: none;
+        }
+        .map-node-btn.is-locked .map-orb-badge {
+            background: radial-gradient(circle at 35% 30%, #1a1a1a 0%, #080808 75%, #020202 100%);
+            border-color: rgba(255, 255, 255, 0.28);
+            color: rgba(255, 255, 255, 0.48);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.9);
+        }
+        @keyframes lockedShake {
+            0%, 100% { transform: translate(-50%, -50%) translateX(0); }
+            20%, 60% { transform: translate(-50%, -50%) translateX(-5px); }
+            40%, 80% { transform: translate(-50%, -50%) translateX(5px); }
+        }
+        .map-node-btn.locked-shake {
+            animation: lockedShake 0.35s ease-in-out;
+        }
+        /* Badge Bintang & Nilai Akhir Proporsional di Atas Ikon Stage pada Peta */
+        .map-score-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: clamp(-0.65rem, min(-1vw, -1.5vh), -0.3rem);
+            z-index: 22;
+            pointer-events: none;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+        }
+        .map-node-btn:hover .map-score-header {
+            transform: translateY(-4px) scale(1.06);
+        }
+        .map-stars-arch {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: clamp(0.1rem, 0.35vw, 0.24rem);
+            margin-bottom: clamp(0.06rem, 0.25vh, 0.16rem);
+        }
+        .map-star-svg {
+            width: clamp(0.68rem, min(1.5vw, 2.4vh), 1.15rem);
+            height: clamp(0.68rem, min(1.5vw, 2.4vh), 1.15rem);
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .map-star-svg.star-center {
+            width: clamp(0.82rem, min(1.8vw, 2.85vh), 1.38rem);
+            height: clamp(0.82rem, min(1.8vw, 2.85vh), 1.38rem);
+            transform: translateY(-2px);
+        }
+        .map-star-svg.star-left {
+            transform: rotate(-14deg) translateY(1px);
+        }
+        .map-star-svg.star-right {
+            transform: rotate(14deg) translateY(1px);
+        }
+        .map-star-svg.is-earned {
+            color: #fde047;
+            filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.95)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.55));
+        }
+        .map-star-svg.is-empty {
+            color: rgba(255, 255, 255, 0.18);
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.9));
+        }
+        .map-score-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.22rem;
+            padding: clamp(0.08rem, 0.25vh, 0.16rem) clamp(0.38rem, 0.8vw, 0.62rem);
+            border-radius: 9999px;
+            background: linear-gradient(180deg, rgba(24, 24, 24, 0.94) 0%, rgba(8, 8, 8, 0.98) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            font-size: clamp(0.48rem, min(0.95vw, 1.55vh), 0.72rem);
+            line-height: 1;
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+        }
+        .map-score-pill.is-scored {
+            border-color: rgba(253, 224, 71, 0.65);
+            box-shadow: 0 0 12px rgba(250, 204, 21, 0.35), 0 4px 10px rgba(0, 0, 0, 0.95), inset 0 0 6px rgba(253, 224, 71, 0.18);
         }
         /* Plakat Stage Berlekuk Organik / Chamfered dengan Ornamen Berlian */
         .map-plaque-wrap {
@@ -789,28 +1225,28 @@
             <div id="map-nodes-container" class="absolute inset-0 w-full h-full z-20"></div>
         </div>
 
-        <!-- Math Quiz Modal for Exponent Question (Horizontal / Landscape Centered Format) -->
-        <div id="quiz-modal" class="hidden absolute inset-0 z-40 flex items-center justify-center bg-black/85 backdrop-blur-md p-2 sm:p-5 overflow-y-auto">
-            <div id="quiz-modal-card" class="bg-neutral-950/95 border border-neutral-700 rounded-xl w-[96%] max-w-4xl max-h-[92%] overflow-y-auto custom-scroll px-4 py-3.5 sm:px-7 sm:py-5 text-neutral-200 shadow-2xl flex flex-col justify-start my-auto">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 border-b border-neutral-800/90 pb-2.5 mb-3 shrink-0">
-                    <div class="flex items-center gap-2">
-                        <span class="inline-block w-2.5 h-2.5 rounded-full bg-white animate-pulse"></span>
-                        <h3 id="quiz-modal-title" class="title-font text-sm sm:text-base font-bold text-white tracking-wider">GERBANG MISTERI: EKSPONEN</h3>
+        <!-- Math Quiz Modal for Exponent Question (Panel Luas, Proporsional & Responsif) -->
+        <div id="quiz-modal" class="hidden absolute inset-0 z-40 flex items-center justify-center bg-black/80 p-2.5 sm:p-5">
+            <div id="quiz-modal-card" class="quiz-popup-16-9 bg-neutral-950/95 border border-white/25 rounded-2xl overflow-y-auto custom-scroll px-4 py-3.5 sm:px-7 sm:py-5 text-neutral-200 my-auto gap-2.5 sm:gap-3.5">
+                <div class="flex flex-col gap-1 border-b border-neutral-800/90 pb-2 sm:pb-3 shrink-0 text-left">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white animate-pulse shrink-0 shadow-[0_0_8px_#fff]"></span>
+                        <h3 id="quiz-modal-title" class="title-font text-xs sm:text-sm md:text-base font-bold text-white tracking-wider leading-snug break-words">GERBANG MISTERI: EKSPONEN</h3>
                     </div>
-                    <p id="quiz-modal-subtitle" class="text-[11px] sm:text-xs text-neutral-400"></p>
+                    <p id="quiz-modal-subtitle" class="text-[10px] sm:text-xs text-neutral-400 pl-4 sm:pl-4.5 leading-relaxed break-words"></p>
                 </div>
                 
-                <div id="quiz-body-layout" class="flex flex-col gap-3 items-stretch justify-start">
-                    <div id="quiz-question-box" class="bg-neutral-900/80 border border-neutral-800 px-3.5 py-2.5 sm:px-5 sm:py-3.5 rounded-lg text-center flex items-center justify-center">
-                        <div id="quiz-question-text" class="text-xs sm:text-base font-semibold text-white tracking-wide leading-relaxed w-full"></div>
+                <div id="quiz-body-layout" class="flex-1 flex flex-col gap-2.5 sm:gap-3.5 items-stretch justify-center min-h-0">
+                    <div id="quiz-question-box" class="bg-neutral-900/85 border border-white/15 px-3.5 py-3 sm:px-6 sm:py-4 rounded-xl text-center flex flex-col items-center justify-center flex-1 min-h-0 shadow-inner overflow-y-auto custom-scroll">
+                        <div id="quiz-question-text" class="text-xs sm:text-sm md:text-base font-semibold text-white tracking-wide leading-relaxed w-full max-w-3xl mx-auto my-auto"></div>
                     </div>
 
-                    <div id="quiz-options" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 shrink-0">
-                        <!-- Options populated via JS -->
+                    <div id="quiz-options" class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 shrink-0">
+                        <!-- Options / Drag-and-Drop Number Panel populated via JS -->
                     </div>
                 </div>
 
-                <div id="quiz-feedback" class="text-center text-xs sm:text-sm font-medium min-h-[1.25rem] mt-2 shrink-0"></div>
+                <div id="quiz-feedback" class="text-center text-xs sm:text-sm font-medium min-h-[1.1rem] shrink-0"></div>
             </div>
         </div>
 
@@ -831,16 +1267,26 @@
 
         <!-- Ending Screen Overlay -->
         <div id="ending-screen" class="hidden absolute inset-0 z-25 flex flex-col items-center justify-center bg-black/90 backdrop-blur-md p-6 text-center">
-            <div class="w-16 h-16 rounded-full bg-white/10 border border-white/30 flex items-center justify-center mb-4 shadow-[0_0_50px_rgba(255,255,255,0.5)]">
+            <div class="w-16 h-16 rounded-full bg-white/10 border border-white/30 flex items-center justify-center mb-3 shadow-[0_0_50px_rgba(255,255,255,0.5)]">
                 <div class="w-4 h-4 rounded-full bg-white animate-ping"></div>
             </div>
-            <h2 id="ending-title" class="title-font text-3xl sm:text-5xl font-bold text-white mb-2">FAJAR MENYINGSING</h2>
-            <p id="ending-desc" class="text-neutral-300 text-sm max-w-md mb-6">Kamu berhasil melewati bayang-bayang hutan, memecahkan teka-teki eksponen, dan menemukan kedamaian.</p>
-            <p id="final-stats" class="text-xs text-neutral-400 uppercase tracking-widest mb-8"></p>
+            <h2 id="ending-title" class="title-font text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-2">FAJAR MENYINGSING</h2>
+            <p id="ending-desc" class="text-neutral-300 text-xs sm:text-sm max-w-md mb-4">Kamu berhasil melewati bayang-bayang hutan, memecahkan teka-teki eksponen, dan menemukan kedamaian.</p>
+
+            <!-- Tampilan Bintang & Nilai Akhir Stage -->
+            <div id="ending-score-showcase" class="flex flex-col items-center justify-center bg-neutral-950/90 border border-white/25 rounded-2xl px-6 py-3.5 mb-4 shadow-[0_0_30px_rgba(255,255,255,0.12)]">
+                <div id="ending-stars-row" class="flex items-center justify-center gap-2 mb-1.5"></div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-neutral-400 font-semibold">Nilai Akhir:</span>
+                    <span id="ending-score-value" class="title-font text-xl sm:text-2xl font-extrabold text-amber-300 drop-shadow-[0_0_10px_rgba(250,204,21,0.6)]">100</span>
+                </div>
+            </div>
+
+            <p id="final-stats" class="text-[11px] sm:text-xs text-neutral-400 uppercase tracking-widest mb-6"></p>
             <div class="flex flex-wrap justify-center gap-4">
-                <button id="btn-next-stage" class="noir-btn px-6 py-3 text-white border-white/50 shadow-[0_0_25px_rgba(255,255,255,0.25)] font-semibold">Lanjut ke Stage Berikutnya</button>
-                <button id="btn-ending-map" class="noir-btn px-6 py-3 text-white border-white/35">Pilih di Peta Stage</button>
-                <button id="btn-play-again" class="noir-btn px-6 py-3 text-neutral-300 border-white/20">Mainkan Ulang Stage</button>
+                <button id="btn-next-stage" class="hidden noir-btn px-6 py-3 text-white border-white/50 shadow-[0_0_25px_rgba(255,255,255,0.25)] font-semibold">Lanjut ke Stage Berikutnya</button>
+                <button id="btn-ending-map" class="noir-btn px-6 py-3 text-white border-white/50 shadow-[0_0_25px_rgba(255,255,255,0.22)] font-semibold">Peta Stage</button>
+                <button id="btn-play-again" class="noir-btn px-6 py-3 text-neutral-200 border-white/25">Ulangi Stage</button>
             </div>
         </div>
     </div>
@@ -874,8 +1320,21 @@ class NoirAudioEngine {
             const AudioCtx = window.AudioContext || window.webkitAudioContext;
             this.ctx = new AudioCtx();
             this.masterGain = this.ctx.createGain();
-            this.masterGain.gain.value = this.enabled ? 1.0 : 0.0;
-            this.masterGain.connect(this.ctx.destination);
+            this.masterGain.gain.value = this.enabled ? 1.35 : 0.0;
+
+            // Compressor agar seluruh efek suara elemen terdengar lantang, jernih, dan tidak pecah
+            if (this.ctx.createDynamicsCompressor) {
+                this.compressor = this.ctx.createDynamicsCompressor();
+                this.compressor.threshold.setValueAtTime(-18, this.ctx.currentTime);
+                this.compressor.knee.setValueAtTime(12, this.ctx.currentTime);
+                this.compressor.ratio.setValueAtTime(4, this.ctx.currentTime);
+                this.compressor.attack.setValueAtTime(0.005, this.ctx.currentTime);
+                this.compressor.release.setValueAtTime(0.18, this.ctx.currentTime);
+                this.masterGain.connect(this.compressor);
+                this.compressor.connect(this.ctx.destination);
+            } else {
+                this.masterGain.connect(this.ctx.destination);
+            }
 
             this.noiseBuffer = this.createNoiseBuffer(4.0);
             this.initialized = true;
@@ -931,7 +1390,7 @@ class NoirAudioEngine {
             this.ctx.resume().catch(() => {});
         }
         if (this.masterGain && this.ctx) {
-            this.masterGain.gain.setTargetAtTime(this.enabled ? 1.0 : 0.0, this.ctx.currentTime, 0.15);
+            this.masterGain.gain.setTargetAtTime(this.enabled ? 1.35 : 0.0, this.ctx.currentTime, 0.15);
         }
         return this.enabled;
     }
@@ -1295,6 +1754,38 @@ class NoirAudioEngine {
             osc: scrapeOsc,
             lfo: scrapeLfo
         };
+
+        // G. KANAL ARUS ANGIN VERTIKAL (WIND ZONES DI STAGE 8 & RAJA 2)
+        const windZoneGain = this.ctx.createGain();
+        const windZonePan = this.createPanner();
+        windZoneGain.gain.value = 0;
+
+        const wzNoise = this.createLoopingNoise();
+        const wzFilter = this.ctx.createBiquadFilter();
+        wzFilter.type = 'bandpass';
+        wzFilter.frequency.value = 520;
+        wzFilter.Q.value = 2.2;
+
+        const wzLfo = this.ctx.createOscillator();
+        const wzLfoGain = this.ctx.createGain();
+        wzLfo.type = 'sine';
+        wzLfo.frequency.value = 2.4;
+        wzLfoGain.gain.value = 220;
+        wzLfo.connect(wzLfoGain);
+        wzLfoGain.connect(wzFilter.frequency);
+
+        wzNoise.connect(wzFilter);
+        wzFilter.connect(windZoneGain);
+        windZoneGain.connect(windZonePan);
+        windZonePan.connect(this.masterGain);
+
+        wzNoise.start();
+        wzLfo.start();
+        this.channels.windZone = {
+            gain: windZoneGain,
+            pan: windZonePan,
+            filter: wzFilter
+        };
     }
 
     silenceProximityChannels() {
@@ -1339,10 +1830,10 @@ class NoirAudioEngine {
 
         if (this.channels.saw) {
             if (minSawDist < MAX_SAW_DIST) {
-                const prox = Math.pow(1 - minSawDist / MAX_SAW_DIST, 1.75);
-                this.channels.saw.gain.gain.setTargetAtTime(prox * 0.22, now, 0.06);
+                const prox = Math.pow(1 - minSawDist / MAX_SAW_DIST, 1.55);
+                this.channels.saw.gain.gain.setTargetAtTime(prox * 0.42, now, 0.05);
                 this.setPan(this.channels.saw.pan, sawDx / 350);
-                this.channels.saw.osc1.frequency.setTargetAtTime(115 + prox * 28, now, 0.08);
+                this.channels.saw.osc1.frequency.setTargetAtTime(115 + prox * 34, now, 0.06);
             } else {
                 this.channels.saw.gain.gain.setTargetAtTime(0, now, 0.1);
             }
@@ -1352,13 +1843,13 @@ class NoirAudioEngine {
         let maxStoneIntensity = 0;
         let stoneDx = 0;
         let boulderMod = 0;
-        const MAX_STONE_DIST = 720;
+        const MAX_STONE_DIST = 760;
 
         if (env.boulder && env.boulder.active && env.boulder.triggered) {
             const d = Math.hypot(px - env.boulder.x, py - env.boulder.y);
             if (d < MAX_STONE_DIST) {
-                const prox = Math.pow(1 - d / MAX_STONE_DIST, 1.35);
-                const intensity = prox * 1.15;
+                const prox = Math.pow(1 - d / MAX_STONE_DIST, 1.25);
+                const intensity = prox * 1.35;
                 boulderMod = Math.sin((env.boulder.angle || 0) * 4) * 35;
                 if (intensity > maxStoneIntensity) {
                     maxStoneIntensity = intensity;
@@ -1370,9 +1861,9 @@ class NoirAudioEngine {
             const cx = cr.x + cr.w * 0.5;
             const cy = cr.y + cr.h * 0.5;
             const d = Math.hypot(px - cx, py - cy);
-            if (d < 480) {
-                const prox = Math.pow(1 - d / 480, 1.6);
-                const stateFactor = (cr.state === 'slam' || cr.state === 'rise') ? 0.85 : 0.0;
+            if (d < 520) {
+                const prox = Math.pow(1 - d / 520, 1.45);
+                const stateFactor = (cr.state === 'slam' || cr.state === 'rise') ? 1.0 : 0.0;
                 const intensity = prox * stateFactor;
                 if (intensity > maxStoneIntensity) {
                     maxStoneIntensity = intensity;
@@ -1384,8 +1875,8 @@ class NoirAudioEngine {
             if (cp.state === 'shaking') {
                 const cx = cp.x + cp.w * 0.5;
                 const d = Math.hypot(px - cx, py - cp.y);
-                if (d < 360) {
-                    const intensity = Math.pow(1 - d / 360, 1.4) * 0.9;
+                if (d < 420) {
+                    const intensity = Math.pow(1 - d / 420, 1.3) * 1.1;
                     if (intensity > maxStoneIntensity) {
                         maxStoneIntensity = intensity;
                         stoneDx = cx - px;
@@ -1395,11 +1886,11 @@ class NoirAudioEngine {
         }
 
         if (this.channels.stone) {
-            this.channels.stone.gain.gain.setTargetAtTime(Math.min(0.45, maxStoneIntensity * 0.38), now, 0.06);
+            this.channels.stone.gain.gain.setTargetAtTime(Math.min(0.65, maxStoneIntensity * 0.52), now, 0.05);
             this.setPan(this.channels.stone.pan, stoneDx / 380);
-            this.channels.stone.filter.frequency.setTargetAtTime(Math.max(60, 105 + maxStoneIntensity * 110 + boulderMod), now, 0.06);
+            this.channels.stone.filter.frequency.setTargetAtTime(Math.max(60, 115 + maxStoneIntensity * 130 + boulderMod), now, 0.05);
             if (this.channels.stone.osc) {
-                this.channels.stone.osc.frequency.setTargetAtTime(42 + maxStoneIntensity * 18 + boulderMod * 0.2, now, 0.06);
+                this.channels.stone.osc.frequency.setTargetAtTime(42 + maxStoneIntensity * 22 + boulderMod * 0.2, now, 0.05);
             }
         }
 
@@ -1407,16 +1898,16 @@ class NoirAudioEngine {
         if (this.channels.water) {
             if (player.inWater) {
                 const swimSpeed = Math.hypot(player.vx, player.vy);
-                const isSwimming = swimSpeed > 0.25;
+                const isSwimming = swimSpeed > 0.22;
                 const targetWaterGain = isSwimming
-                    ? Math.min(0.36, 0.14 + swimSpeed * 0.045)
-                    : 0.07;
-                const strokeRipple = isSwimming ? Math.sin(now * 7.5) * 95 : 0;
+                    ? Math.min(0.52, 0.22 + swimSpeed * 0.065)
+                    : 0.12;
+                const strokeRipple = isSwimming ? Math.sin(now * 7.5) * 115 : 0;
 
-                this.channels.water.gain.gain.setTargetAtTime(targetWaterGain, now, 0.06);
+                this.channels.water.gain.gain.setTargetAtTime(targetWaterGain, now, 0.05);
                 this.setPan(this.channels.water.pan, Math.max(-0.35, Math.min(0.35, player.vx * 0.08)));
-                this.channels.water.filter.frequency.setTargetAtTime(380 + swimSpeed * 75 + strokeRipple, now, 0.07);
-                this.channels.water.lowpass.frequency.setTargetAtTime(isSwimming ? 820 : 480, now, 0.08);
+                this.channels.water.filter.frequency.setTargetAtTime(410 + swimSpeed * 85 + strokeRipple, now, 0.06);
+                this.channels.water.lowpass.frequency.setTargetAtTime(isSwimming ? 980 : 560, now, 0.07);
             } else {
                 this.channels.water.gain.gain.setTargetAtTime(0, now, 0.08);
             }
@@ -1426,15 +1917,15 @@ class NoirAudioEngine {
         let maxLaserIntensity = 0;
         let laserDx = 0;
         let nearestLaserActive = false;
-        const MAX_LASER_DIST = 480;
+        const MAX_LASER_DIST = 520;
 
         for (const lb of (env.laserBeams || [])) {
             const midX = (lb.x1 + lb.x2) * 0.5;
             const clampedY = Math.max(Math.min(lb.y1, lb.y2), Math.min(py, Math.max(lb.y1, lb.y2)));
             const d = Math.hypot(px - midX, py - clampedY);
             if (d < MAX_LASER_DIST) {
-                const prox = Math.pow(1 - d / MAX_LASER_DIST, 1.65);
-                const stateMult = lb.active ? 1.0 : (lb.warning ? 0.55 : 0.15);
+                const prox = Math.pow(1 - d / MAX_LASER_DIST, 1.5);
+                const stateMult = lb.active ? 1.0 : (lb.warning ? 0.6 : 0.18);
                 const intensity = prox * stateMult;
                 if (intensity > maxLaserIntensity) {
                     maxLaserIntensity = intensity;
@@ -1445,24 +1936,24 @@ class NoirAudioEngine {
         }
 
         if (this.channels.laser) {
-            this.channels.laser.gain.gain.setTargetAtTime(maxLaserIntensity * 0.18, now, 0.05);
+            this.channels.laser.gain.gain.setTargetAtTime(maxLaserIntensity * 0.34, now, 0.04);
             this.setPan(this.channels.laser.pan, laserDx / 320);
-            this.channels.laser.osc2.frequency.setTargetAtTime(nearestLaserActive ? 888 : 540, now, 0.06);
+            this.channels.laser.osc2.frequency.setTargetAtTime(nearestLaserActive ? 920 : 540, now, 0.05);
         }
 
         // 5. PROXIMITY BUSUR LISTRIK TEGANGAN TINGGI (ELECTRIC ARCS)
         let maxElecIntensity = 0;
         let elecDx = 0;
         let nearestElecActive = false;
-        const MAX_ELEC_DIST = 500;
+        const MAX_ELEC_DIST = 540;
 
         for (const arc of (env.electricArcs || [])) {
             const midX = (arc.x1 + arc.x2) * 0.5;
             const clampedY = Math.max(Math.min(arc.y1, arc.y2), Math.min(py, Math.max(arc.y1, arc.y2)));
             const d = Math.hypot(px - midX, py - clampedY);
             if (d < MAX_ELEC_DIST) {
-                const prox = Math.pow(1 - d / MAX_ELEC_DIST, 1.65);
-                const stateMult = arc.active ? 1.0 : (arc.warning ? 0.48 : 0.14);
+                const prox = Math.pow(1 - d / MAX_ELEC_DIST, 1.5);
+                const stateMult = arc.active ? 1.0 : (arc.warning ? 0.52 : 0.16);
                 const intensity = prox * stateMult;
                 if (intensity > maxElecIntensity) {
                     maxElecIntensity = intensity;
@@ -1473,13 +1964,12 @@ class NoirAudioEngine {
         }
 
         if (this.channels.electric) {
-            // Efek percikan listrik acak (crackle jitter) saat busur listrik aktif di dekat karakter
-            const crackleJitter = nearestElecActive ? (0.75 + Math.random() * 0.5) : 0.6;
-            this.channels.electric.gain.gain.setTargetAtTime(maxElecIntensity * 0.22 * crackleJitter, now, 0.04);
+            const crackleJitter = nearestElecActive ? (0.85 + Math.random() * 0.55) : 0.65;
+            this.channels.electric.gain.gain.setTargetAtTime(maxElecIntensity * 0.38 * crackleJitter, now, 0.03);
             this.setPan(this.channels.electric.pan, elecDx / 320);
             if (nearestElecActive) {
-                this.channels.electric.noiseFilter.frequency.setTargetAtTime(2200 + Math.random() * 1400, now, 0.03);
-                this.channels.electric.buzzOsc.frequency.setTargetAtTime(160 + Math.random() * 60, now, 0.03);
+                this.channels.electric.noiseFilter.frequency.setTargetAtTime(2200 + Math.random() * 1600, now, 0.03);
+                this.channels.electric.buzzOsc.frequency.setTargetAtTime(160 + Math.random() * 75, now, 0.03);
             } else {
                 this.channels.electric.buzzOsc.frequency.setTargetAtTime(120, now, 0.08);
             }
@@ -1487,7 +1977,7 @@ class NoirAudioEngine {
 
         // 6. EFEK SUARA MENDORONG / MENARIK KOTAK KAYU & GEROBAK TANGGA
         if (this.channels.scrape) {
-            const isMovingObject = (player.isPushing || player.isPulling) && Math.abs(player.vx) > 0.15 && player.onGround;
+            const isMovingObject = (player.isPushing || player.isPulling) && Math.abs(player.vx) > 0.12 && player.onGround;
             if (isMovingObject) {
                 let onCart = false;
                 for (const lc of (env.ladderCarts || [])) {
@@ -1496,21 +1986,49 @@ class NoirAudioEngine {
                         break;
                     }
                 }
-                const speedFactor = Math.min(1.2, Math.abs(player.vx) / 2.2);
-                this.channels.scrape.gain.gain.setTargetAtTime(0.24 * speedFactor, now, 0.05);
+                const speedFactor = Math.min(1.35, Math.abs(player.vx) / 2.0);
+                this.channels.scrape.gain.gain.setTargetAtTime(0.42 * speedFactor, now, 0.04);
                 this.setPan(this.channels.scrape.pan, player.facing * 0.15);
                 if (onCart) {
-                    // Suara roda besi gerobak tangga berputar & berderit di atas tanah
-                    this.channels.scrape.filter.frequency.setTargetAtTime(420 + Math.sin(now * 14) * 90, now, 0.05);
-                    this.channels.scrape.osc.frequency.setTargetAtTime(92 + (now * 25 % 18), now, 0.05);
+                    this.channels.scrape.filter.frequency.setTargetAtTime(440 + Math.sin(now * 15) * 110, now, 0.04);
+                    this.channels.scrape.osc.frequency.setTargetAtTime(95 + (now * 28 % 22), now, 0.04);
                 } else {
-                    // Suara gesekan berat peti kayu diseret di atas tanah/batu
-                    this.channels.scrape.filter.frequency.setTargetAtTime(240 + Math.random() * 60, now, 0.05);
-                    this.channels.scrape.osc.frequency.setTargetAtTime(58 + Math.random() * 12, now, 0.05);
+                    this.channels.scrape.filter.frequency.setTargetAtTime(260 + Math.random() * 75, now, 0.04);
+                    this.channels.scrape.osc.frequency.setTargetAtTime(62 + Math.random() * 14, now, 0.04);
                 }
             } else {
                 this.channels.scrape.gain.gain.setTargetAtTime(0, now, 0.08);
             }
+        }
+
+        // 7. EFEK SUARA ARUS ANGIN VERTIKAL (WIND ZONES)
+        let maxWindIntensity = 0;
+        let windDx = 0;
+        let inWindZone = false;
+        const MAX_WIND_DIST = 480;
+
+        for (const wz of (env.windZones || [])) {
+            const cx = wz.x + wz.w * 0.5;
+            const cy = wz.y + wz.h * 0.5;
+            const d = Math.hypot(px - cx, py - cy);
+            if (px >= wz.x && px <= wz.x + wz.w && py >= wz.y && py <= wz.y + wz.h) {
+                maxWindIntensity = 1.0;
+                windDx = 0;
+                inWindZone = true;
+                break;
+            } else if (d < MAX_WIND_DIST) {
+                const prox = Math.pow(1 - d / MAX_WIND_DIST, 1.5);
+                if (prox > maxWindIntensity) {
+                    maxWindIntensity = prox;
+                    windDx = cx - px;
+                }
+            }
+        }
+
+        if (this.channels.windZone) {
+            this.channels.windZone.gain.gain.setTargetAtTime(maxWindIntensity * (inWindZone ? 0.38 : 0.22), now, 0.06);
+            this.setPan(this.channels.windZone.pan, windDx / 320);
+            this.channels.windZone.filter.frequency.setTargetAtTime(inWindZone ? 680 : 460, now, 0.07);
         }
     }
 
@@ -1743,42 +2261,58 @@ class NoirAudioEngine {
 
     playSpiderElectrocute() {
         if (!this.enabled || !this.ctx) return;
+        if (this.ctx.state === 'suspended') {
+            this.ctx.resume().catch(() => {});
+        }
         const now = this.ctx.currentTime;
 
-        // 1. Sambaran petir tegangan tinggi & gemeretak sengatan listrik (Electric Zap & Crackle)
+        // 1. Ledakan petir awal & gemeretak sengatan listrik tegangan tinggi (Multi-layered Thunder & Electric Zap)
         if (this.noiseBuffer) {
             const zapNoise = this.ctx.createBufferSource();
             zapNoise.buffer = this.noiseBuffer;
             const zapFilter = this.ctx.createBiquadFilter();
             zapFilter.type = 'bandpass';
-            zapFilter.frequency.setValueAtTime(2800, now);
-            zapFilter.frequency.exponentialRampToValueAtTime(650, now + 0.65);
-            zapFilter.Q.value = 2.4;
+            zapFilter.frequency.setValueAtTime(3200, now);
+            zapFilter.frequency.exponentialRampToValueAtTime(520, now + 0.95);
+            zapFilter.Q.value = 1.8;
 
             const zapGain = this.ctx.createGain();
-            zapGain.gain.setValueAtTime(0.42, now);
-            zapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.68);
+            zapGain.gain.setValueAtTime(0.68, now);
+            zapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.98);
 
             zapNoise.connect(zapFilter);
             zapFilter.connect(zapGain);
             zapGain.connect(this.masterGain);
-            zapNoise.start(now, Math.random() * 1.5, 0.70);
+            zapNoise.start(now, Math.random() * 1.2, 1.0);
+
+            // Dentuman guntur rendah saat petir menyambar
+            const thunderOsc = this.ctx.createOscillator();
+            const thunderGain = this.ctx.createGain();
+            thunderOsc.type = 'sawtooth';
+            thunderOsc.frequency.setValueAtTime(135, now);
+            thunderOsc.frequency.exponentialRampToValueAtTime(28, now + 0.55);
+            thunderGain.gain.setValueAtTime(0.52, now);
+            thunderGain.gain.exponentialRampToValueAtTime(0.001, now + 0.58);
+            thunderOsc.connect(thunderGain);
+            thunderGain.connect(this.masterGain);
+            thunderOsc.start(now);
+            thunderOsc.stop(now + 0.6);
         }
 
-        // Osilator sengatan busur listrik bergetar cepat
+        // 2. Osilator sengatan busur listrik bergetar cepat (Electric Arc Buzz)
         const arcOsc = this.ctx.createOscillator();
         const arcMod = this.ctx.createOscillator();
         const arcModGain = this.ctx.createGain();
         const arcGain = this.ctx.createGain();
 
         arcOsc.type = 'sawtooth';
-        arcOsc.frequency.setValueAtTime(140, now);
+        arcOsc.frequency.setValueAtTime(165, now);
         arcMod.type = 'square';
-        arcMod.frequency.setValueAtTime(48, now);
-        arcModGain.gain.setValueAtTime(110, now);
+        arcMod.frequency.setValueAtTime(54, now);
+        arcModGain.gain.setValueAtTime(135, now);
 
-        arcGain.gain.setValueAtTime(0.28, now);
-        arcGain.gain.exponentialRampToValueAtTime(0.001, now + 0.62);
+        arcGain.gain.setValueAtTime(0.46, now);
+        arcGain.gain.exponentialRampToValueAtTime(0.001, now + 0.88);
 
         arcMod.connect(arcModGain);
         arcModGain.connect(arcOsc.frequency);
@@ -1787,46 +2321,49 @@ class NoirAudioEngine {
 
         arcOsc.start(now);
         arcMod.start(now);
-        arcOsc.stop(now + 0.65);
-        arcMod.stop(now + 0.65);
+        arcOsc.stop(now + 0.9);
+        arcMod.stop(now + 0.9);
 
-        // 2. Pekikan kesakitan laba-laba raksasa saat tersengat listrik
+        // 3. Pekikan kesakitan laba-laba raksasa saat tersengat listrik
         const screech1 = this.ctx.createOscillator();
         const screech2 = this.ctx.createOscillator();
         const screechFilter = this.ctx.createBiquadFilter();
         const screechGain = this.ctx.createGain();
 
         screech1.type = 'sawtooth';
-        screech1.frequency.setValueAtTime(620, now + 0.04);
-        screech1.frequency.exponentialRampToValueAtTime(195, now + 0.58);
+        screech1.frequency.setValueAtTime(680, now + 0.05);
+        screech1.frequency.exponentialRampToValueAtTime(185, now + 0.78);
 
         screech2.type = 'triangle';
-        screech2.frequency.setValueAtTime(910, now + 0.04);
-        screech2.frequency.exponentialRampToValueAtTime(240, now + 0.58);
-        screech2.detune.setValueAtTime(25, now);
+        screech2.frequency.setValueAtTime(980, now + 0.05);
+        screech2.frequency.exponentialRampToValueAtTime(230, now + 0.78);
+        screech2.detune.setValueAtTime(28, now);
 
         screechFilter.type = 'bandpass';
-        screechFilter.frequency.setValueAtTime(1150, now + 0.04);
-        screechFilter.frequency.exponentialRampToValueAtTime(360, now + 0.58);
-        screechFilter.Q.value = 3.0;
+        screechFilter.frequency.setValueAtTime(1250, now + 0.05);
+        screechFilter.frequency.exponentialRampToValueAtTime(340, now + 0.78);
+        screechFilter.Q.value = 2.6;
 
         screechGain.gain.setValueAtTime(0.001, now);
-        screechGain.gain.linearRampToValueAtTime(0.28, now + 0.07);
-        screechGain.gain.exponentialRampToValueAtTime(0.001, now + 0.62);
+        screechGain.gain.linearRampToValueAtTime(0.45, now + 0.09);
+        screechGain.gain.exponentialRampToValueAtTime(0.001, now + 0.82);
 
         screech1.connect(screechFilter);
         screech2.connect(screechFilter);
         screechFilter.connect(screechGain);
         screechGain.connect(this.masterGain);
 
-        screech1.start(now + 0.04);
-        screech2.start(now + 0.04);
-        screech1.stop(now + 0.64);
-        screech2.stop(now + 0.64);
+        screech1.start(now + 0.05);
+        screech2.start(now + 0.05);
+        screech1.stop(now + 0.85);
+        screech2.stop(now + 0.85);
     }
 
     playSpiderBurnDeath() {
         if (!this.enabled || !this.ctx) return;
+        if (this.ctx.state === 'suspended') {
+            this.ctx.resume().catch(() => {});
+        }
         const now = this.ctx.currentTime;
 
         // 1. Desisan api & tubuh laba-laba raksasa terbakar hangus (Sizzling & Charring Crackle)
@@ -1837,23 +2374,23 @@ class NoirAudioEngine {
 
             const sizzleFilter = this.ctx.createBiquadFilter();
             sizzleFilter.type = 'bandpass';
-            sizzleFilter.frequency.setValueAtTime(1450, now);
-            sizzleFilter.frequency.exponentialRampToValueAtTime(380, now + 3.2);
-            sizzleFilter.Q.value = 1.6;
+            sizzleFilter.frequency.setValueAtTime(1550, now);
+            sizzleFilter.frequency.exponentialRampToValueAtTime(340, now + 3.4);
+            sizzleFilter.Q.value = 1.4;
 
             const crackleLfo = this.ctx.createOscillator();
             const crackleLfoGain = this.ctx.createGain();
             crackleLfo.type = 'sawtooth';
-            crackleLfo.frequency.setValueAtTime(18, now);
-            crackleLfoGain.gain.setValueAtTime(620, now);
+            crackleLfo.frequency.setValueAtTime(22, now);
+            crackleLfoGain.gain.setValueAtTime(720, now);
             crackleLfo.connect(crackleLfoGain);
             crackleLfoGain.connect(sizzleFilter.frequency);
 
             const burnGain = this.ctx.createGain();
             burnGain.gain.setValueAtTime(0.01, now);
-            burnGain.gain.linearRampToValueAtTime(0.38, now + 0.18);
-            burnGain.gain.setValueAtTime(0.32, now + 1.4);
-            burnGain.gain.exponentialRampToValueAtTime(0.001, now + 3.4);
+            burnGain.gain.linearRampToValueAtTime(0.56, now + 0.15);
+            burnGain.gain.setValueAtTime(0.48, now + 1.6);
+            burnGain.gain.exponentialRampToValueAtTime(0.001, now + 3.5);
 
             burnNoise.connect(sizzleFilter);
             sizzleFilter.connect(burnGain);
@@ -1861,8 +2398,8 @@ class NoirAudioEngine {
 
             burnNoise.start(now);
             crackleLfo.start(now);
-            burnNoise.stop(now + 3.5);
-            crackleLfo.stop(now + 3.5);
+            burnNoise.stop(now + 3.6);
+            crackleLfo.stop(now + 3.6);
         }
 
         // 2. Gemuruh rendah & raungan kehancuran laba-laba saat hangus menjadi abu
@@ -1872,19 +2409,19 @@ class NoirAudioEngine {
         const roarGain = this.ctx.createGain();
 
         roarOsc.type = 'sawtooth';
-        roarOsc.frequency.setValueAtTime(155, now);
-        roarOsc.frequency.exponentialRampToValueAtTime(28, now + 2.8);
+        roarOsc.frequency.setValueAtTime(165, now);
+        roarOsc.frequency.exponentialRampToValueAtTime(26, now + 3.0);
 
         subOsc.type = 'triangle';
-        subOsc.frequency.setValueAtTime(78, now);
-        subOsc.frequency.exponentialRampToValueAtTime(18, now + 2.9);
+        subOsc.frequency.setValueAtTime(82, now);
+        subOsc.frequency.exponentialRampToValueAtTime(18, now + 3.1);
 
         roarFilter.type = 'lowpass';
-        roarFilter.frequency.setValueAtTime(420, now);
-        roarFilter.frequency.exponentialRampToValueAtTime(85, now + 2.8);
+        roarFilter.frequency.setValueAtTime(480, now);
+        roarFilter.frequency.exponentialRampToValueAtTime(80, now + 3.0);
 
-        roarGain.gain.setValueAtTime(0.34, now);
-        roarGain.gain.exponentialRampToValueAtTime(0.001, now + 3.0);
+        roarGain.gain.setValueAtTime(0.52, now);
+        roarGain.gain.exponentialRampToValueAtTime(0.001, now + 3.2);
 
         roarOsc.connect(roarFilter);
         subOsc.connect(roarFilter);
@@ -1893,8 +2430,8 @@ class NoirAudioEngine {
 
         roarOsc.start(now);
         subOsc.start(now);
-        roarOsc.stop(now + 3.1);
-        subOsc.stop(now + 3.1);
+        roarOsc.stop(now + 3.3);
+        subOsc.stop(now + 3.3);
     }
 
     playSpiderWebShoot() {
@@ -2136,16 +2673,102 @@ class NoirAudioEngine {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(95 + Math.random() * 25, now);
-        osc.frequency.exponentialRampToValueAtTime(30, now + 0.06);
+        osc.frequency.setValueAtTime(105 + Math.random() * 28, now);
+        osc.frequency.exponentialRampToValueAtTime(32, now + 0.075);
 
-        gain.gain.setValueAtTime(0.08, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.065);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
 
         osc.connect(gain);
         gain.connect(this.masterGain);
         osc.start(now);
-        osc.stop(now + 0.07);
+        osc.stop(now + 0.085);
+
+        // Desir halus rumput/tanah saat melangkah
+        if (this.noiseBuffer) {
+            const stepNoise = this.ctx.createBufferSource();
+            stepNoise.buffer = this.noiseBuffer;
+            const filter = this.ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(950 + Math.random() * 250, now);
+            filter.Q.value = 2.0;
+            const nGain = this.ctx.createGain();
+            nGain.gain.setValueAtTime(0.06, now);
+            nGain.gain.exponentialRampToValueAtTime(0.001, now + 0.055);
+            stepNoise.connect(filter);
+            filter.connect(nGain);
+            nGain.connect(this.masterGain);
+            stepNoise.start(now, Math.random() * 2.0, 0.06);
+        }
+    }
+
+    playLand(impactSpeed = 5) {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+        const vol = Math.min(0.34, Math.max(0.12, impactSpeed * 0.028));
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(88, now);
+        osc.frequency.exponentialRampToValueAtTime(24, now + 0.14);
+        gain.gain.setValueAtTime(vol, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.16);
+    }
+
+    playLadderStep() {
+        if (!this.enabled || !this.ctx) return;
+        const nowMs = performance.now();
+        if (this.lastLadderTime && nowMs - this.lastLadderTime < 160) return;
+        this.lastLadderTime = nowMs;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(320 + Math.random() * 60, now);
+        osc.frequency.exponentialRampToValueAtTime(110, now + 0.075);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.085);
+    }
+
+    playCrumbleCrack() {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(195, now);
+        osc.frequency.exponentialRampToValueAtTime(48, now + 0.22);
+        gain.gain.setValueAtTime(0.26, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.25);
+
+        if (this.noiseBuffer) {
+            const crackNoise = this.ctx.createBufferSource();
+            crackNoise.buffer = this.noiseBuffer;
+            const filter = this.ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(1200, now);
+            filter.Q.value = 2.2;
+            const nGain = this.ctx.createGain();
+            nGain.gain.setValueAtTime(0.22, now);
+            nGain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+            crackNoise.connect(filter);
+            filter.connect(nGain);
+            nGain.connect(this.masterGain);
+            crackNoise.start(now, Math.random() * 1.5, 0.2);
+        }
     }
 
     playJump() {
@@ -2154,16 +2777,16 @@ class NoirAudioEngine {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(110, now);
-        osc.frequency.exponentialRampToValueAtTime(210, now + 0.14);
+        osc.frequency.setValueAtTime(115, now);
+        osc.frequency.exponentialRampToValueAtTime(235, now + 0.15);
 
-        gain.gain.setValueAtTime(0.12, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+        gain.gain.setValueAtTime(0.22, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
 
         osc.connect(gain);
         gain.connect(this.masterGain);
         osc.start(now);
-        osc.stop(now + 0.16);
+        osc.stop(now + 0.17);
     }
 
     playParasiteLatch() {
@@ -2172,10 +2795,10 @@ class NoirAudioEngine {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(520, now);
-        osc.frequency.exponentialRampToValueAtTime(180, now + 0.35);
+        osc.frequency.setValueAtTime(540, now);
+        osc.frequency.exponentialRampToValueAtTime(175, now + 0.36);
 
-        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.setValueAtTime(0.24, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
 
         osc.connect(gain);
@@ -2193,7 +2816,7 @@ class NoirAudioEngine {
         osc.frequency.setValueAtTime(330, now);
         osc.frequency.exponentialRampToValueAtTime(660, now + 0.45);
 
-        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.setValueAtTime(0.24, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.48);
 
         osc.connect(gain);
@@ -2208,16 +2831,16 @@ class NoirAudioEngine {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(150, now);
-        osc.frequency.exponentialRampToValueAtTime(32, now + 0.55);
+        osc.frequency.setValueAtTime(155, now);
+        osc.frequency.exponentialRampToValueAtTime(30, now + 0.58);
 
-        gain.gain.setValueAtTime(0.24, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+        gain.gain.setValueAtTime(0.34, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.62);
 
         osc.connect(gain);
         gain.connect(this.masterGain);
         osc.start(now);
-        osc.stop(now + 0.62);
+        osc.stop(now + 0.64);
     }
 
     playMechanism() {
@@ -2226,16 +2849,16 @@ class NoirAudioEngine {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'square';
-        osc.frequency.setValueAtTime(85, now);
-        osc.frequency.setValueAtTime(115, now + 0.08);
+        osc.frequency.setValueAtTime(92, now);
+        osc.frequency.setValueAtTime(132, now + 0.08);
 
-        gain.gain.setValueAtTime(0.1, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        gain.gain.setValueAtTime(0.22, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
 
         osc.connect(gain);
         gain.connect(this.masterGain);
         osc.start(now);
-        osc.stop(now + 0.26);
+        osc.stop(now + 0.28);
     }
 }
 
@@ -2281,6 +2904,8 @@ let windZones = [];
 let laserBeams = []; 
 let solvedQuizGates = {};
 let completedStages = {};
+let stageScores = {};
+let stageQuizMistakes = 0;
 let mapActive = false;
 let bossEntity = null;
 
@@ -2292,6 +2917,10 @@ function getNextStageId(stageId) {
         return stageOrder[idx + 1];
     }
     return null;
+}
+
+function isStageUnlocked(stageId) {
+    return true;
 }
 
 const stageMapMetadata = [
@@ -3095,8 +3724,6 @@ function getStageIslandSVG(stage) {
                         <path d="M 162 66 L 200 20 L 228 62 L 238 113 L 232 113 L 221 64 L 197 26 L 158 70 Z"/>
                     </g>
 
-                    <!-- Tubuh Utama Leviathan: Abdomen Tarantula Berbulu & Inti Reaktor Bercahaya -->
-                    <g fill="#030303" stroke="#383838" stroke-width="1.1" stroke-dasharray="2 1.2">
                     <!-- Tubuh Utama Leviathan: Abdomen Tarantula Berbulu -->
                     <g fill="#030303" stroke="#383838" stroke-width="1.1" stroke-dasharray="2 1.2">
                         <!-- Abdomen Tarantula Besar (Tanpa Lingkaran Hitam di Perut) -->
@@ -4682,14 +5309,53 @@ function renderMapNodes() {
     container.innerHTML = '';
 
     stageMapMetadata.forEach((meta) => {
-        const isCurrent = currentStage === meta.stage;
+        const isUnlocked = isStageUnlocked(meta.stage);
+        const isCurrent = (currentStage === meta.stage) && isUnlocked;
         const isDone = !!completedStages[meta.stage];
+        const scoreData = stageScores[meta.stage] || null;
+        const earnedStars = scoreData ? scoreData.stars : 0;
+        const finalScore = scoreData ? scoreData.score : null;
 
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `map-node-btn ${isCurrent ? 'is-current' : ''} ${isDone ? 'is-completed' : ''}`;
+        btn.className = `map-node-btn ${isCurrent ? 'is-current' : ''} ${isDone ? 'is-completed' : ''} ${!isUnlocked ? 'is-locked' : ''}`;
         btn.style.left = `${meta.x}%`;
         btn.style.top = `${meta.y}%`;
+        btn.title = isUnlocked
+            ? (isDone && finalScore !== null ? `${meta.name} • Nilai: ${finalScore} (${earnedStars} Bintang)` : meta.name)
+            : `${meta.name} (Terkunci - Selesaikan stage sebelumnya terlebih dahulu)`;
+
+        const renderStarSVG = (posClass, filled) => `
+            <svg class="map-star-svg ${posClass} ${filled ? 'is-earned' : 'is-empty'}" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l2.92 6.26L22 9.27l-5.05 4.73L18.18 21 12 17.56 5.82 21l1.23-7-5.05-4.73 7.08-1.01L12 2z"/>
+            </svg>
+        `;
+
+        const topScoreHeaderHTML = isDone && finalScore !== null ? `
+            <div class="map-score-header">
+                <div class="map-stars-arch">
+                    ${renderStarSVG('star-left', earnedStars >= 1)}
+                    ${renderStarSVG('star-center', earnedStars >= 2)}
+                    ${renderStarSVG('star-right', earnedStars >= 3)}
+                </div>
+                <div class="map-score-pill is-scored">
+                    <span class="text-neutral-300 font-semibold">NILAI</span>
+                    <span class="text-amber-300 font-extrabold tabular-nums">${finalScore}</span>
+                </div>
+            </div>
+        ` : `
+            <div class="map-score-header opacity-75">
+                <div class="map-stars-arch">
+                    ${renderStarSVG('star-left', false)}
+                    ${renderStarSVG('star-center', false)}
+                    ${renderStarSVG('star-right', false)}
+                </div>
+                <div class="map-score-pill">
+                    <span class="text-neutral-400 font-medium">NILAI</span>
+                    <span class="text-neutral-500 font-bold tabular-nums">--</span>
+                </div>
+            </div>
+        `;
 
         // Penanda siluet karakter berdiri di atas pulau stage yang sedang aktif (selain Stage 1 yang sudah memiliki siluet di tebingnya)
         const boyMarkerHTML = (isCurrent && meta.stage !== 1) ? `
@@ -4706,21 +5372,41 @@ function renderMapNodes() {
 
         const statusBadgeHTML = isDone ? `
             <span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-neutral-100 text-black flex items-center justify-center text-[10px] font-extrabold shadow-[0_0_10px_#ffffff]">✓</span>
-        ` : '';
+        ` : (!isUnlocked ? `
+            <span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-neutral-900 border border-white/40 text-neutral-200 flex items-center justify-center shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+                <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17 9h-1V7a4 4 0 00-8 0v2H7a2 2 0 00-2 2v8a2 2 0 002 2h10a2 2 0 002-2v-8a2 2 0 00-2-2zm-6 7.73V18a1 1 0 01-2 0v-1.27a2 2 0 112 0zM10 9V7a2 2 0 114 0v2h-4z"/>
+                </svg>
+            </span>
+        ` : '');
+
+        const orbInnerHTML = isUnlocked
+            ? `<span>${meta.badge || meta.stage}</span>`
+            : `<svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-neutral-400" viewBox="0 0 24 24" fill="currentColor">
+                   <path d="M17 9h-1V7a4 4 0 00-8 0v2H7a2 2 0 00-2 2v8a2 2 0 002 2h10a2 2 0 002-2v-8a2 2 0 00-2-2zm-6 7.73V18a1 1 0 01-2 0v-1.27a2 2 0 112 0zM10 9V7a2 2 0 114 0v2h-4z"/>
+               </svg>`;
 
         btn.innerHTML = `
+            ${topScoreHeaderHTML}
             <div class="map-island-wrap">
                 ${boyMarkerHTML}
                 ${getStageIslandSVG(meta.stage)}
             </div>
             <div class="map-orb-badge">
-                <span>${meta.badge || meta.stage}</span>
+                ${orbInnerHTML}
                 ${statusBadgeHTML}
             </div>
         `;
 
         btn.addEventListener('click', () => {
             audio.init();
+            if (!isUnlocked) {
+                audio.playParasiteLatch();
+                btn.classList.remove('locked-shake');
+                void btn.offsetWidth;
+                btn.classList.add('locked-shake');
+                return;
+            }
             audio.playCleanse();
             startStageFromMap(meta.stage);
         });
@@ -4783,6 +5469,7 @@ function closeMapScreen() {
 }
 
 function startStageFromMap(stageNumber) {
+    if (!isStageUnlocked(stageNumber)) return;
     currentStage = stageNumber;
     mapActive = false;
     gameEnded = false;
@@ -4891,31 +5578,57 @@ const stageMathQuizzes = {
             options: ["Saya Paham, Lanjutkan Perjalanan!"]
         },
         {
-            type: 'quiz',
-            title: "STAGE 1 - BAB II: TANTANGAN PERKALIAN",
-            subtitle: "Uji pemahamanmu dari materi Bab I:",
+            type: 'drag_drop',
+            title: "STAGE 1 - SOAL 1: TANTANGAN PERKALIAN",
+            subtitle: "Seret angka dari panel bawah ke kotak jawaban yang tersedia!",
             question: "Berapakah hasil dari 2<sup>3</sup> × 2<sup>4</sup> menggunakan sifat perkalian eksponen?",
-            options: ["2<sup>7</sup>", "2<sup>12</sup>", "4<sup>7</sup>", "4<sup>12</sup>"],
-            correctIndex: 0,
+            equationPrompt: "2<sup>3</sup> × 2<sup>4</sup> =",
+            slots: [
+                { id: 'base', role: 'base', answer: '2', placeholder: '?' },
+                { id: 'exp', role: 'exp', answer: '7', placeholder: '?' }
+            ],
             explanation: "Benar! a<sup>m</sup> × a<sup>n</sup> = a<sup>m+n</sup>, jadi 2<sup>3+4</sup> = 2<sup>7</sup>."
         },
         {
-            type: 'quiz',
-            title: "STAGE 1 - BAB III: TANTANGAN LANJUTAN",
-            subtitle: "Uji pemahamanmu dari materi Bab I:",
-            question: "Berapakah bentuk sederhana dari 5<sup>2</sup> × 5<sup>3</sup>?",
-            options: ["25<sup>6</sup>", "5<sup>5</sup>", "10<sup>5</sup>", "25<sup>5</sup>"],
-            correctIndex: 1,
-            explanation: "Benar! Basis sama, pangkat dijumlahkan: 2 + 3 = 5, sehingga menjadi 5<sup>5</sup>."
+            type: 'drag_drop',
+            title: "STAGE 1 - SOAL 2: TANTANGAN LANJUTAN",
+            subtitle: "Seret angka dari panel bawah ke kotak basis dan pangkat yang tersedia!",
+            question: "Sederhanakan bentuk perkalian eksponen dari 5<sup>2</sup> × 5<sup>3</sup>!",
+            equationPrompt: "5<sup>2</sup> × 5<sup>3</sup> =",
+            slots: [
+                { id: 'base', role: 'base', answer: '5', placeholder: '?' },
+                { id: 'exp', role: 'exp', answer: '5', placeholder: '?' }
+            ],
+            explanation: "Benar! Basis tetap 5 dan pangkat dijumlahkan: 2 + 3 = 5, sehingga menjadi 5<sup>5</sup>."
         },
         {
-            type: 'quiz',
-            title: "STAGE 1 - BAB IV: GERBANG AKHIR",
-            subtitle: "Uji pemahamanmu dari materi Bab I:",
-            question: "Jika a<sup>4</sup> × a<sup>5</sup> = a<sup>x</sup>, berapakah nilai x?",
-            options: ["20", "1", "9", "45"],
-            correctIndex: 2,
-            explanation: "Benar! x = 4 + 5 = 9."
+            type: 'drag_drop',
+            title: "STAGE 1 - SOAL 3: PERKALIAN TIGA SUKU",
+            subtitle: "Ingat bahwa bilangan tanpa pangkat tertulis bernilai pangkat 1 (a = a<sup>1</sup>). Seret angka yang tepat!",
+            question: "Sederhanakan perkalian tiga suku eksponen dari 3<sup>2</sup> × 3 × 3<sup>5</sup>!",
+            equationPrompt: "3<sup>2</sup> × 3 × 3<sup>5</sup> =",
+            slots: [
+                { id: 'base', role: 'base', answer: '3', placeholder: '?' },
+                { id: 'exp', role: 'exp', answer: '8', placeholder: '?' }
+            ],
+            explanation: "Benar! Karena 3 = 3<sup>1</sup>, maka pangkatnya dijumlahkan: 3<sup>2+1+5</sup> = 3<sup>8</sup>."
+        },
+        {
+            type: 'drag_drop',
+            title: "STAGE 1 - SOAL 4: UJIAN KOMPLEKS MULTI-BASIS",
+            subtitle: "Kelompokkan suku-suku dengan basis yang sama lalu jumlahkan pangkatnya masing-masing!",
+            question: "Sederhanakan operasi perkalian eksponen kompleks berikut:",
+            equationPrompt: "2<sup>4</sup> × 7<sup>2</sup> × 2<sup>5</sup> × 7<sup>6</sup> =",
+            slots: [
+                { id: 'base1', role: 'base', answer: '2', placeholder: '?' },
+                { id: 'exp1', role: 'exp', answer: '9', placeholder: '?' },
+                { id: 'base2', role: 'base', answer: '7', placeholder: '?', prefixOp: '×' },
+                { id: 'exp2', role: 'exp', answer: '8', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['7', '8', '2', '9']
+            ],
+            explanation: "Sempurna! Kelompokkan basis yang sama: (2<sup>4+5</sup>) × (7<sup>2+6</sup>) = 2<sup>9</sup> × 7<sup>8</sup>."
         }
     ],
     2: [
@@ -4927,40 +5640,194 @@ const stageMathQuizzes = {
             options: ["Saya Siap Menghadapi Stage 2!"]
         },
         {
-            type: 'quiz',
-            title: "STAGE 2 - BAB II: JURANG PEMBAGIAN",
-            subtitle: "Gunakan sifat pembagian eksponen ({a<sup>m</sup>|a<sup>n</sup>} = a<sup>m-n</sup>):",
-            question: "Berapakah bentuk sederhana dari {7<sup>8</sup>|7<sup>3</sup>}?",
-            options: ["7<sup>11</sup>", "7<sup>5</sup>", "1<sup>5</sup>", "7<sup>24</sup>"],
-            correctIndex: 1,
-            explanation: "Tepat sekali! Pangkat dikurangi: 8 - 3 = 5, sehingga hasilnya 7<sup>5</sup>."
+            type: 'drag_drop',
+            title: "STAGE 2 - SOAL 1: JURANG PEMBAGIAN",
+            subtitle: "Seret angka dari panel bawah untuk menguraikan langkah pembagian eksponen!",
+            question: "Uraikan dan sederhanakan bentuk dari {7<sup>8</sup>|7<sup>3</sup>} langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{7<sup>8</sup>|7<sup>3</sup>}",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '−' },
+                                { slotIndex: 2 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 3,
+                            expSlots: [
+                                { slotIndex: 4 }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_base', role: 'base', answer: '7', placeholder: '?' },
+                { id: 's1_exp1', role: 'exp', answer: '8', placeholder: '?' },
+                { id: 's1_exp2', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's2_base', role: 'base', answer: '7', placeholder: '?' },
+                { id: 's2_exp', role: 'exp', answer: '5', placeholder: '?' }
+            ],
+            explanation: "Tepat sekali! {7<sup>8</sup>|7<sup>3</sup>} = 7<sup>8-3</sup> = 7<sup>5</sup>."
         },
         {
-            type: 'quiz',
-            title: "STAGE 2 - BAB III: KOMBINASI OPERASI",
-            subtitle: "Tantangan Menengah! Gabungkan sifat perkalian dan pembagian:",
-            question: "Sederhanakan bentuk dari: {4<sup>5</sup> × 4<sup>3</sup>|4<sup>2</sup>}",
-            options: ["4<sup>6</sup>", "4<sup>10</sup>", "4<sup>4</sup>", "16<sup>6</sup>"],
-            correctIndex: 0,
-            explanation: "Luar biasa! Pangkatnya: (5 + 3) - 2 = 8 - 2 = 6, sehingga menjadi 4<sup>6</sup>."
+            type: 'drag_drop',
+            title: "STAGE 2 - SOAL 2: KOMBINASI OPERASI",
+            subtitle: "Seret angka dari panel bawah untuk menguraikan gabungan perkalian dan pembagian eksponen!",
+            question: "Uraikan dan sederhanakan bentuk dari {4<sup>5</sup> × 4<sup>3</sup>|4<sup>2</sup>} langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{4<sup>5</sup> × 4<sup>3</sup>|4<sup>2</sup>}",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '+' },
+                                { slotIndex: 2 },
+                                { op: '−' },
+                                { slotIndex: 3 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 4,
+                            expSlots: [
+                                { slotIndex: 5 }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_base', role: 'base', answer: '4', placeholder: '?' },
+                { id: 's1_exp1', role: 'exp', answer: '5', placeholder: '?' },
+                { id: 's1_exp2', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's1_exp3', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's2_base', role: 'base', answer: '4', placeholder: '?' },
+                { id: 's2_exp', role: 'exp', answer: '6', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['4', '3', '5', '2', '4', '6']
+            ],
+            explanation: "Luar biasa! {4<sup>5</sup> × 4<sup>3</sup>|4<sup>2</sup>} = 4<sup>5+3-2</sup> = 4<sup>6</sup>."
         },
         {
-            type: 'quiz',
-            title: "STAGE 2 - BAB IV: TEKA-TEKI VARIABEL",
-            subtitle: "Tantangan Lanjut! Cari nilai pangkat yang hilang:",
-            question: "Jika {m<sup>12</sup>|m<sup>x</sup>} = m<sup>4</sup>, maka berapakah nilai x yang memenuhi?",
-            options: ["3", "16", "8", "48"],
-            correctIndex: 2,
-            explanation: "Benar! Karena 12 - x = 4, maka nilai x adalah 12 - 4 = 8."
+            type: 'drag_drop',
+            title: "STAGE 2 - SOAL 3: PEMBAGIAN PANGKAT SATU",
+            subtitle: "Ingat bahwa bilangan tanpa pangkat tertulis bernilai pangkat 1 (9 = 9<sup>1</sup>)!",
+            question: "Uraikan dan sederhanakan bentuk pembagian dari {9<sup>7</sup>|9} langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{9<sup>7</sup>|9}",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '−' },
+                                { slotIndex: 2 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 3,
+                            expSlots: [
+                                { slotIndex: 4 }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_base', role: 'base', answer: '9', placeholder: '?' },
+                { id: 's1_exp1', role: 'exp', answer: '7', placeholder: '?' },
+                { id: 's1_exp2', role: 'exp', answer: '1', placeholder: '?' },
+                { id: 's2_base', role: 'base', answer: '9', placeholder: '?' },
+                { id: 's2_exp', role: 'exp', answer: '6', placeholder: '?' }
+            ],
+            explanation: "Benar! Karena 9 = 9<sup>1</sup>, maka {9<sup>7</sup>|9<sup>1</sup>} = 9<sup>7-1</sup> = 9<sup>6</sup>."
         },
         {
-            type: 'quiz',
-            title: "STAGE 2 - BAB V: GERBANG PUNCAK EKSPONEN",
-            subtitle: "Ujian Terakhir! Selesaikan operasi eksponen beruntun berikut:",
-            question: "Berapakah nilai akhir (dalam angka) dari: {2<sup>6</sup> × 2<sup>4</sup>|2<sup>7</sup>}?",
-            options: ["6", "8", "16", "4"],
-            correctIndex: 1,
-            explanation: "Sempurna! Pangkat: 6 + 4 - 7 = 3. Hasilnya adalah 2<sup>3</sup> = 2 × 2 × 2 = 8."
+            type: 'drag_drop',
+            title: "STAGE 2 - SOAL 4: GERBANG PUNCAK MULTI-BASIS",
+            subtitle: "Ujian Terakhir Stage 2! Uraikan pembagian untuk masing-masing basis yang sama:",
+            question: "Uraikan dan sederhanakan pembagian eksponen dua basis dari {2<sup>8</sup> × 5<sup>6</sup>|2<sup>3</sup> × 5<sup>2</sup>}:",
+            stepRows: [
+                {
+                    leftPrompt: "{2<sup>8</sup> × 5<sup>6</sup>|2<sup>3</sup> × 5<sup>2</sup>}",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '−' },
+                                { slotIndex: 2 }
+                            ]
+                        },
+                        {
+                            prefixOp: '×',
+                            baseSlot: 3,
+                            expSlots: [
+                                { slotIndex: 4 },
+                                { op: '−' },
+                                { slotIndex: 5 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 6,
+                            expSlots: [
+                                { slotIndex: 7 }
+                            ]
+                        },
+                        {
+                            prefixOp: '×',
+                            baseSlot: 8,
+                            expSlots: [
+                                { slotIndex: 9 }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b1', role: 'base', answer: '2', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '8', placeholder: '?' },
+                { id: 's1_e2', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's1_b2', role: 'base', answer: '5', placeholder: '?' },
+                { id: 's1_e3', role: 'exp', answer: '6', placeholder: '?' },
+                { id: 's1_e4', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's2_b1', role: 'base', answer: '2', placeholder: '?' },
+                { id: 's2_e1', role: 'exp', answer: '5', placeholder: '?' },
+                { id: 's2_b2', role: 'base', answer: '5', placeholder: '?' },
+                { id: 's2_e2', role: 'exp', answer: '4', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['5', '6', '2', '2', '8', '3', '5', '4', '2', '5']
+            ],
+            explanation: "Sempurna! Kurangkan pangkat tiap basis yang sama: 2<sup>8-3</sup> × 5<sup>6-2</sup> = 2<sup>5</sup> × 5<sup>4</sup>."
         }
     ],
     3: [
@@ -4972,40 +5839,224 @@ const stageMathQuizzes = {
             options: ["Saya Paham, Hadapi Tantangan Stage 3!"]
         },
         {
-            type: 'quiz',
-            title: "STAGE 3 - BAB II: JEBAKAN PANGKAT NOL",
-            subtitle: "Hati-hati dengan tanda kurung dan operasi penjumlahan:",
-            question: "Berapakah nilai dari: 2026<sup>0</sup> + 8 × 5<sup>0</sup>?",
-            options: ["9", "1", "2034", "0"],
-            correctIndex: 0,
+            type: 'drag_drop',
+            title: "STAGE 3 - SOAL 1: JEBAKAN PANGKAT NOL",
+            subtitle: "Ingat bahwa setiap bilangan tak nol berpangkat 0 bernilai 1 (a<sup>0</sup> = 1). Seret angka ke kotak yang tersedia!",
+            question: "Uraikan dan hitung nilai dari 2026<sup>0</sup> + 8 × 5<sup>0</sup> langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "2026<sup>0</sup> + 8 × 5<sup>0</sup>",
+                    terms: [
+                        { baseSlot: 0 },
+                        { prefixOp: '+', baseSlot: 1 },
+                        { prefixOp: '×', baseSlot: 2 }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 3 },
+                        { prefixOp: '+', baseSlot: 4 }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 5 }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b1', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's1_b2', role: 'base', answer: '8', placeholder: '?' },
+                { id: 's1_b3', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's2_b1', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's2_b2', role: 'base', answer: '8', placeholder: '?' },
+                { id: 's3_res', role: 'base', answer: '9', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['1', '8', '1', '8', '1', '9']
+            ],
             explanation: "Tepat! 2026<sup>0</sup> = 1 dan 5<sup>0</sup> = 1. Maka: 1 + (8 × 1) = 1 + 8 = 9."
         },
         {
-            type: 'quiz',
-            title: "STAGE 3 - BAB III: KOMBINASI SISA NOL",
-            subtitle: "Gabungkan sifat perkalian (Stage 1) dan pembagian (Stage 2):",
-            question: "Berapakah nilai akhir dari operasi: {6<sup>4</sup> × 6<sup>3</sup>|6<sup>7</sup>}?",
-            options: ["6", "0", "1", "42"],
-            correctIndex: 2,
-            explanation: "Cerdas! Pangkatnya: (4 + 3) - 7 = 7 - 7 = 0. Maka 6<sup>0</sup> = 1."
+            type: 'drag_drop',
+            title: "STAGE 3 - SOAL 2: KOMBINASI SISA NOL",
+            subtitle: "Gabungkan sifat perkalian (Stage 1), pembagian (Stage 2), dan pangkat nol!",
+            question: "Uraikan dan sederhanakan bentuk dari {6<sup>4</sup> × 6<sup>3</sup>|6<sup>7</sup>} langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{6<sup>4</sup> × 6<sup>3</sup>|6<sup>7</sup>}",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '+' },
+                                { slotIndex: 2 },
+                                { op: '−' },
+                                { slotIndex: 3 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 4,
+                            expSlots: [
+                                { slotIndex: 5 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 6 }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_base', role: 'base', answer: '6', placeholder: '?' },
+                { id: 's1_exp1', role: 'exp', answer: '4', placeholder: '?' },
+                { id: 's1_exp2', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's1_exp3', role: 'exp', answer: '7', placeholder: '?' },
+                { id: 's2_base', role: 'base', answer: '6', placeholder: '?' },
+                { id: 's2_exp', role: 'exp', answer: '0', placeholder: '?' },
+                { id: 's3_res', role: 'base', answer: '1', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['6', '3', '4', '7', '6', '0', '1']
+            ],
+            explanation: "Cerdas! Pangkatnya: (4 + 3) − 7 = 7 − 7 = 0. Maka 6<sup>0</sup> = 1."
         },
         {
-            type: 'quiz',
-            title: "STAGE 3 - BAB IV: ALJABAR EKSPONEN",
-            subtitle: "Gunakan ketiga sifat eksponen untuk menyederhanakan bentuk berikut:",
-            question: "Sederhanakan bentuk dari: {a<sup>5</sup> × a<sup>4</sup>|a<sup>9</sup> × b<sup>0</sup>} (dengan a, b ≠ 0)",
-            options: ["a", "0", "1", "a<sup>18</sup>"],
-            correctIndex: 2,
-            explanation: "Luar biasa! Pembilang: a<sup>5+4</sup> = a<sup>9</sup>. Penyebut: a<sup>9</sup> × 1 = a<sup>9</sup>. Maka {a<sup>9</sup>|a<sup>9</sup>} = a<sup>0</sup> = 1."
+            type: 'drag_drop',
+            title: "STAGE 3 - SOAL 3: OPERASI GABUNGAN PANGKAT NOL",
+            subtitle: "Uraikan pembagian eksponen dan penjumlahan bilangan berpangkat nol berikut!",
+            question: "Uraikan dan hitung nilai dari {5<sup>6</sup> × 5<sup>2</sup>|5<sup>8</sup>} + 9<sup>0</sup> langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{5<sup>6</sup> × 5<sup>2</sup>|5<sup>8</sup>} + 9<sup>0</sup>",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '+' },
+                                { slotIndex: 2 },
+                                { op: '−' },
+                                { slotIndex: 3 }
+                            ]
+                        },
+                        {
+                            prefixOp: '+',
+                            baseSlot: 4
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 5,
+                            expSlots: [
+                                { slotIndex: 6 }
+                            ]
+                        },
+                        {
+                            prefixOp: '+',
+                            baseSlot: 7
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 8 }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b1', role: 'base', answer: '5', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '6', placeholder: '?' },
+                { id: 's1_e2', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's1_e3', role: 'exp', answer: '8', placeholder: '?' },
+                { id: 's1_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's2_b1', role: 'base', answer: '5', placeholder: '?' },
+                { id: 's2_e1', role: 'exp', answer: '0', placeholder: '?' },
+                { id: 's2_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's3_res', role: 'base', answer: '2', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['5', '2', '6', '8', '1', '5', '0', '1', '2']
+            ],
+            explanation: "Luar biasa! {5<sup>6</sup> × 5<sup>2</sup>|5<sup>8</sup>} = 5<sup>6+2-8</sup> = 5<sup>0</sup> = 1. Ditambah 9<sup>0</sup> = 1, hasilnya 1 + 1 = 2."
         },
         {
-            type: 'quiz',
-            title: "STAGE 3 - BAB V: UJIAN SANG PENGUASA HAMPA",
-            subtitle: "Tantangan Puncak! Hitung kombinasi tiga sifat eksponen berikut:",
-            question: "Berapakah hasil akhir dari: {3<sup>5</sup> × 3<sup>2</sup>|3<sup>4</sup>} - (99 × 78<sup>0</sup>)<sup>0</sup>?",
-            options: ["27", "26", "0", "8"],
-            correctIndex: 1,
-            explanation: "Sempurna! Bagian kiri: 3<sup>5+2-4</sup> = 3<sup>3</sup> = 27. Bagian kanan dipangkatkan 0 hasilnya 1. Jadi 27 - 1 = 26!"
+            type: 'drag_drop',
+            title: "STAGE 3 - SOAL 4: UJIAN SANG PENGUASA HAMPA",
+            subtitle: "Tantangan Puncak Stage 3! Hitung kombinasi tiga sifat eksponen berikut:",
+            question: "Uraikan dan hitung hasil akhir dari {3<sup>4</sup> × 3<sup>3</sup>|3<sup>5</sup>} − (99 × 78<sup>0</sup>)<sup>0</sup>:",
+            stepRows: [
+                {
+                    leftPrompt: "{3<sup>4</sup> × 3<sup>3</sup>|3<sup>5</sup>} − (99 × 78<sup>0</sup>)<sup>0</sup>",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '+' },
+                                { slotIndex: 2 },
+                                { op: '−' },
+                                { slotIndex: 3 }
+                            ]
+                        },
+                        {
+                            prefixOp: '−',
+                            baseSlot: 4
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 5,
+                            expSlots: [
+                                { slotIndex: 6 }
+                            ]
+                        },
+                        {
+                            prefixOp: '−',
+                            baseSlot: 7
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 8 }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b1', role: 'base', answer: '3', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '4', placeholder: '?' },
+                { id: 's1_e2', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's1_e3', role: 'exp', answer: '5', placeholder: '?' },
+                { id: 's1_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's2_b1', role: 'base', answer: '3', placeholder: '?' },
+                { id: 's2_e1', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's2_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's3_res', role: 'base', answer: '8', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['3', '3', '4', '5', '1', '3', '2', '1', '8']
+            ],
+            explanation: "Sempurna! Bagian kiri: 3<sup>4+3-5</sup> = 3<sup>2</sup> = 9. Bagian kanan dipangkatkan 0 hasilnya 1. Jadi 9 − 1 = 8!"
         }
     ],
     4: [
@@ -5017,78 +6068,446 @@ const stageMathQuizzes = {
             options: ["Saya Paham, Taklukkan Stage 4!"]
         },
         {
-            type: 'quiz',
-            title: "STAGE 4 - BAB II: KONVERSI PANGKAT NEGATIF",
-            subtitle: "Ubah bentuk pangkat negatif menjadi nilai pecahan biasa:",
-            question: "Berapakah nilai dari 3<sup>-2</sup>?",
-            options: ["-9", "-6", "{1|9}", "{1|6}"],
-            correctIndex: 2,
-            explanation: "Tepat sekali! Ingat a<sup>-n</sup> = {1|a<sup>n</sup>}, maka 3<sup>-2</sup> = {1|3<sup>2</sup>} = {1|9} (bukan bilangan negatif)."
+            type: 'drag_drop',
+            title: "STAGE 4 - SOAL 1: KONVERSI PANGKAT NEGATIF",
+            subtitle: "Ubah bentuk pangkat negatif menjadi pecahan berpangkat positif (a<sup>-n</sup> = {1|a<sup>n</sup>}). Seret angka yang tepat!",
+            question: "Uraikan dan hitung nilai dari 3<sup>-2</sup> langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "3<sup>-2</sup>",
+                    terms: [
+                        {
+                            isFraction: true,
+                            numTerms: [{ baseSlot: 0 }],
+                            denTerms: [
+                                {
+                                    baseSlot: 1,
+                                    expSlots: [{ slotIndex: 2 }]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            isFraction: true,
+                            numTerms: [{ baseSlot: 3 }],
+                            denTerms: [{ baseSlot: 4 }]
+                        }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_num', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's1_den_b', role: 'base', answer: '3', placeholder: '?' },
+                { id: 's1_den_e', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's2_num', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's2_den', role: 'base', answer: '9', placeholder: '?' }
+            ],
+            explanation: "Tepat sekali! Ingat a<sup>-n</sup> = {1|a<sup>n</sup>}, maka 3<sup>-2</sup> = {1|3<sup>2</sup>} = {1|9}."
         },
         {
-            type: 'quiz',
-            title: "STAGE 4 - BAB III: KOMBINASI PERKALIAN & PEMBAGIAN",
-            subtitle: "Gabungkan sifat perkalian, pembagian, dan pangkat negatif:",
-            question: "Berapakah nilai akhir dari operasi: {2<sup>4</sup> × 2<sup>-2</sup>|2<sup>5</sup>}?",
-            options: ["{1|8}", "8", "-8", "{1|4}"],
-            correctIndex: 0,
-            explanation: "Luar biasa! Pangkatnya: (4 + (-2)) - 5 = 2 - 5 = -3. Maka 2<sup>-3</sup> = {1|2<sup>3</sup>} = {1|8}."
+            type: 'drag_drop',
+            title: "STAGE 4 - SOAL 2: KOMBINASI PERKALIAN & PEMBAGIAN",
+            subtitle: "Gabungkan sifat perkalian, pembagian, dan pangkat negatif! Seret angka ke kotak yang tersedia:",
+            question: "Uraikan dan sederhanakan operasi {2<sup>4</sup> × 2<sup>-2</sup>|2<sup>5</sup>} langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{2<sup>4</sup> × 2<sup>-2</sup>|2<sup>5</sup>}",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '−' },
+                                { slotIndex: 2 },
+                                { op: '−' },
+                                { slotIndex: 3 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 4,
+                            expSlots: [
+                                { op: '−' },
+                                { slotIndex: 5 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            isFraction: true,
+                            numTerms: [{ baseSlot: 6 }],
+                            denTerms: [{ baseSlot: 7 }]
+                        }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b', role: 'base', answer: '2', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '4', placeholder: '?' },
+                { id: 's1_e2', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's1_e3', role: 'exp', answer: '5', placeholder: '?' },
+                { id: 's2_b', role: 'base', answer: '2', placeholder: '?' },
+                { id: 's2_e', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's3_num', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's3_den', role: 'base', answer: '8', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['2', '4', '5', '2', '2', '3', '1', '8']
+            ],
+            explanation: "Luar biasa! Pangkatnya: 4 − 2 − 5 = −3. Maka 2<sup>-3</sup> = {1|2<sup>3</sup>} = {1|8}."
         },
         {
-            type: 'quiz',
-            title: "STAGE 4 - BAB IV: INVERS PECAHAN & PANGKAT NOL",
-            subtitle: "Perhatikan letak pangkat negatif pada penyebut:",
-            question: "Berapakah hasil dari: {1|4<sup>-2</sup>} + 7<sup>0</sup>?",
-            options: ["{1|16}", "17", "16", "9"],
-            correctIndex: 1,
-            explanation: "Cerdas! Karena {1|a<sup>-n</sup>} = a<sup>n</sup>, maka {1|4<sup>-2</sup>} = 4<sup>2</sup> = 16. Ditambah 7<sup>0</sup> = 1, hasilnya 16 + 1 = 17."
+            type: 'drag_drop',
+            title: "STAGE 4 - SOAL 3: INVERS PECAHAN & PANGKAT NOL",
+            subtitle: "Ingat bahwa {1|a<sup>-n</sup>} = a<sup>n</sup> dan a<sup>0</sup> = 1. Seret angka ke kotak yang tersedia!",
+            question: "Uraikan dan hitung hasil dari {1|2<sup>-3</sup>} + 7<sup>0</sup> langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{1|2<sup>-3</sup>} + 7<sup>0</sup>",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [{ slotIndex: 1 }]
+                        },
+                        {
+                            prefixOp: '+',
+                            baseSlot: 2
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 3 },
+                        {
+                            prefixOp: '+',
+                            baseSlot: 4
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 5 }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b1', role: 'base', answer: '2', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's1_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's2_b1', role: 'base', answer: '8', placeholder: '?' },
+                { id: 's2_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's3_res', role: 'base', answer: '9', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['2', '3', '1', '1', '8', '9']
+            ],
+            explanation: "Cerdas! Karena {1|a<sup>-n</sup>} = a<sup>n</sup>, maka {1|2<sup>-3</sup>} = 2<sup>3</sup> = 8. Ditambah 7<sup>0</sup> = 1, hasilnya 8 + 1 = 9."
         },
         {
-            type: 'quiz',
-            title: "STAGE 4 - BAB V: UJIAN SANG MASTER INVERS",
-            subtitle: "Ujian Pamungkas! Gabungkan keempat sifat eksponen yang telah dipelajari:",
-            question: "Berapakah hasil dari: {5<sup>3</sup> × 5<sup>-5</sup>|5<sup>-4</sup>} + 2<sup>-1</sup>?",
-            options: ["25{1|2}", "{1|25}", "10{1|2}", "5{1|2}"],
-            correctIndex: 0,
-            explanation: "Sempurna! Bagian kiri: 5<sup>3+(-5)-(-4)</sup> = 5<sup>-2+4</sup> = 5<sup>2</sup> = 25. Ditambah 2<sup>-1</sup> = {1|2}, maka 25 + {1|2} = 25{1|2}!"
+            type: 'drag_drop',
+            title: "STAGE 4 - SOAL 4: UJIAN SANG MASTER INVERS",
+            subtitle: "Ujian Pamungkas Stage 4! Gabungkan keempat sifat eksponen yang telah dipelajari:",
+            question: "Uraikan dan hitung hasil akhir dari {3<sup>4</sup> × 3<sup>-5</sup>|3<sup>-3</sup>} − 8<sup>0</sup> langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{3<sup>4</sup> × 3<sup>-5</sup>|3<sup>-3</sup>} − 8<sup>0</sup>",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '−' },
+                                { slotIndex: 2 },
+                                { op: '+' },
+                                { slotIndex: 3 }
+                            ]
+                        },
+                        {
+                            prefixOp: '−',
+                            baseSlot: 4
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 5,
+                            expSlots: [{ slotIndex: 6 }]
+                        },
+                        {
+                            prefixOp: '−',
+                            baseSlot: 7
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 8 }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b1', role: 'base', answer: '3', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '4', placeholder: '?' },
+                { id: 's1_e2', role: 'exp', answer: '5', placeholder: '?' },
+                { id: 's1_e3', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's1_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's2_b1', role: 'base', answer: '3', placeholder: '?' },
+                { id: 's2_e1', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's2_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's3_res', role: 'base', answer: '8', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['3', '3', '5', '4', '1', '3', '2', '1', '8']
+            ],
+            explanation: "Sempurna! Bagian kiri: 3<sup>4−5−(−3)</sup> = 3<sup>4−5+3</sup> = 3<sup>2</sup> = 9. Dikurangi 8<sup>0</sup> = 1, maka 9 − 1 = 8!"
         }
     ],
     'boss1': [
         {
-            type: 'quiz',
+            type: 'drag_drop',
             title: "SEGEL SERANGAN BALIK I: PERKALIAN & PEMBAGIAN",
-            subtitle: "Pecahkan segel ini untuk menyambar Sang Raja Bayangan (-25% HP Raja):",
-            question: "Sederhanakan dan hitung nilai dari: {2<sup>5</sup> × 2<sup>3</sup>|2<sup>4</sup>}",
-            options: ["16", "8", "32", "4"],
-            correctIndex: 0,
-            explanation: "Petir Cahaya Menyambar! 2<sup>5+3-4</sup> = 2<sup>4</sup> = 16. Darah Sang Raja berkurang 25%!"
+            subtitle: "Seret angka ke kotak yang tersedia untuk menyambar Sang Raja Bayangan (-25% HP Raja):",
+            question: "Uraikan dan hitung nilai dari {2<sup>5</sup> × 2<sup>2</sup>|2<sup>4</sup>} langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{2<sup>5</sup> × 2<sup>2</sup>|2<sup>4</sup>}",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '+' },
+                                { slotIndex: 2 },
+                                { op: '−' },
+                                { slotIndex: 3 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 4,
+                            expSlots: [
+                                { slotIndex: 5 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 6 }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b', role: 'base', answer: '2', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '5', placeholder: '?' },
+                { id: 's1_e2', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's1_e3', role: 'exp', answer: '4', placeholder: '?' },
+                { id: 's2_b', role: 'base', answer: '2', placeholder: '?' },
+                { id: 's2_e', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's3_res', role: 'base', answer: '8', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['2', '2', '5', '4', '2', '3', '8']
+            ],
+            explanation: "Petir Cahaya Menyambar! 2<sup>5+2−4</sup> = 2<sup>3</sup> = 8. Darah Sang Raja berkurang 25%!"
         },
         {
-            type: 'quiz',
+            type: 'drag_drop',
             title: "SEGEL SERANGAN BALIK II: PANGKAT NOL & PERKALIAN",
-            subtitle: "Pecahkan segel kedua untuk melukai Sang Raja Bayangan (-25% HP Raja):",
-            question: "Berapakah nilai dari: 3<sup>2</sup> × 3<sup>1</sup> + (125 × 9<sup>2</sup>)<sup>0</sup>?",
-            options: ["28", "27", "10", "0"],
-            correctIndex: 0,
-            explanation: "Sambaran Kedua Tepat Sasaran! 3<sup>2+1</sup> + 1 = 27 + 1 = 28. Darah Sang Raja tersisa 50%!"
+            subtitle: "Pecahkan segel kedua dengan menyeret angka yang tepat untuk melukai Sang Raja (-25% HP Raja):",
+            question: "Uraikan dan hitung nilai dari 2<sup>2</sup> × 2<sup>1</sup> + (125 × 9<sup>2</sup>)<sup>0</sup> langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "2<sup>2</sup> × 2<sup>1</sup> + (125 × 9<sup>2</sup>)<sup>0</sup>",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '+' },
+                                { slotIndex: 2 }
+                            ]
+                        },
+                        {
+                            prefixOp: '+',
+                            baseSlot: 3
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 4,
+                            expSlots: [
+                                { slotIndex: 5 }
+                            ]
+                        },
+                        {
+                            prefixOp: '+',
+                            baseSlot: 6
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 7 }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b1', role: 'base', answer: '2', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's1_e2', role: 'exp', answer: '1', placeholder: '?' },
+                { id: 's1_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's2_b1', role: 'base', answer: '2', placeholder: '?' },
+                { id: 's2_e1', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's2_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's3_res', role: 'base', answer: '9', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['2', '1', '2', '1', '2', '3', '1', '9']
+            ],
+            explanation: "Sambaran Kedua Tepat Sasaran! 2<sup>2+1</sup> + 1 = 2<sup>3</sup> + 1 = 8 + 1 = 9. Darah Sang Raja tersisa 50%!"
         },
         {
-            type: 'quiz',
+            type: 'drag_drop',
             title: "SEGEL SERANGAN BALIK III: PANGKAT NEGATIF",
             subtitle: "Pecahkan segel ketiga untuk menghancurkan perisai bayangan (-25% HP Raja):",
-            question: "Berapakah hasil dari operasi: {4<sup>2</sup> × 4<sup>-4</sup>|4<sup>-1</sup>}?",
-            options: ["{1|4}", "4", "-4", "{1|16}"],
-            correctIndex: 0,
-            explanation: "Perisai Raja Retak! Pangkatnya: 2 + (-4) - (-1) = -1, sehingga 4<sup>-1</sup> = {1|4}. Darah Sang Raja tersisa 25%!"
+            question: "Uraikan dan sederhanakan operasi {4<sup>2</sup> × 4<sup>-4</sup>|4<sup>-1</sup>} langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{4<sup>2</sup> × 4<sup>-4</sup>|4<sup>-1</sup>}",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '−' },
+                                { slotIndex: 2 },
+                                { op: '+' },
+                                { slotIndex: 3 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 4,
+                            expSlots: [
+                                { op: '−' },
+                                { slotIndex: 5 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            isFraction: true,
+                            numTerms: [{ baseSlot: 6 }],
+                            denTerms: [{ baseSlot: 7 }]
+                        }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b', role: 'base', answer: '4', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's1_e2', role: 'exp', answer: '4', placeholder: '?' },
+                { id: 's1_e3', role: 'exp', answer: '1', placeholder: '?' },
+                { id: 's2_b', role: 'base', answer: '4', placeholder: '?' },
+                { id: 's2_e', role: 'exp', answer: '1', placeholder: '?' },
+                { id: 's3_num', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's3_den', role: 'base', answer: '4', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['4', '1', '4', '2', '4', '1', '1', '4']
+            ],
+            explanation: "Perisai Raja Retak! Pangkatnya: 2 − 4 + 1 = −1, sehingga 4<sup>-1</sup> = {1|4}. Darah Sang Raja tersisa 25%!"
         },
         {
-            type: 'quiz',
+            type: 'drag_drop',
             title: "SEGEL PAMUNGKAS IV: KOMBINASI SIFAT 1–4",
             subtitle: "Segel Terakhir! Gabungkan keempat sifat eksponen untuk menumbangkan Sang Raja (-25% HP Raja):",
-            question: "Berapakah nilai akhir dari: {1|3<sup>-2</sup>} + {5<sup>4</sup> × 5<sup>-1</sup>|5<sup>3</sup>} - 2026<sup>0</sup>?",
-            options: ["9", "10", "8", "1"],
-            correctIndex: 0,
-            explanation: "Kemenangan Mutlak! {1|3<sup>-2</sup>} = 3<sup>2</sup> = 9. Ditambah 5<sup>3-3</sup> = 5<sup>0</sup> = 1, dikurangi 2026<sup>0</sup> = 1. Hasilnya: 9 + 1 - 1 = 9!"
+            question: "Uraikan dan hitung nilai akhir dari {1|3<sup>-2</sup>} + {5<sup>4</sup>|5<sup>4</sup>} − 9<sup>0</sup> langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{1|3<sup>-2</sup>} + {5<sup>4</sup>|5<sup>4</sup>} − 9<sup>0</sup>",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [{ slotIndex: 1 }]
+                        },
+                        {
+                            prefixOp: '+',
+                            baseSlot: 2,
+                            expSlots: [{ slotIndex: 3 }]
+                        },
+                        {
+                            prefixOp: '−',
+                            baseSlot: 4
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 5 },
+                        {
+                            prefixOp: '+',
+                            baseSlot: 6
+                        },
+                        {
+                            prefixOp: '−',
+                            baseSlot: 7
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 8 }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b1', role: 'base', answer: '3', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's1_b2', role: 'base', answer: '5', placeholder: '?' },
+                { id: 's1_e2', role: 'exp', answer: '0', placeholder: '?' },
+                { id: 's1_b3', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's2_b1', role: 'base', answer: '9', placeholder: '?' },
+                { id: 's2_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's2_b3', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's3_res', role: 'base', answer: '9', placeholder: '?' }
+            ],
+            explanation: "Kemenangan Mutlak! {1|3<sup>-2</sup>} = 3<sup>2</sup> = 9, ditambah {5<sup>4</sup>|5<sup>4</sup>} = 5<sup>0</sup> = 1, dikurangi 9<sup>0</sup> = 1. Hasilnya: 9 + 1 − 1 = 9!"
         }
     ],
     5: [
@@ -5100,40 +6519,241 @@ const stageMathQuizzes = {
             options: ["Saya Paham, Masuk ke Terowongan & Air!"]
         },
         {
-            type: 'quiz',
-            title: "STAGE 5 - BAB II: PINTU TEROWONGAN GELAP",
-            subtitle: "Gunakan sifat pangkat berpangkat (a<sup>m</sup>)<sup>n</sup> = a<sup>m×n</sup>:",
-            question: "Berapakah bentuk sederhana dari (3<sup>4</sup>)<sup>5</sup>?",
-            options: ["3<sup>9</sup>", "3<sup>20</sup>", "15<sup>4</sup>", "3<sup>45</sup>"],
-            correctIndex: 1,
-            explanation: "Tepat sekali! Pada bentuk (3<sup>4</sup>)<sup>5</sup>, pangkatnya dikalikan: 4 × 5 = 20, sehingga menjadi 3<sup>20</sup> (bukan 3<sup>9</sup>)."
+            type: 'drag_drop',
+            title: "STAGE 5 - SOAL 1: PINTU TEROWONGAN GELAP",
+            subtitle: "Seret angka dari panel bawah untuk menguraikan sifat pangkat berpangkat (a<sup>m</sup>)<sup>n</sup> = a<sup>m×n</sup>!",
+            question: "Uraikan dan sederhanakan bentuk dari (3<sup>2</sup>)<sup>4</sup> langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "(3<sup>2</sup>)<sup>4</sup>",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '×' },
+                                { slotIndex: 2 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 3,
+                            expSlots: [
+                                { slotIndex: 4 }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_base', role: 'base', answer: '3', placeholder: '?' },
+                { id: 's1_exp1', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's1_exp2', role: 'exp', answer: '4', placeholder: '?' },
+                { id: 's2_base', role: 'base', answer: '3', placeholder: '?' },
+                { id: 's2_exp', role: 'exp', answer: '8', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['3', '4', '2', '3', '8']
+            ],
+            explanation: "Tepat sekali! Pada bentuk (3<sup>2</sup>)<sup>4</sup>, pangkatnya dikalikan: 3<sup>2×4</sup> = 3<sup>8</sup>."
         },
         {
-            type: 'quiz',
-            title: "STAGE 5 - BAB III: PENYELAMAN BAWAH AIR",
-            subtitle: "Kamu kini berada di dalam air! Gabungkan sifat pangkat berpangkat dan perkalian:",
-            question: "Sederhanakan bentuk dari: (2<sup>3</sup>)<sup>2</sup> × 2<sup>5</sup>",
-            options: ["2<sup>10</sup>", "2<sup>11</sup>", "2<sup>30</sup>", "4<sup>11</sup>"],
-            correctIndex: 1,
-            explanation: "Luar biasa! Pertama: (2<sup>3</sup>)<sup>2</sup> = 2<sup>3×2</sup> = 2<sup>6</sup>. Lalu dikali 2<sup>5</sup>, pangkatnya ditambah: 2<sup>6+5</sup> = 2<sup>11</sup>."
+            type: 'drag_drop',
+            title: "STAGE 5 - SOAL 2: PENYELAMAN BAWAH AIR",
+            subtitle: "Kamu kini berada di dalam air! Gabungkan sifat pangkat berpangkat dan perkalian eksponen:",
+            question: "Uraikan dan sederhanakan bentuk dari (2<sup>2</sup>)<sup>3</sup> × 2<sup>3</sup> langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "(2<sup>2</sup>)<sup>3</sup> × 2<sup>3</sup>",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '×' },
+                                { slotIndex: 2 },
+                                { op: '+' },
+                                { slotIndex: 3 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 4,
+                            expSlots: [
+                                { slotIndex: 5 },
+                                { op: '+' },
+                                { slotIndex: 6 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 7,
+                            expSlots: [
+                                { slotIndex: 8 }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b', role: 'base', answer: '2', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's1_e2', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's1_e3', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's2_b', role: 'base', answer: '2', placeholder: '?' },
+                { id: 's2_e1', role: 'exp', answer: '6', placeholder: '?' },
+                { id: 's2_e2', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's3_b', role: 'base', answer: '2', placeholder: '?' },
+                { id: 's3_e', role: 'exp', answer: '9', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['2', '3', '2', '3', '2', '6', '3', '2', '9'],
+                ['2', '2', '3', '3', '2', '3', '6', '2', '9'],
+                ['2', '3', '2', '3', '2', '3', '6', '2', '9']
+            ],
+            explanation: "Luar biasa! Pertama: (2<sup>2</sup>)<sup>3</sup> = 2<sup>2×3</sup> = 2<sup>6</sup>. Lalu dikali 2<sup>3</sup>, pangkatnya ditambah: 2<sup>6+3</sup> = 2<sup>9</sup>."
         },
         {
-            type: 'quiz',
-            title: "STAGE 5 - BAB IV: ARUS DALAM TEROWONGAN",
-            subtitle: "Gabungkan pangkat berpangkat dengan sifat pembagian pecahan:",
-            question: "Berapakah bentuk sederhana dari: {(7<sup>4</sup>)<sup>3</sup>|7<sup>5</sup>}?",
-            options: ["7<sup>7</sup>", "7<sup>2</sup>", "7<sup>17</sup>", "1<sup>7</sup>"],
-            correctIndex: 0,
-            explanation: "Cerdas! Pembilang: (7<sup>4</sup>)<sup>3</sup> = 7<sup>4×3</sup> = 7<sup>12</sup>. Lalu dibagi 7<sup>5</sup> menjadi 7<sup>12-5</sup> = 7<sup>7</sup>."
+            type: 'drag_drop',
+            title: "STAGE 5 - SOAL 3: ARUS DALAM TEROWONGAN",
+            subtitle: "Gabungkan sifat pangkat berpangkat dengan sifat pembagian pecahan eksponen:",
+            question: "Uraikan dan sederhanakan bentuk dari {(7<sup>3</sup>)<sup>3</sup>|7<sup>4</sup>} langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{(7<sup>3</sup>)<sup>3</sup>|7<sup>4</sup>}",
+                    terms: [
+                        {
+                            baseSlot: 0,
+                            expSlots: [
+                                { slotIndex: 1 },
+                                { op: '×' },
+                                { slotIndex: 2 },
+                                { op: '−' },
+                                { slotIndex: 3 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 4,
+                            expSlots: [
+                                { slotIndex: 5 },
+                                { op: '−' },
+                                { slotIndex: 6 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            baseSlot: 7,
+                            expSlots: [
+                                { slotIndex: 8 }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b', role: 'base', answer: '7', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's1_e2', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's1_e3', role: 'exp', answer: '4', placeholder: '?' },
+                { id: 's2_b', role: 'base', answer: '7', placeholder: '?' },
+                { id: 's2_e1', role: 'exp', answer: '9', placeholder: '?' },
+                { id: 's2_e2', role: 'exp', answer: '4', placeholder: '?' },
+                { id: 's3_b', role: 'base', answer: '7', placeholder: '?' },
+                { id: 's3_e', role: 'exp', answer: '5', placeholder: '?' }
+            ],
+            explanation: "Cerdas! Pembilang: (7<sup>3</sup>)<sup>3</sup> = 7<sup>3×3</sup> = 7<sup>9</sup>. Lalu dibagi 7<sup>4</sup> menjadi 7<sup>9−4</sup> = 7<sup>5</sup>."
         },
         {
-            type: 'quiz',
-            title: "STAGE 5 - BAB V: KUIL SAMUDRA EKSPONEN",
-            subtitle: "Ujian Pamungkas Stage 5! Gabungkan pangkat berpangkat, negatif, dan pangkat nol:",
-            question: "Berapakah nilai akhir dari: {(3<sup>2</sup>)<sup>3</sup> × 3<sup>-4</sup>|9<sup>0</sup>}?",
-            options: ["9", "27", "{1|9}", "1"],
-            correctIndex: 0,
-            explanation: "Sempurna! (3<sup>2</sup>)<sup>3</sup> = 3<sup>6</sup>. Dikali 3<sup>-4</sup> menjadi 3<sup>6+(-4)</sup> = 3<sup>2</sup> = 9. Dibagi 9<sup>0</sup> = 1, hasilnya adalah {9|1} = 9!"
+            type: 'drag_drop',
+            title: "STAGE 5 - SOAL 4: KUIL SAMUDRA EKSPONEN",
+            subtitle: "Ujian Pamungkas Stage 5! Gabungkan pangkat berpangkat, pangkat negatif, dan pangkat nol:",
+            question: "Uraikan dan hitung nilai akhir dari {(3<sup>2</sup>)<sup>3</sup> × 3<sup>-4</sup>|9<sup>0</sup>} langkah demi langkah:",
+            stepRows: [
+                {
+                    leftPrompt: "{(3<sup>2</sup>)<sup>3</sup> × 3<sup>-4</sup>|9<sup>0</sup>}",
+                    terms: [
+                        {
+                            isFraction: true,
+                            numTerms: [
+                                {
+                                    baseSlot: 0,
+                                    expSlots: [
+                                        { slotIndex: 1 },
+                                        { op: '×' },
+                                        { slotIndex: 2 },
+                                        { op: '−' },
+                                        { slotIndex: 3 }
+                                    ]
+                                }
+                            ],
+                            denTerms: [
+                                { baseSlot: 4 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        {
+                            isFraction: true,
+                            numTerms: [
+                                {
+                                    baseSlot: 5,
+                                    expSlots: [
+                                        { slotIndex: 6 }
+                                    ]
+                                }
+                            ],
+                            denTerms: [
+                                { baseSlot: 7 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    leftPrompt: "",
+                    terms: [
+                        { baseSlot: 8 }
+                    ]
+                }
+            ],
+            slots: [
+                { id: 's1_b1', role: 'base', answer: '3', placeholder: '?' },
+                { id: 's1_e1', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's1_e2', role: 'exp', answer: '3', placeholder: '?' },
+                { id: 's1_e3', role: 'exp', answer: '4', placeholder: '?' },
+                { id: 's1_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's2_b1', role: 'base', answer: '3', placeholder: '?' },
+                { id: 's2_e1', role: 'exp', answer: '2', placeholder: '?' },
+                { id: 's2_b2', role: 'base', answer: '1', placeholder: '?' },
+                { id: 's3_res', role: 'base', answer: '9', placeholder: '?' }
+            ],
+            alternateAnswers: [
+                ['3', '3', '2', '4', '1', '3', '2', '1', '9']
+            ],
+            explanation: "Sempurna! {(3<sup>2</sup>)<sup>3</sup> × 3<sup>-4</sup>|9<sup>0</sup>} = {3<sup>2×3−4</sup>|1} = {3<sup>2</sup>|1} = 9!"
         }
     ],
     6: [
@@ -5376,10 +6996,10 @@ function formatMathHTML(text) {
 const stageCheckpoints = {
     1: [
         { x: 140, y: 500, chapter: "I - Hutan Sunyi", hint: "Temui lingkaran cahaya eksponen di depan..." },
-        { x: 1100, y: 470, chapter: "II - Gerbang Pangkat", hint: "Dorong kotak kayu ke tepi jurang untuk melompat ke platform soal kedua!" },
-        { x: 2350, y: 450, chapter: "III - Parasit Cahaya", hint: "Jawab tantangan Bab 3 untuk membuka jalur berikutnya." },
-        { x: 3650, y: 450, chapter: "IV - Mesin Bayangan", hint: "Jawab tantangan Bab 4 dan dorong peti untuk mengangkat gerbang." },
-        { x: 4850, y: 400, chapter: "V - Lereng Maut", hint: "Lompati gergaji berputar dan waspadai batu besar di puncak bukit!" }
+        { x: 1100, y: 470, chapter: "II - Gerbang Pangkat", hint: "Dorong kotak kayu ke tepi jurang untuk melompat ke platform soal pertama!" },
+        { x: 2350, y: 450, chapter: "III - Parasit Cahaya", hint: "Selesaikan tantangan Drag & Drop kedua untuk membuka jalur berikutnya." },
+        { x: 3650, y: 450, chapter: "IV - Mesin Bayangan", hint: "Selesaikan tantangan Drag & Drop tiga suku dan dorong peti untuk mengangkat gerbang." },
+        { x: 4850, y: 400, chapter: "V - Lereng Maut", hint: "Lompati gergaji, hindari batu raksasa, dan pecahkan ujian Drag & Drop kompleks di ujung lereng!" }
     ],
     2: [
         { x: 140, y: 500, chapter: "I - Lembah Pembagian", hint: "Stage 2 dimulai! Pelajari sifat pembagian eksponen pada lingkaran cahaya di depan." },
@@ -5516,6 +7136,7 @@ function initWorld(fullReset = false) {
     if (fullReset) {
         activeCheckpointIndex = 0;
         deathCount = 0;
+        stageQuizMistakes = 0;
         playerLives = INITIAL_STAGE_LIVES;
         solvedQuizGates = {};
         document.getElementById('death-count').textContent = '0';
@@ -5631,7 +7252,8 @@ function initWorld(fullReset = false) {
             { id: 100, x: 790, y: 250, w: 32, h: 220, solved: !!solvedQuizGates[100], quizIndex: 0 },
             { id: 101, x: 1730, y: 245, w: 32, h: 140, solved: !!solvedQuizGates[101], quizIndex: 1 },
             { id: 102, x: 2850, y: 360, w: 32, h: 160, solved: !!solvedQuizGates[102], quizIndex: 2 },
-            { id: 103, x: 3500, y: 320, w: 32, h: 160, solved: !!solvedQuizGates[103], quizIndex: 3 }
+            { id: 103, x: 3500, y: 320, w: 32, h: 160, solved: !!solvedQuizGates[103], quizIndex: 3 },
+            { id: 104, x: 5750, y: 360, w: 32, h: 160, solved: !!solvedQuizGates[104], quizIndex: 4 }
         ];
 
         saws = [
@@ -7451,6 +9073,7 @@ function updateGame(dt = 1) {
                 if (keys.up) {
                     player.vy = -4.2;
                     player.climbCycle += 0.22 * dt;
+                    audio.playLadderStep();
                 } else {
                     player.vy = 1.2;
                     player.climbCycle -= 0.12 * dt;
@@ -7585,6 +9208,8 @@ function updateGame(dt = 1) {
     if (!player.onRope) {
         player.y += player.vy * dt;
     }
+    const wasOnGround = player.onGround;
+    const preLandVy = player.vy;
     player.onGround = false;
 
     const allSupportBlocks = [...solidBlocks, ...crates, ...ladderCarts];
@@ -7598,12 +9223,16 @@ function updateGame(dt = 1) {
                 player.y = supportTopY - player.h;
                 player.vy = 0;
                 player.onGround = true;
+                if (!wasOnGround && preLandVy > 3.2) {
+                    audio.playLand(preLandVy);
+                }
                 if (b.vx !== undefined && b.rangeX !== undefined) {
                     player.x += b.vx;
                 }
                 if (b.state === 'idle') {
                     b.state = 'shaking';
                     b.timer = 38;
+                    audio.playCrumbleCrack();
                 }
             } else if (player.vy < 0 && player.y >= b.y + b.h - 24) {
                 player.y = b.y + b.h;
@@ -7926,46 +9555,75 @@ function updateGame(dt = 1) {
         gameEnded = true;
         completedStages[currentStage] = true;
         audio.playCleanse();
+
+        // Hitung nilai akhir (0–100) dan perolehan bintang (1–3 bintang)
+        const rawScore = Math.round(playerLives - deathCount * 5 - stageQuizMistakes * 10);
+        const finalStageScore = (deathCount === 0 && stageQuizMistakes === 0)
+            ? 100
+            : Math.max(10, Math.min(100, rawScore));
+        const earnedStars = finalStageScore >= 85 ? 3 : (finalStageScore >= 60 ? 2 : 1);
+
+        const prevRecord = stageScores[currentStage];
+        const bestScore = prevRecord ? Math.max(prevRecord.score, finalStageScore) : finalStageScore;
+        const bestStars = bestScore >= 85 ? 3 : (bestScore >= 60 ? 2 : 1);
+        stageScores[currentStage] = {
+            score: bestScore,
+            lastScore: finalStageScore,
+            stars: bestStars
+        };
+
+        const endingStarsRow = document.getElementById('ending-stars-row');
+        const endingScoreValue = document.getElementById('ending-score-value');
+        if (endingStarsRow) {
+            endingStarsRow.innerHTML = [1, 2, 3].map(idx => {
+                const isLit = idx <= earnedStars;
+                const sizeClass = idx === 2 ? 'w-8 h-8 sm:w-9 sm:h-9 -translate-y-1' : 'w-6 h-6 sm:w-7 sm:h-7';
+                const colorClass = isLit
+                    ? 'text-yellow-300 drop-shadow-[0_0_10px_rgba(250,204,21,0.9)]'
+                    : 'text-white/20';
+                return `<svg class="${sizeClass} ${colorClass} transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l2.92 6.26L22 9.27l-5.05 4.73L18.18 21 12 17.56 5.82 21l1.23-7-5.05-4.73 7.08-1.01L12 2z"/>
+                </svg>`;
+            }).join('');
+        }
+        if (endingScoreValue) {
+            endingScoreValue.textContent = String(finalStageScore);
+        }
+
         const nextStageBtn = document.getElementById('btn-next-stage');
         const playAgainBtn = document.getElementById('btn-play-again');
         const endingTitle = document.getElementById('ending-title');
         const endingDesc = document.getElementById('ending-desc');
 
+        if (nextStageBtn) {
+            nextStageBtn.classList.add('hidden');
+        }
+
         const nextStageId = getNextStageId(currentStage);
         if (currentStage === 'boss1') {
             endingTitle.textContent = "RAJA BAYANGAN TUMBANG!";
             endingDesc.textContent = "Luar biasa! Kamu berhasil memecahkan 4 Segel Eksponen, menyambar Arachne Umbra hingga 0% HP, dan membuka jalan menuju Stage 5!";
-            playAgainBtn.textContent = "Lawan Ulang Raja I";
+            playAgainBtn.textContent = "Ulangi Raja I";
         } else if (currentStage === 'boss2') {
             endingTitle.textContent = "LEVIATHAN AKAR TUMBANG!";
             endingDesc.textContent = "Selamat! Kamu telah menaklukkan seluruh Stage 1–8 beserta kedua Raja Penguasa Bayangan dan menjadi Master Eksponen Sejati!";
-            playAgainBtn.textContent = "Lawan Ulang Raja II";
+            playAgainBtn.textContent = "Ulangi Raja II";
         } else {
             endingTitle.textContent = `STAGE ${currentStage} SELESAI`;
             playAgainBtn.textContent = `Ulangi Stage ${currentStage}`;
-        }
-
-        if (nextStageId) {
-            if (currentStage !== 'boss1' && currentStage !== 'boss2') {
+            if (nextStageId) {
                 const nextLabel = nextStageId === 'boss1'
                     ? 'Raja I: Arachne Umbra'
                     : (nextStageId === 'boss2' ? 'Raja II: Leviathan Akar' : `Stage ${nextStageId}`);
-                endingDesc.textContent = `Kamu telah menaklukkan Stage ${currentStage}! Bersiaplah menghadapi tantangan berikutnya di ${nextLabel}.`;
-            }
-            nextStageBtn.textContent = (nextStageId === 'boss1' || nextStageId === 'boss2')
-                ? 'Hadapi Raja Bayangan (👑)'
-                : `Lanjut ke Stage ${nextStageId}`;
-            nextStageBtn.classList.remove('hidden');
-        } else {
-            if (currentStage !== 'boss2') {
+                endingDesc.textContent = `Kamu telah menaklukkan Stage ${currentStage}! Pilih ${nextLabel} melalui Peta Stage untuk melanjutkan petualangan.`;
+            } else {
                 endingTitle.textContent = "LEGENDA EKSPONEN SEJATI";
                 endingDesc.textContent = "Selamat! Kamu telah menaklukkan seluruh perjalanan epik XHADOW dengan sempurna!";
             }
-            nextStageBtn.classList.add('hidden');
         }
 
         const stageStatName = currentStage === 'boss1' ? 'Raja I' : (currentStage === 'boss2' ? 'Raja II' : `Stage ${currentStage}`);
-        document.getElementById('final-stats').textContent = `${stageStatName} Selesai • Total Kematian: ${deathCount}`;
+        document.getElementById('final-stats').textContent = `${stageStatName} Selesai • Bintang: ${earnedStars}/3 • Total Kematian: ${deathCount}`;
         document.getElementById('ending-screen').classList.remove('hidden');
     }
 
@@ -8485,30 +10143,30 @@ function openQuizModal(quizGate) {
     feedbackEl.className = 'hidden';
 
     if (quizData.type === 'explanation') {
-        // Susun materi secara mendatar (2 kolom berdampingan: Konsep & Rumus di kiri, Contoh di kanan)
+        // Susun materi secara mendatar (2 kolom berdampingan: Konsep & Rumus di kiri, Contoh di kanan) dengan ruang lega
         const parts = quizData.question.split('\n\n');
         if (parts.length >= 3) {
             const titlePart = formatMathHTML(parts[0]);
             const conceptPart = formatMathHTML(parts[1]);
             const examplePart = formatMathHTML(parts.slice(2).join('\n'));
             questionTextEl.innerHTML = `
-                <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-5 items-center text-left">
-                    <div class="sm:col-span-7 space-y-1.5 sm:border-r sm:border-neutral-800 sm:pr-5">
-                        <div class="text-white font-bold text-xs sm:text-sm uppercase tracking-wider text-neutral-300">${titlePart}</div>
-                        <div class="text-xs sm:text-sm text-neutral-200 leading-relaxed">${conceptPart}</div>
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-3.5 sm:gap-6 items-center text-left p-1 sm:p-2">
+                    <div class="sm:col-span-7 space-y-2 sm:border-r sm:border-neutral-800 sm:pr-5">
+                        <div class="text-white font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider text-neutral-300">${titlePart}</div>
+                        <div class="text-xs sm:text-sm md:text-base text-neutral-200 leading-relaxed break-words">${conceptPart}</div>
                     </div>
-                    <div class="sm:col-span-5 bg-black/45 border border-neutral-800/90 rounded-lg p-2.5 sm:p-3 text-xs sm:text-sm text-neutral-200 flex items-center justify-center">
-                        <div>${examplePart}</div>
+                    <div class="sm:col-span-5 bg-black/55 border border-neutral-800/90 rounded-xl p-3 sm:p-4 text-xs sm:text-sm md:text-base text-neutral-200 flex items-center justify-center shadow-inner overflow-x-auto custom-scroll">
+                        <div class="text-left">${examplePart}</div>
                     </div>
                 </div>
             `;
         } else {
-            questionTextEl.innerHTML = formatMathHTML(quizData.question);
+            questionTextEl.innerHTML = `<div class="p-2 sm:p-3">${formatMathHTML(quizData.question)}</div>`;
         }
 
-        optionsContainer.className = 'flex justify-end shrink-0';
+        optionsContainer.className = 'flex justify-end shrink-0 pt-0.5';
         const btn = document.createElement('button');
-        btn.className = 'noir-btn quiz-opt-btn px-6 py-2.5 text-white border-white/40 font-semibold text-xs sm:text-sm';
+        btn.className = 'noir-btn quiz-opt-btn px-6 py-2 sm:px-8 sm:py-2.5 text-white border-white/40 font-semibold text-xs sm:text-sm';
         btn.innerHTML = formatMathHTML(quizData.options[0]);
         btn.onclick = () => {
             quizGate.solved = true;
@@ -8519,15 +10177,431 @@ function openQuizModal(quizGate) {
             activeQuizGate = null;
         };
         optionsContainer.appendChild(btn);
-    } else {
+    } else if (quizData.type === 'drag_drop') {
         let attemptsLeft = 2;
-        questionTextEl.innerHTML = formatMathHTML(quizData.question);
-        optionsContainer.className = 'grid grid-cols-2 sm:grid-cols-4 gap-2.5 shrink-0';
+        let isResolved = false;
+        let activeSlotIndex = 0;
+        const slotValues = quizData.slots.map(() => '');
+        const hasStepRows = Array.isArray(quizData.stepRows) && quizData.stepRows.length > 0;
 
-        // Acak urutan pilihan ganda setiap kali soal ditampilkan (Fisher-Yates Shuffle)
-        const shuffledOptions = quizData.options.map((opt, idx) => ({
-            text: opt,
-            isCorrect: idx === quizData.correctIndex
+        // Tampilan Soal & Kolom Drop Jawaban Eksponen yang Proporsional & Rapi di Dalam Panel
+        questionTextEl.innerHTML = `
+            <div class="flex flex-col items-center justify-center gap-2.5 sm:gap-3.5 w-full py-0.5 px-1 sm:px-2">
+                <div class="text-xs sm:text-sm md:text-base text-neutral-200 font-medium leading-relaxed max-w-2xl break-words">
+                    ${formatMathHTML(quizData.question)}
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-5 bg-black/70 border border-white/15 px-4 py-3 sm:px-7 sm:py-4 rounded-xl shadow-inner w-full max-w-2xl mx-auto overflow-x-auto custom-scroll">
+                    ${hasStepRows ? `
+                        <div id="dnd-slots-wrapper" class="dnd-step-grid select-none"></div>
+                    ` : `
+                        <div class="text-base sm:text-xl md:text-2xl font-bold text-white tracking-wider flex items-center py-1">
+                            ${formatMathHTML(quizData.equationPrompt || '')}
+                        </div>
+                        <div id="dnd-slots-wrapper" class="inline-flex items-end select-none py-1"></div>
+                    `}
+                </div>
+                <div class="flex items-center justify-center gap-3 sm:gap-4 pt-0.5">
+                    <button id="btn-dnd-clear" type="button" class="noir-btn px-3.5 py-1.5 sm:px-5 sm:py-1.5 text-[11px] sm:text-xs border-white/20 text-neutral-300">
+                        Reset Angka
+                    </button>
+                    <button id="btn-dnd-submit" type="button" class="noir-btn px-4 py-1.5 sm:px-6 sm:py-1.5 text-[11px] sm:text-xs border-white/50 text-white font-bold shadow-[0_0_18px_rgba(255,255,255,0.2)]">
+                        Periksa Jawaban
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const slotsWrapper = document.getElementById('dnd-slots-wrapper');
+        const slotElements = new Array(quizData.slots.length);
+
+        const refreshSlotsUI = () => {
+            slotElements.forEach((el, idx) => {
+                if (!el) return;
+                const val = slotValues[idx];
+                const ph = quizData.slots[idx].placeholder || '?';
+                el.textContent = val !== '' ? val : ph;
+                el.classList.toggle('is-filled', val !== '');
+                el.classList.toggle('text-neutral-500', val === '');
+                el.classList.toggle('text-white', val !== '');
+                el.classList.toggle('is-active-slot', !isResolved && idx === activeSlotIndex);
+            });
+        };
+
+        const createSlotElement = (idx, customClass = '') => {
+            const slotCfg = quizData.slots[idx];
+            const slotEl = document.createElement('div');
+            const roleClass = customClass || (slotCfg.role === 'exp' ? 'slot-exp' : 'slot-base');
+            slotEl.className = `dnd-drop-slot ${roleClass}`;
+            slotEl.dataset.slotIndex = String(idx);
+            slotEl.title = slotCfg.role === 'exp' ? 'Kotak Pangkat (Eksponen)' : 'Kotak Basis (Bilangan Pokok)';
+
+            slotEl.addEventListener('click', () => {
+                if (isResolved) return;
+                audio.playStep();
+                if (slotValues[idx] !== '') {
+                    slotValues[idx] = '';
+                }
+                activeSlotIndex = idx;
+                slotEl.classList.remove('is-wrong', 'is-correct');
+                refreshSlotsUI();
+            });
+
+            slotElements[idx] = slotEl;
+            return slotEl;
+        };
+
+        if (hasStepRows) {
+            const buildSingleTermNodes = (term, parentEl, isInsideFraction = false) => {
+                if (term.prefixOp) {
+                    const opSpan = document.createElement('span');
+                    opSpan.className = 'mx-1.5 sm:mx-2 text-sm sm:text-lg font-bold text-neutral-300 select-none self-center';
+                    opSpan.innerHTML = term.prefixOp;
+                    parentEl.appendChild(opSpan);
+                }
+
+                if (term.isFraction) {
+                    const fracWrap = document.createElement('div');
+                    fracWrap.className = 'dnd-slot-frac';
+
+                    const numDiv = document.createElement('div');
+                    numDiv.className = 'dnd-slot-frac-num';
+                    (term.numTerms || []).forEach(nt => buildSingleTermNodes(nt, numDiv, true));
+
+                    const denDiv = document.createElement('div');
+                    denDiv.className = 'dnd-slot-frac-den';
+                    (term.denTerms || []).forEach(dt => buildSingleTermNodes(dt, denDiv, true));
+
+                    fracWrap.appendChild(numDiv);
+                    fracWrap.appendChild(denDiv);
+                    parentEl.appendChild(fracWrap);
+                    return;
+                }
+
+                const termWrap = document.createElement('div');
+                termWrap.className = 'dnd-term-wrap';
+
+                if (typeof term.baseSlot === 'number') {
+                    const baseCls = isInsideFraction ? 'slot-frac-base' : 'slot-step-base';
+                    termWrap.appendChild(createSlotElement(term.baseSlot, baseCls));
+                }
+
+                if (Array.isArray(term.expSlots) && term.expSlots.length > 0) {
+                    const expGroup = document.createElement('div');
+                    expGroup.className = 'dnd-exp-group';
+                    term.expSlots.forEach((expItem) => {
+                        if (expItem.op) {
+                            const expOp = document.createElement('span');
+                            expOp.className = 'text-xs sm:text-sm font-extrabold text-white select-none px-0.5';
+                            expOp.textContent = expItem.op;
+                            expGroup.appendChild(expOp);
+                        } else if (typeof expItem.slotIndex === 'number') {
+                            const expCls = isInsideFraction ? 'slot-frac-exp' : 'slot-step-exp';
+                            expGroup.appendChild(createSlotElement(expItem.slotIndex, expCls));
+                        }
+                    });
+                    termWrap.appendChild(expGroup);
+                }
+
+                parentEl.appendChild(termWrap);
+            };
+
+            quizData.stepRows.forEach((row) => {
+                // Kolom 1: Sisi kiri tanda '=' (Soal pada baris pertama, kosong pada baris berikutnya)
+                const leftCell = document.createElement('div');
+                leftCell.className = 'text-right font-bold text-white text-sm sm:text-lg md:text-xl flex items-center justify-end py-0.5';
+                if (row.leftPrompt) {
+                    leftCell.innerHTML = formatMathHTML(row.leftPrompt);
+                }
+                slotsWrapper.appendChild(leftCell);
+
+                // Kolom 2: Tanda '=' yang tersusun lurus vertikal ke bawah
+                const eqCell = document.createElement('div');
+                eqCell.className = 'text-center font-bold text-neutral-200 text-base sm:text-lg md:text-xl px-1 sm:px-2 flex items-center justify-center py-0.5';
+                eqCell.textContent = '=';
+                slotsWrapper.appendChild(eqCell);
+
+                // Kolom 3: Sisi kanan tanda '=' (Susunan kotak basis, pangkat & pecahan per langkah)
+                const rightCell = document.createElement('div');
+                rightCell.className = 'text-left flex items-center justify-start py-0.5';
+
+                (row.terms || []).forEach((term) => {
+                    buildSingleTermNodes(term, rightCell, false);
+                });
+
+                slotsWrapper.appendChild(rightCell);
+            });
+        } else {
+            quizData.slots.forEach((slotCfg, idx) => {
+                if (slotCfg.prefixOp) {
+                    const opSpan = document.createElement('span');
+                    opSpan.className = 'mx-1.5 sm:mx-2.5 text-base sm:text-xl md:text-2xl font-bold text-neutral-300 select-none self-center';
+                    opSpan.innerHTML = slotCfg.prefixOp;
+                    slotsWrapper.appendChild(opSpan);
+                }
+                slotsWrapper.appendChild(createSlotElement(idx));
+            });
+        }
+
+        refreshSlotsUI();
+
+        // Panel Bawah: Deretan Angka 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+        optionsContainer.className = 'bg-neutral-900/90 border border-white/15 rounded-xl px-3.5 py-2 sm:px-5 sm:py-3 flex flex-col items-center gap-1.5 shrink-0';
+        const hintLabel = document.createElement('div');
+        hintLabel.className = 'text-[9px] sm:text-[11px] text-neutral-400 uppercase tracking-widest font-medium text-center';
+        hintLabel.textContent = 'Panel Angka (Seret / Drag angka ke kotak jawaban di atas)';
+        optionsContainer.appendChild(hintLabel);
+
+        const tilesRow = document.createElement('div');
+        tilesRow.className = 'grid grid-cols-10 gap-1.5 sm:gap-2 w-full max-w-lg place-items-center';
+        optionsContainer.appendChild(tilesRow);
+
+        const assignDigitToSlot = (slotIdx, digitStr) => {
+            if (isResolved || slotIdx < 0 || slotIdx >= slotValues.length) return;
+            slotValues[slotIdx] = digitStr;
+            slotElements[slotIdx].classList.remove('is-wrong', 'is-correct');
+            audio.playMechanism();
+
+            // Pindahkan fokus otomatis ke slot berikutnya yang masih kosong
+            const nextEmpty = slotValues.findIndex((v, i) => i > slotIdx && v === '');
+            const anyEmpty = slotValues.findIndex(v => v === '');
+            if (nextEmpty !== -1) activeSlotIndex = nextEmpty;
+            else if (anyEmpty !== -1) activeSlotIndex = anyEmpty;
+
+            refreshSlotsUI();
+        };
+
+        const findHoveredSlotIndex = (clientX, clientY) => {
+            let bestIdx = -1;
+            let bestDist = 46; // Radius magnet agar mudah di-drop di layar sentuh maupun mouse
+            slotElements.forEach((el, idx) => {
+                const rect = el.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const dist = Math.hypot(clientX - cx, clientY - cy);
+                if (dist < bestDist) {
+                    bestDist = dist;
+                    bestIdx = idx;
+                }
+            });
+            return bestIdx;
+        };
+
+        for (let digit = 0; digit <= 9; digit++) {
+            const tile = document.createElement('div');
+            tile.className = 'dnd-number-tile';
+            tile.textContent = String(digit);
+            tile.dataset.digit = String(digit);
+
+            tile.addEventListener('pointerdown', (e) => {
+                if (isResolved) return;
+                e.preventDefault();
+                audio.init();
+                audio.playStep();
+
+                const digitStr = String(digit);
+                const startX = e.clientX;
+                const startY = e.clientY;
+                let moved = false;
+
+                const ghost = document.createElement('div');
+                ghost.className = 'dnd-floating-ghost';
+                ghost.textContent = digitStr;
+                ghost.style.left = `${startX}px`;
+                ghost.style.top = `${startY}px`;
+                document.body.appendChild(ghost);
+
+                const onPointerMove = (moveEvt) => {
+                    const dx = moveEvt.clientX - startX;
+                    const dy = moveEvt.clientY - startY;
+                    if (Math.hypot(dx, dy) > 5) moved = true;
+                    ghost.style.left = `${moveEvt.clientX}px`;
+                    ghost.style.top = `${moveEvt.clientY}px`;
+
+                    const hoverIdx = findHoveredSlotIndex(moveEvt.clientX, moveEvt.clientY);
+                    slotElements.forEach((el, i) => {
+                        el.classList.toggle('is-hover-target', i === hoverIdx);
+                    });
+                };
+
+                const onPointerUp = (upEvt) => {
+                    window.removeEventListener('pointermove', onPointerMove);
+                    window.removeEventListener('pointerup', onPointerUp);
+                    window.removeEventListener('pointercancel', onPointerUp);
+                    if (ghost.parentNode) ghost.parentNode.removeChild(ghost);
+                    slotElements.forEach(el => el.classList.remove('is-hover-target'));
+
+                    const dropIdx = findHoveredSlotIndex(upEvt.clientX, upEvt.clientY);
+                    if (dropIdx !== -1) {
+                        assignDigitToSlot(dropIdx, digitStr);
+                    } else if (!moved) {
+                        // Jika pemain mengetuk cepat angka tanpa menyeret, masukkan ke slot aktif
+                        assignDigitToSlot(activeSlotIndex, digitStr);
+                    }
+                };
+
+                window.addEventListener('pointermove', onPointerMove);
+                window.addEventListener('pointerup', onPointerUp);
+                window.addEventListener('pointercancel', onPointerUp);
+            });
+
+            tilesRow.appendChild(tile);
+        }
+
+        const clearBtn = document.getElementById('btn-dnd-clear');
+        const submitBtn = document.getElementById('btn-dnd-submit');
+
+        if (clearBtn) {
+            clearBtn.onclick = () => {
+                if (isResolved) return;
+                audio.playStep();
+                for (let i = 0; i < slotValues.length; i++) slotValues[i] = '';
+                slotElements.forEach(el => el.classList.remove('is-wrong', 'is-correct'));
+                activeSlotIndex = 0;
+                feedbackEl.className = 'hidden';
+                refreshSlotsUI();
+            };
+        }
+
+        if (submitBtn) {
+            submitBtn.onclick = () => {
+                if (isResolved) return;
+                feedbackEl.classList.remove('hidden');
+
+                // Pastikan semua kotak jawaban sudah diisi sebelum memeriksa
+                if (slotValues.some(v => v === '')) {
+                    feedbackEl.className = 'text-center text-[10px] sm:text-xs md:text-sm font-medium shrink-0 text-amber-400';
+                    feedbackEl.textContent = 'Seret angka ke semua kotak jawaban terlebih dahulu!';
+                    audio.playStep();
+                    return;
+                }
+
+                const primaryCorrect = quizData.slots.every((s, idx) => slotValues[idx] === s.answer);
+                const altCorrect = Array.isArray(quizData.alternateAnswers) &&
+                    quizData.alternateAnswers.some(altArr => altArr.every((ans, idx) => slotValues[idx] === ans));
+                const allCorrect = primaryCorrect || altCorrect;
+
+                if (allCorrect) {
+                    isResolved = true;
+                    slotElements.forEach(el => {
+                        el.classList.remove('is-active-slot', 'is-wrong');
+                        el.classList.add('is-correct');
+                    });
+                    if (clearBtn) clearBtn.disabled = true;
+                    submitBtn.disabled = true;
+
+                    const prevLives = playerLives;
+                    playerLives = Math.min(100, playerLives + LIFE_STEP_PERCENT);
+                    const actualGain = playerLives - prevLives;
+                    updateLivesUI(actualGain);
+
+                    const isBossFight = (currentStage === 'boss1' || currentStage === 'boss2') && bossEntity;
+                    const projectedBossHp = isBossFight ? Math.max(0, bossEntity.hp - 25) : 0;
+                    const bossDamageNote = isBossFight
+                        ? ` <span class="font-bold text-white">[-25% HP RAJA • Sisa ${projectedBossHp}%]</span>`
+                        : '';
+
+                    const lifeNote = prevLives >= 100
+                        ? '[+10% Nyawa • Maks 100%]'
+                        : `[+${LIFE_STEP_PERCENT}% Nyawa]`;
+
+                    feedbackEl.className = 'text-center text-[10px] sm:text-xs md:text-sm font-medium shrink-0 text-emerald-400';
+                    feedbackEl.innerHTML = `<span class="font-bold text-emerald-300 mr-1.5">${lifeNote}</span>${bossDamageNote} ` + formatMathHTML(quizData.explanation || 'Jawaban benar! Gerbang terbuka.');
+                    audio.playCleanse();
+
+                    setTimeout(() => {
+                        quizGate.solved = true;
+                        solvedQuizGates[quizGate.id] = true;
+                        document.getElementById('quiz-modal').classList.add('hidden');
+                        quizActive = false;
+                        activeQuizGate = null;
+
+                        if (isBossFight) {
+                            // Pastikan Raja Laba-Laba berada di dalam jangkauan layar kamera agar sambaran petir terlihat jelas
+                            const minVisX = cameraX + 220;
+                            const maxVisX = cameraX + VIEW_W - 190;
+                            if (bossEntity.x < minVisX || bossEntity.x > maxVisX) {
+                                const newBossX = Math.max(minVisX, Math.min(maxVisX, player.x + 260));
+                                const shiftX = newBossX - bossEntity.x;
+                                bossEntity.x = newBossX;
+                                if (bossEntity.legs) {
+                                    bossEntity.legs.forEach(lg => {
+                                        lg.x += shiftX;
+                                        lg.startX += shiftX;
+                                        lg.nextX += shiftX;
+                                    });
+                                }
+                            }
+
+                            bossEntity.hp = Math.max(0, bossEntity.hp - 25);
+                            bossEntity.hurtFlash = 92;
+                            bossEntity.lightningTimer = 92;
+                            bossEntity.lightningStartX = quizGate.x + quizGate.w / 2;
+                            bossEntity.lightningStartY = quizGate.y + quizGate.h - 42;
+                            if (bossEntity.hp > 0) {
+                                bossEntity.state = 'stalk';
+                                bossEntity.timer = 150;
+                            }
+                            screenShake = 20;
+                            audio.playSpiderElectrocute();
+                            updateBossHUD();
+
+                            for (let pIdx = 0; pIdx < 40; pIdx++) {
+                                particles.push({
+                                    x: bossEntity.x + (Math.random() - 0.5) * 140,
+                                    y: bossEntity.y + (Math.random() - 0.5) * 85,
+                                    vx: (Math.random() - 0.5) * 12,
+                                    vy: (Math.random() - 0.5) * 12,
+                                    size: 2.5 + Math.random() * 2.5,
+                                    color: '#ffffff',
+                                    life: 55
+                                });
+                            }
+                        }
+                    }, 950);
+                } else {
+                    attemptsLeft--;
+                    stageQuizMistakes++;
+                    slotElements.forEach((el, idx) => {
+                        el.classList.remove('is-correct', 'is-wrong');
+                        if (slotValues[idx] !== quizData.slots[idx].answer) {
+                            el.classList.add('is-wrong');
+                        } else {
+                            el.classList.add('is-correct');
+                        }
+                    });
+
+                    if (attemptsLeft > 0) {
+                        feedbackEl.className = 'text-center text-[10px] sm:text-xs md:text-sm font-medium shrink-0 text-amber-400';
+                        feedbackEl.textContent = `Masih ada kotak yang belum tepat! Perbaiki kotak merah (tersisa ${attemptsLeft} kesempatan).`;
+                        audio.playParasiteLatch();
+                    } else {
+                        isResolved = true;
+                        if (clearBtn) clearBtn.disabled = true;
+                        submitBtn.disabled = true;
+                        feedbackEl.className = 'text-center text-[10px] sm:text-xs md:text-sm font-medium shrink-0 text-rose-400';
+                        feedbackEl.textContent = 'Jawaban Salah 2 Kali! Game Over — Kamu harus mengulang dari awal stage ini.';
+                        audio.playDeath();
+                        setTimeout(() => {
+                            document.getElementById('quiz-modal').classList.add('hidden');
+                            quizActive = false;
+                            activeQuizGate = null;
+                            playerLives = 0;
+                            updateLivesUI(0);
+                            triggerGameOver(`Kamu salah menjawab soal eksponen 2 kali di Stage ${currentStage}! Kembali ke awal stage.`);
+                        }, 1350);
+                    }
+                }
+            };
+        }
+    } else {
+        questionTextEl.innerHTML = `<div class="p-2 sm:p-4 text-sm sm:text-base md:text-lg leading-relaxed break-words">${formatMathHTML(quizData.question)}</div>`;
+        optionsContainer.className = 'grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 shrink-0';
+        let attemptsLeft = 2;
+
+        // Acak urutan pilihan ganda setiap kali kuis dibuka (Fisher-Yates Shuffle)
+        const shuffledOptions = quizData.options.map((text, originalIdx) => ({
+            text,
+            isCorrect: originalIdx === quizData.correctIndex
         }));
         for (let i = shuffledOptions.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -8536,14 +10610,14 @@ function openQuizModal(quizGate) {
 
         shuffledOptions.forEach((optObj) => {
             const btn = document.createElement('button');
-            btn.className = 'noir-btn quiz-opt-btn py-2.5 px-3 text-center justify-center';
+            btn.className = 'noir-btn quiz-opt-btn text-center justify-center font-semibold';
             btn.innerHTML = formatMathHTML(optObj.text);
             btn.onclick = () => {
                 feedbackEl.classList.remove('hidden');
                 if (optObj.isCorrect) {
-                    // Nonaktifkan seluruh tombol pilihan setelah menjawab benar
                     const allBtns = optionsContainer.querySelectorAll('button');
                     allBtns.forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; });
+                    btn.classList.add('border-emerald-400', 'bg-emerald-950/60', 'text-emerald-200');
 
                     const prevLives = playerLives;
                     playerLives = Math.min(100, playerLives + LIFE_STEP_PERCENT);
@@ -8562,8 +10636,8 @@ function openQuizModal(quizGate) {
 
                     feedbackEl.className = 'text-center text-xs sm:text-sm font-medium mt-2 shrink-0 text-emerald-400';
                     feedbackEl.innerHTML = `<span class="font-bold text-emerald-300 mr-1.5">${lifeNote}</span>${bossDamageNote} ` + formatMathHTML(quizData.explanation || 'Jawaban benar! Gerbang terbuka.');
-                    // Saat menjawab benar di dalam modal, hanya putar sound efek standar seperti stage lainnya
                     audio.playCleanse();
+
                     setTimeout(() => {
                         quizGate.solved = true;
                         solvedQuizGates[quizGate.id] = true;
@@ -8571,33 +10645,51 @@ function openQuizModal(quizGate) {
                         quizActive = false;
                         activeQuizGate = null;
 
-                        // Efek petir & suara laba-laba tersengat listrik baru berbunyi saat efek listrik menyambar di layar
                         if (isBossFight) {
+                            const minVisX = cameraX + 220;
+                            const maxVisX = cameraX + VIEW_W - 190;
+                            if (bossEntity.x < minVisX || bossEntity.x > maxVisX) {
+                                const newBossX = Math.max(minVisX, Math.min(maxVisX, player.x + 260));
+                                const shiftX = newBossX - bossEntity.x;
+                                bossEntity.x = newBossX;
+                                if (bossEntity.legs) {
+                                    bossEntity.legs.forEach(lg => {
+                                        lg.x += shiftX;
+                                        lg.startX += shiftX;
+                                        lg.nextX += shiftX;
+                                    });
+                                }
+                            }
+
                             bossEntity.hp = Math.max(0, bossEntity.hp - 25);
-                            bossEntity.hurtFlash = 45;
-                            bossEntity.lightningTimer = 45;
+                            bossEntity.hurtFlash = 92;
+                            bossEntity.lightningTimer = 92;
                             bossEntity.lightningStartX = quizGate.x + quizGate.w / 2;
-                            bossEntity.lightningStartY = quizGate.y + quizGate.h / 2;
-                            screenShake = 16;
+                            bossEntity.lightningStartY = quizGate.y + quizGate.h - 42;
+                            if (bossEntity.hp > 0) {
+                                bossEntity.state = 'stalk';
+                                bossEntity.timer = 150;
+                            }
+                            screenShake = 20;
                             audio.playSpiderElectrocute();
                             updateBossHUD();
 
-                            for (let pIdx = 0; pIdx < 28; pIdx++) {
+                            for (let pIdx = 0; pIdx < 40; pIdx++) {
                                 particles.push({
-                                    x: bossEntity.x + (Math.random() - 0.5) * 90,
-                                    y: bossEntity.y + (Math.random() - 0.5) * 60,
-                                    vx: (Math.random() - 0.5) * 9,
-                                    vy: (Math.random() - 0.5) * 9,
-                                    size: 3.5,
+                                    x: bossEntity.x + (Math.random() - 0.5) * 140,
+                                    y: bossEntity.y + (Math.random() - 0.5) * 85,
+                                    vx: (Math.random() - 0.5) * 12,
+                                    vy: (Math.random() - 0.5) * 12,
+                                    size: 2.5 + Math.random() * 2.5,
                                     color: '#ffffff',
-                                    life: 45
+                                    life: 55
                                 });
                             }
                         }
                     }, 950);
                 } else {
                     attemptsLeft--;
-                    // Nonaktifkan tombol opsi yang salah agar tidak dipilih ulang
+                    stageQuizMistakes++;
                     btn.disabled = true;
                     btn.style.pointerEvents = 'none';
                     btn.classList.add('opacity-40', 'border-rose-500/60', 'line-through');
@@ -8617,8 +10709,10 @@ function openQuizModal(quizGate) {
                             document.getElementById('quiz-modal').classList.add('hidden');
                             quizActive = false;
                             activeQuizGate = null;
-                            triggerGameOver(`Kesempatan menjawab habis (salah 2 kali)! Kembali ke awal Stage ${currentStage} dan nyawa direset menjadi 100%.`);
-                        }, 1050);
+                            playerLives = 0;
+                            updateLivesUI(0);
+                            triggerGameOver(`Kamu salah menjawab soal eksponen 2 kali di Stage ${currentStage}! Kembali ke awal stage.`);
+                        }, 1350);
                     }
                 }
             };
@@ -8634,12 +10728,11 @@ function updateParticles() {
         const pt = particles[i];
         pt.x += pt.vx;
         pt.y += pt.vy;
-        if (pt.isSmoke) {
-            pt.vx *= 0.985;
-            pt.vy -= 0.025;
-            if (pt.size > 5) pt.size += 0.16;
+        if (!pt.isSmoke) {
+            pt.vy += 0.22;
         } else {
-            pt.vy += 0.18;
+            pt.vx *= 0.98;
+            pt.size += 0.08;
         }
         pt.life--;
         if (pt.life <= 0) {
@@ -8658,8 +10751,8 @@ function updateParticles() {
 }
 
 function renderGame() {
+    const time = performance.now() * 0.002;
     ctx.save();
-
     if (screenShake > 0) {
         const sx = (Math.random() - 0.5) * screenShake;
         const sy = (Math.random() - 0.5) * screenShake;
@@ -8717,7 +10810,6 @@ function renderGame() {
     const layerAlphas = [0.42, 0.68, 0.92];
     const layerFactors = [0.16, 0.36, 0.62];
     const ambTime = performance.now() * 0.0015;
-    const time = performance.now() * 0.002;
 
     for (let layer = 0; layer < 3; layer++) {
         ctx.save();
@@ -8730,122 +10822,69 @@ function renderGame() {
         for (const tree of bgTrees) {
             if (tree.layer !== layer) continue;
             const tx = tree.x - cameraX * layerFactors[layer];
-            if (tx < -260 || tx > VIEW_W + 260) continue;
+            if (tx < -220 || tx > VIEW_W + 220) continue;
 
             if (tree.isTendrilOnly) {
-                const sway = Math.sin(ambTime + tree.x * 0.02) * 8;
+                const sway = Math.sin(ambTime + tree.x * 0.01) * 8;
+                ctx.lineWidth = 2.2;
                 ctx.beginPath();
-                ctx.moveTo(tx - tree.width * 0.26, -20);
-                ctx.quadraticCurveTo(tx + sway * 0.4, tree.tendrilLen * 0.55, tx + sway, tree.tendrilLen);
-                ctx.quadraticCurveTo(tx + tree.width * 0.12 + sway * 0.4, tree.tendrilLen * 0.55, tx + tree.width * 0.26, -20);
-                ctx.closePath();
-                ctx.fill();
+                ctx.moveTo(tx, -20);
+                ctx.quadraticCurveTo(tx + sway * 0.5, tree.tendrilLen * 0.5, tx + sway, tree.tendrilLen);
+                ctx.stroke();
                 continue;
             }
 
-            // Fungsi posisi tengah & lebar batang pohon agar ranting menyatu 100% dengan batang
-            const getTrunkCenter = (t) => tx + Math.sin(t * Math.PI) * tree.midCurve + t * tree.tilt;
-            const getTrunkHalfW = (t) => tree.width * (0.42 + 0.28 * Math.pow(1 - t, 2.2) + 0.52 * Math.pow(t, 2.6));
+            const w = tree.width;
+            const topX = tx + tree.tilt;
+            const midX = tx + tree.midCurve;
+            const rf = tree.rootFlare;
 
             ctx.beginPath();
-            const steps = 10;
-            for (let s = 0; s <= steps; s++) {
-                const t = s / steps;
-                const py = -30 + t * (VIEW_H + 60);
-                const px = getTrunkCenter(t) - getTrunkHalfW(t);
-                if (s === 0) ctx.moveTo(px, py);
-                else ctx.lineTo(px, py);
-            }
-            for (let s = steps; s >= 0; s--) {
-                const t = s / steps;
-                const py = -30 + t * (VIEW_H + 60);
-                const px = getTrunkCenter(t) + getTrunkHalfW(t);
-                ctx.lineTo(px, py);
-            }
+            ctx.moveTo(tx - w * 0.5 - rf, VIEW_H + 40);
+            ctx.bezierCurveTo(
+                tx - w * 0.48, VIEW_H * 0.72,
+                midX - w * 0.36, VIEW_H * 0.38,
+                topX - w * 0.26, -40
+            );
+            ctx.lineTo(topX + w * 0.26, -40);
+            ctx.bezierCurveTo(
+                midX + w * 0.36, VIEW_H * 0.38,
+                tx + w * 0.48, VIEW_H * 0.72,
+                tx + w * 0.5 + rf, VIEW_H + 40
+            );
             ctx.closePath();
             ctx.fill();
 
-            // Dahan organik meruncing dengan cabang-cabang ranting kecil bertingkat
             for (const br of tree.branches) {
-                const by = -30 + br.yRatio * (VIEW_H + 60);
-                const trunkCx = getTrunkCenter(br.yRatio);
-                const trunkHw = getTrunkHalfW(br.yRatio);
-                const startX = trunkCx + br.dir * (trunkHw * 0.35);
-                const ctrlX = startX + br.dir * br.len * 0.52;
-                const ctrlY = by + br.rise * 0.45 + br.curve;
+                const by = VIEW_H * br.yRatio;
+                const tRatio = 1 - br.yRatio;
+                const trunkCenterAtY = tx * (1 - tRatio) + topX * tRatio + Math.sin(br.yRatio * Math.PI) * (tree.midCurve * 0.5);
+                const startX = trunkCenterAtY + br.dir * (w * 0.15);
                 const endX = startX + br.dir * br.len;
                 const endY = by + br.rise;
+                const ctrlX = (startX + endX) * 0.5;
+                const ctrlY = (by + endY) * 0.5 + br.curve;
 
                 ctx.beginPath();
-                ctx.moveTo(startX, by - br.thick * 0.85);
-                ctx.quadraticCurveTo(ctrlX, ctrlY - br.thick * 0.28, endX, endY);
-                ctx.quadraticCurveTo(ctrlX, ctrlY + br.thick * 0.32, startX, by + br.thick * 0.95);
+                ctx.moveTo(startX, by - br.thick * 0.55);
+                ctx.quadraticCurveTo(ctrlX, ctrlY - br.thick * 0.22, endX, endY);
+                ctx.quadraticCurveTo(ctrlX, ctrlY + br.thick * 0.22, startX, by + br.thick * 0.55);
                 ctx.closePath();
                 ctx.fill();
 
-                // Anak ranting pertama & ranting mikro bercabang
-                const tSub = br.subTwigRatio;
-                const subStartX = (1 - tSub) * (1 - tSub) * startX + 2 * (1 - tSub) * tSub * ctrlX + tSub * tSub * endX;
-                const subStartY = (1 - tSub) * (1 - tSub) * by + 2 * (1 - tSub) * tSub * ctrlY + tSub * tSub * endY;
-                const subTipX = subStartX + br.dir * br.subTwigLen;
-                const subTipY = subStartY + br.subTwigAngle;
-                const subMidX = (subStartX + subTipX) * 0.5;
-                const subMidY = (subStartY + subTipY) * 0.5;
+                const subX = startX + (endX - startX) * br.subTwigRatio;
+                const subY = by + (endY - by) * br.subTwigRatio;
+                const rad = (br.subTwigAngle * Math.PI) / 180;
+                const tipX = subX + br.dir * Math.cos(rad) * br.subTwigLen;
+                const tipY = subY + Math.sin(rad) * br.subTwigLen;
+                ctx.lineWidth = Math.max(1.2, br.thick * 0.25);
                 ctx.beginPath();
-                ctx.moveTo(subStartX, subStartY - br.thick * 0.22);
-                ctx.quadraticCurveTo(subMidX, subMidY - br.thick * 0.12, subTipX, subTipY);
-                ctx.quadraticCurveTo(subMidX, subMidY + br.thick * 0.12, subStartX, subStartY + br.thick * 0.22);
-                ctx.closePath();
-                ctx.fill();
-
-                // Ranting-ranting halus tambahan di ujung dahan
-                const microStartX = subStartX + (subTipX - subStartX) * 0.55;
-                const microStartY = subStartY + (subTipY - subStartY) * 0.55;
-                ctx.lineWidth = Math.max(1, br.thick * 0.16);
-                ctx.beginPath();
-                ctx.moveTo(microStartX, microStartY);
-                ctx.lineTo(subTipX - br.dir * 4, subTipY + (br.subTwigAngle > 0 ? 8 : -8));
-                ctx.moveTo(endX, endY);
-                ctx.lineTo(endX + br.dir * 11, endY - 7);
-                ctx.moveTo(endX, endY);
-                ctx.lineTo(endX + br.dir * 14, endY + 5);
+                ctx.moveTo(subX, subY);
+                ctx.lineTo(tipX, tipY);
                 ctx.stroke();
             }
         }
         ctx.restore();
-
-        // Lapisan kabut serta berkas cahaya atmosferik miring yang melebar dan lembut di sela pepohonan
-        const fogGrad = ctx.createLinearGradient(0, VIEW_H * 0.05, 0, VIEW_H);
-        fogGrad.addColorStop(0, 'rgba(230,230,230,0.06)');
-        fogGrad.addColorStop(0.48, 'rgba(215,215,215,0.22)');
-        fogGrad.addColorStop(0.82, 'rgba(145,145,145,0.14)');
-        fogGrad.addColorStop(1, 'rgba(18,18,18,0.28)');
-        ctx.fillStyle = fogGrad;
-        ctx.fillRect(0, 0, VIEW_W, VIEW_H);
-
-        if (layer === 1) {
-            ctx.save();
-            for (let r = 0; r < 6; r++) {
-                const rayWorldX = r * 1250 + 380;
-                const rx = ((rayWorldX - cameraX * 0.28) % (VIEW_W + 700) + (VIEW_W + 700)) % (VIEW_W + 700) - 350;
-                const topW = 90 + (r % 3) * 35;
-                const botW = 340 + (r % 2) * 110;
-                const slant = 110 + (r % 2) * 45;
-                const rayGrad = ctx.createLinearGradient(rx, 0, rx + slant * 0.5, VIEW_H * 0.92);
-                rayGrad.addColorStop(0, 'rgba(255, 255, 255, 0.18)');
-                rayGrad.addColorStop(0.55, 'rgba(240, 240, 240, 0.10)');
-                rayGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-                ctx.fillStyle = rayGrad;
-                ctx.beginPath();
-                ctx.moveTo(rx - topW / 2, -20);
-                ctx.lineTo(rx + topW / 2, -20);
-                ctx.lineTo(rx + slant + botW / 2, VIEW_H);
-                ctx.lineTo(rx + slant - botW / 2, VIEW_H);
-                ctx.closePath();
-                ctx.fill();
-            }
-            ctx.restore();
-        }
     }
 
     ctx.save();
@@ -10232,30 +12271,118 @@ function renderGame() {
             ctx.restore();
         }
 
-        // Sambaran Petir Cahaya Putih dari Segel Eksponen ke Tubuh Sang Raja
+        // Sambaran Petir Cahaya Putih Bercabang dari Segel Eksponen & Langit ke Tubuh Sang Raja
         if (bossEntity.lightningTimer > 0) {
             ctx.save();
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 4.5;
-            ctx.shadowColor = '#ffffff';
-            ctx.shadowBlur = 28;
-            ctx.beginPath();
-            ctx.moveTo(bossEntity.lightningStartX, bossEntity.lightningStartY);
-            const segments = 8;
-            for (let s = 1; s < segments; s++) {
-                const frac = s / segments;
-                const lx = bossEntity.lightningStartX + (bx - bossEntity.lightningStartX) * frac + (Math.random() - 0.5) * 38;
-                const ly = bossEntity.lightningStartY + (by - bossEntity.lightningStartY) * frac + (Math.random() - 0.5) * 38;
-                ctx.lineTo(lx, ly);
+            const lRatio = Math.min(1, bossEntity.lightningTimer / 92);
+
+            if (bossEntity.lightningTimer % 3 !== 0) {
+                ctx.fillStyle = `rgba(255, 255, 255, ${0.18 * lRatio})`;
+                ctx.fillRect(cameraX - 40, cameraY - 40, VIEW_W + 80, VIEW_H + 80);
             }
-            ctx.lineTo(bx, by);
-            ctx.stroke();
+
+            const sealGlow = ctx.createRadialGradient(
+                bossEntity.lightningStartX, bossEntity.lightningStartY, 4,
+                bossEntity.lightningStartX, bossEntity.lightningStartY, 64
+            );
+            sealGlow.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+            sealGlow.addColorStop(0.45, 'rgba(255, 255, 255, 0.45)');
+            sealGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = sealGlow;
+            ctx.beginPath();
+            ctx.arc(bossEntity.lightningStartX, bossEntity.lightningStartY, 64, 0, Math.PI * 2);
+            ctx.fill();
+
+            const spiderShockGlow = ctx.createRadialGradient(bx + 20, by - 8, 10, bx + 20, by - 8, 145);
+            spiderShockGlow.addColorStop(0, 'rgba(255, 255, 255, 0.92)');
+            spiderShockGlow.addColorStop(0.5, 'rgba(235, 235, 235, 0.38)');
+            spiderShockGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = spiderShockGlow;
+            ctx.beginPath();
+            ctx.arc(bx + 20, by - 8, 145, 0, Math.PI * 2);
+            ctx.fill();
+
+            const drawBranchingBolt = (x1, y1, x2, y2, mainWidth, jitterAmp, branchCount = 3) => {
+                const segs = 10;
+                const pts = [{ x: x1, y: y1 }];
+                for (let s = 1; s < segs; s++) {
+                    const frac = s / segs;
+                    const env = Math.sin(frac * Math.PI);
+                    pts.push({
+                        x: x1 + (x2 - x1) * frac + (Math.random() - 0.5) * jitterAmp * env,
+                        y: y1 + (y2 - y1) * frac + (Math.random() - 0.5) * jitterAmp * env
+                    });
+                }
+                pts.push({ x: x2, y: y2 });
+
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.38)';
+                ctx.lineWidth = mainWidth * 2.8;
+                ctx.beginPath();
+                ctx.moveTo(pts[0].x, pts[0].y);
+                for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+                ctx.stroke();
+
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = mainWidth;
+                ctx.shadowColor = '#ffffff';
+                ctx.shadowBlur = 24;
+                ctx.beginPath();
+                ctx.moveTo(pts[0].x, pts[0].y);
+                for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+                ctx.stroke();
+
+                ctx.lineWidth = Math.max(1.4, mainWidth * 0.52);
+                for (let b = 0; b < branchCount; b++) {
+                    const idx = 2 + Math.floor((b + 0.5) * ((segs - 3) / Math.max(1, branchCount)));
+                    const root = pts[Math.min(pts.length - 2, idx)];
+                    const dirAngle = Math.atan2(y2 - y1, x2 - x1) + (b % 2 === 0 ? 0.65 : -0.65) + (Math.random() - 0.5) * 0.35;
+                    const bLen = 45 + Math.random() * 55;
+                    const midBX = root.x + Math.cos(dirAngle) * (bLen * 0.5) + (Math.random() - 0.5) * 18;
+                    const midBY = root.y + Math.sin(dirAngle) * (bLen * 0.5) + (Math.random() - 0.5) * 18;
+                    const endBX = root.x + Math.cos(dirAngle) * bLen + (Math.random() - 0.5) * 24;
+                    const endBY = root.y + Math.sin(dirAngle) * bLen + (Math.random() - 0.5) * 24;
+
+                    ctx.beginPath();
+                    ctx.moveTo(root.x, root.y);
+                    ctx.lineTo(midBX, midBY);
+                    ctx.lineTo(endBX, endBY);
+                    ctx.stroke();
+                }
+            };
+
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            drawBranchingBolt(bossEntity.lightningStartX, bossEntity.lightningStartY, bx - 12, by + 6, 4.8, 52, 4);
+            drawBranchingBolt(bossEntity.lightningStartX, bossEntity.lightningStartY, bx + 55, by - 20, 3.4, 64, 3);
+
+            const skyX1 = bx - 25 + (Math.random() - 0.5) * 45;
+            const skyX2 = bx + 65 + (Math.random() - 0.5) * 45;
+            drawBranchingBolt(skyX1, cameraY - 30, bx - 10, by + 2, 5.4, 58, 4);
+            drawBranchingBolt(skyX2, cameraY - 30, bx + 58, by - 22, 4.6, 54, 3);
+
+            ctx.lineWidth = 2.2;
+            ctx.strokeStyle = '#ffffff';
+            if (bossEntity.legs) {
+                for (let lIdx = 0; lIdx < bossEntity.legs.length; lIdx++) {
+                    if (Math.random() < 0.75) {
+                        const lg = bossEntity.legs[lIdx];
+                        const midX = (bx + lg.x) * 0.5 + (Math.random() - 0.5) * 28;
+                        const midY = (by + lg.y) * 0.5 - 35 + (Math.random() - 0.5) * 28;
+                        ctx.beginPath();
+                        ctx.moveTo(bx + (lIdx < 4 ? -18 : 28), by);
+                        ctx.lineTo(midX, midY);
+                        ctx.lineTo(lg.x + (Math.random() - 0.5) * 14, lg.y - 10);
+                        ctx.stroke();
+                    }
+                }
+            }
             ctx.restore();
         }
 
         const isFlashing = bossEntity.hurtFlash > 0 && Math.floor(bossEntity.hurtFlash) % 2 === 0;
-        const mainColor = isFlashing ? '#ffffff' : '#020202';
-        const backLegColor = isFlashing ? '#e5e5e5' : '#0a0a0a';
+        const mainColor = isFlashing ? '#ffffff' : (isDying ? '#141414' : '#020202');
+        const backLegColor = isFlashing ? '#e5e5e5' : (isDying ? '#1c1c1c' : '#0a0a0a');
         const furColor = isFlashing ? '#ffffff' : '#0c0c0c';
 
         // Fungsi menggambar ruas tungkai Laba-Laba Tarantula Raksasa dengan Bulu Lebat, Tipis & Melambai Selang-Seling Mengikuti Gerakan Kaki
@@ -10612,20 +12739,31 @@ function renderGame() {
         // Retakan bara putih menyala & efek hangus di sekujur tubuh saat Raja Laba-Laba sekarat
         if (isDying) {
             ctx.save();
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 2.2;
-            ctx.shadowColor = '#ffffff';
-            ctx.shadowBlur = 16;
+            const glowAlpha = Math.max(0.2, 1 - burnRatio * 0.75);
+            const emberGlow = ctx.createRadialGradient(bx + 30, by - 10, 8, bx + 30, by - 10, 115);
+            emberGlow.addColorStop(0, `rgba(255, 255, 255, ${0.42 * glowAlpha})`);
+            emberGlow.addColorStop(0.5, `rgba(180, 180, 180, ${0.18 * glowAlpha})`);
+            emberGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = emberGlow;
             ctx.beginPath();
-            ctx.moveTo(bx + 20, by - 35);
+            ctx.arc(bx + 30, by - 10, 115, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2.4;
+            ctx.shadowColor = '#ffffff';
+            ctx.shadowBlur = 18;
+            ctx.beginPath();
+            ctx.moveTo(bx + 15, by - 42);
             ctx.lineTo(bx + 45, by - 18);
             ctx.lineTo(bx + 78, by - 28);
-            ctx.lineTo(bx + 105, by - 8);
+            ctx.lineTo(bx + 112, by - 6);
             ctx.moveTo(bx + 45, by - 18);
-            ctx.lineTo(bx + 58, by + 8);
-            ctx.moveTo(bx - 32, by - 4);
+            ctx.lineTo(bx + 58, by + 12);
+            ctx.lineTo(bx + 88, by + 18);
+            ctx.moveTo(bx - 36, by - 6);
             ctx.lineTo(bx - 12, by + 8);
-            ctx.lineTo(bx + 10, by - 2);
+            ctx.lineTo(bx + 14, by - 2);
             ctx.stroke();
             ctx.restore();
         }
@@ -11501,6 +13639,9 @@ function setupControls() {
         audio.init();
         audio.playMechanism();
         requestGameFullscreen();
+        currentStage = 1;
+        completedStages = {};
+        solvedQuizGates = {};
         const titleScreen = document.getElementById('title-screen');
         titleScreen.style.opacity = '0';
         setTimeout(() => titleScreen.classList.add('hidden'), 550);
@@ -11534,6 +13675,10 @@ function setupControls() {
         endingMapBtn.addEventListener('click', () => {
             audio.init();
             audio.playMechanism();
+            if (completedStages[currentStage]) {
+                const nextId = getNextStageId(currentStage);
+                if (nextId) currentStage = nextId;
+            }
             document.getElementById('ending-screen').classList.add('hidden');
             openMapScreen();
         });
