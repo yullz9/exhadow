@@ -345,32 +345,149 @@
         .custom-scroll::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.5);
         }
-        /* Popup Modal Materi & Soal Luas, Proporsional & Responsif */
+        /* Popup Modal Materi & Soal Lebih Besar, Leluasa & Responsif di Semua Perangkat (HP & Laptop) */
         .quiz-popup-16-9 {
-            width: min(92vw, 900px);
-            min-height: min(78dvh, 480px);
-            max-width: 94vw;
-            max-height: 92dvh;
+            width: min(96vw, 1100px);
+            height: auto;
+            min-height: min(82dvh, 440px);
+            max-width: 97vw;
+            max-height: 95dvh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(255, 255, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.18);
         }
-        @media (max-width: 640px) {
+        @media (min-height: 580px) and (min-width: 640px) {
             .quiz-popup-16-9 {
-                width: 94vw;
-                min-height: min(82dvh, 420px);
-                max-height: 94dvh;
+                min-height: min(86dvh, 620px);
             }
         }
-        /* Elemen Drag & Drop Soal Eksponen - Proporsional & Tidak Tumpang Tindih */
+        @media (max-width: 640px) {
+            .quiz-popup-16-9 {
+                width: 97vw;
+                max-width: 97vw;
+                max-height: 96dvh;
+            }
+        }
+        /* Kontainer Persamaan Auto-Fit agar Tidak Pernah Terpotong di HP */
+        #dnd-equation-container {
+            position: relative;
+            width: 100%;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        #dnd-scale-outer {
+            margin: auto;
+            position: relative;
+            flex-shrink: 0;
+        }
+        #dnd-scale-inner {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: max-content;
+            transform-origin: top left;
+        }
+        /* Tata Letak Dock Panel Angka & Tombol Aksi */
+        .dnd-controls-dock {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.55rem;
+            width: 100%;
+        }
+        .dnd-tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(10, minmax(0, 1fr));
+            gap: 0.45rem;
+            width: 100%;
+            max-width: 42rem;
+            place-items: center;
+        }
+        @media (max-width: 440px) and (min-height: 520px) {
+            .dnd-tiles-grid {
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+                max-width: 22rem;
+            }
+        }
+        .dnd-action-btns {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        /* Adaptasi Khusus Layar Pendek / HP Mode Landscape */
+        @media (max-height: 540px) {
+            #quiz-modal {
+                padding: 0.2rem 0.4rem !important;
+            }
+            .quiz-popup-16-9 {
+                width: min(97vw, 980px);
+                min-height: 92dvh;
+                max-height: 96dvh;
+                padding: 0.5rem 1rem !important;
+                gap: 0.35rem !important;
+                border-radius: 0.85rem !important;
+            }
+            #quiz-header-box {
+                padding-bottom: 0.25rem !important;
+                gap: 0.1rem !important;
+            }
+            #quiz-modal-title {
+                font-size: 0.78rem !important;
+            }
+            #quiz-modal-subtitle {
+                font-size: 0.66rem !important;
+                line-height: 1.2 !important;
+            }
+            #quiz-body-layout {
+                gap: 0.35rem !important;
+            }
+            #quiz-question-box {
+                padding: 0.45rem 0.75rem !important;
+            }
+            #dnd-question-prompt {
+                font-size: 0.78rem !important;
+                line-height: 1.28 !important;
+                margin-bottom: 0.2rem !important;
+            }
+            #quiz-options {
+                padding: 0.35rem 0.75rem !important;
+                gap: 0.25rem !important;
+            }
+            .dnd-hint-label {
+                display: none !important;
+            }
+            .dnd-controls-dock {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0.75rem;
+            }
+            .dnd-tiles-grid {
+                flex: 1;
+                max-width: none;
+                gap: 0.3rem;
+            }
+            .dnd-action-btns {
+                flex-shrink: 0;
+                gap: 0.4rem;
+            }
+            .dnd-action-btns .noir-btn {
+                padding: 0.35rem 0.75rem !important;
+                font-size: 0.7rem !important;
+            }
+        }
+        /* Elemen Drag & Drop Soal Eksponen - Lebih Besar, Leluasa & Proporsional */
         .dnd-drop-slot {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             background: rgba(10, 10, 10, 0.92);
             border: 2px dashed rgba(255, 255, 255, 0.45);
-            border-radius: 0.45rem;
+            border-radius: 0.5rem;
             color: #ffffff;
             font-weight: 700;
             transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
@@ -381,16 +498,16 @@
             flex-shrink: 0;
         }
         .dnd-drop-slot.slot-base {
-            width: clamp(2rem, min(4.4vw, 6.4dvh), 2.9rem);
-            height: clamp(2rem, min(4.4vw, 6.4dvh), 2.9rem);
-            font-size: clamp(0.95rem, min(2vw, 3dvh), 1.35rem);
+            width: clamp(2.4rem, min(5.2vw, 7.4dvh), 3.4rem);
+            height: clamp(2.4rem, min(5.2vw, 7.4dvh), 3.4rem);
+            font-size: clamp(1.1rem, min(2.3vw, 3.4dvh), 1.55rem);
         }
         .dnd-drop-slot.slot-exp {
-            width: clamp(1.5rem, min(3.2vw, 4.8dvh), 2.1rem);
-            height: clamp(1.5rem, min(3.2vw, 4.8dvh), 2.1rem);
-            font-size: clamp(0.78rem, min(1.5vw, 2.2dvh), 1rem);
-            margin-left: 0.16rem;
-            margin-bottom: clamp(0.65rem, min(1.5vw, 2.2dvh), 1rem);
+            width: clamp(1.75rem, min(3.8vw, 5.5dvh), 2.45rem);
+            height: clamp(1.75rem, min(3.8vw, 5.5dvh), 2.45rem);
+            font-size: clamp(0.88rem, min(1.7vw, 2.5dvh), 1.15rem);
+            margin-left: 0.2rem;
+            margin-bottom: clamp(0.75rem, min(1.8vw, 2.6dvh), 1.2rem);
         }
         .dnd-drop-slot.is-active-slot {
             border-color: rgba(255, 255, 255, 0.85);
@@ -406,11 +523,11 @@
         .dnd-step-grid {
             display: inline-grid;
             grid-template-columns: auto auto auto;
-            row-gap: clamp(0.35rem, 1.1dvh, 0.6rem);
-            column-gap: clamp(0.45rem, 1.2vw, 0.75rem);
+            row-gap: clamp(0.5rem, 1.4dvh, 0.85rem);
+            column-gap: clamp(0.6rem, 1.5vw, 1rem);
             align-items: center;
             justify-content: center;
-            padding: clamp(0.25rem, 0.8dvh, 0.5rem) clamp(0.4rem, 1.2vw, 0.85rem);
+            padding: clamp(0.4rem, 1.2dvh, 0.75rem) clamp(0.65rem, 1.6vw, 1.2rem);
         }
         .dnd-term-wrap {
             display: inline-flex;
@@ -420,19 +537,19 @@
         .dnd-exp-group {
             display: inline-flex;
             align-items: center;
-            gap: 0.18rem;
-            margin-left: 0.15rem;
-            margin-bottom: clamp(0.6rem, min(1.4vw, 2.1dvh), 0.9rem);
+            gap: 0.22rem;
+            margin-left: 0.18rem;
+            margin-bottom: clamp(0.7rem, min(1.6vw, 2.4dvh), 1.1rem);
         }
         .dnd-drop-slot.slot-step-base {
-            width: clamp(1.75rem, min(3.7vw, 5.4dvh), 2.4rem);
-            height: clamp(1.75rem, min(3.7vw, 5.4dvh), 2.4rem);
-            font-size: clamp(0.88rem, min(1.7vw, 2.5dvh), 1.2rem);
+            width: clamp(2.1rem, min(4.4vw, 6.4dvh), 2.85rem);
+            height: clamp(2.1rem, min(4.4vw, 6.4dvh), 2.85rem);
+            font-size: clamp(1rem, min(2vw, 2.9dvh), 1.4rem);
         }
         .dnd-drop-slot.slot-step-exp {
-            width: clamp(1.35rem, min(2.9vw, 4.3dvh), 1.85rem);
-            height: clamp(1.35rem, min(2.9vw, 4.3dvh), 1.85rem);
-            font-size: clamp(0.72rem, min(1.35vw, 2dvh), 0.95rem);
+            width: clamp(1.6rem, min(3.4vw, 5dvh), 2.2rem);
+            height: clamp(1.6rem, min(3.4vw, 5dvh), 2.2rem);
+            font-size: clamp(0.82rem, min(1.55vw, 2.3dvh), 1.1rem);
         }
         .dnd-slot-frac {
             display: inline-flex;
@@ -440,66 +557,66 @@
             align-items: center;
             justify-content: center;
             vertical-align: middle;
-            margin: 0.08rem 0.2rem;
+            margin: 0.12rem 0.28rem;
         }
         .dnd-slot-frac-num {
             display: flex;
             align-items: flex-end;
             justify-content: center;
             border-bottom: 2px solid rgba(255, 255, 255, 0.85);
-            padding: 0.16rem 0.45rem 0.22rem 0.45rem;
+            padding: 0.22rem 0.55rem 0.28rem 0.55rem;
             width: 100%;
         }
         .dnd-slot-frac-den {
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            padding: 0.3rem 0.45rem 0.14rem 0.45rem;
+            padding: 0.36rem 0.55rem 0.18rem 0.55rem;
             width: 100%;
         }
         .dnd-slot-frac .dnd-exp-group {
-            margin-bottom: clamp(0.45rem, min(1.1vw, 1.6dvh), 0.72rem);
+            margin-bottom: clamp(0.55rem, min(1.3vw, 1.9dvh), 0.88rem);
         }
         /* Mode Rapat Proporsional untuk Soal dengan Banyak Langkah & Pecahan Bertingkat */
         .dnd-step-grid.is-dense-grid {
-            row-gap: clamp(0.18rem, 0.55dvh, 0.32rem);
-            column-gap: clamp(0.35rem, 0.9vw, 0.55rem);
-            padding: 0.15rem 0.4rem;
+            row-gap: clamp(0.3rem, 0.85dvh, 0.52rem);
+            column-gap: clamp(0.45rem, 1.15vw, 0.75rem);
+            padding: 0.25rem 0.6rem;
         }
         .dnd-step-grid.is-dense-grid .dnd-drop-slot.slot-step-base,
         .dnd-step-grid.is-dense-grid .dnd-drop-slot.slot-frac-base {
-            width: clamp(1.32rem, min(2.7vw, 3.6dvh), 1.78rem);
-            height: clamp(1.32rem, min(2.7vw, 3.6dvh), 1.78rem);
-            font-size: clamp(0.72rem, min(1.3vw, 1.85dvh), 0.95rem);
+            width: clamp(1.65rem, min(3.3vw, 4.5dvh), 2.2rem);
+            height: clamp(1.65rem, min(3.3vw, 4.5dvh), 2.2rem);
+            font-size: clamp(0.85rem, min(1.5vw, 2.15dvh), 1.12rem);
         }
         .dnd-step-grid.is-dense-grid .dnd-drop-slot.slot-step-exp,
         .dnd-step-grid.is-dense-grid .dnd-drop-slot.slot-frac-exp {
-            width: clamp(1.02rem, min(2.1vw, 2.85dvh), 1.38rem);
-            height: clamp(1.02rem, min(2.1vw, 2.85dvh), 1.38rem);
-            font-size: clamp(0.6rem, min(1.05vw, 1.5dvh), 0.78rem);
+            width: clamp(1.26rem, min(2.5vw, 3.5dvh), 1.68rem);
+            height: clamp(1.26rem, min(2.5vw, 3.5dvh), 1.68rem);
+            font-size: clamp(0.68rem, min(1.2vw, 1.75dvh), 0.9rem);
         }
         .dnd-step-grid.is-dense-grid .dnd-exp-group {
-            margin-bottom: clamp(0.38rem, min(0.9vw, 1.25dvh), 0.56rem);
-            gap: 0.12rem;
+            margin-bottom: clamp(0.48rem, min(1.1vw, 1.55dvh), 0.7rem);
+            gap: 0.15rem;
         }
         .dnd-step-grid.is-dense-grid .dnd-slot-frac {
-            margin: 0.02rem 0.12rem;
+            margin: 0.06rem 0.18rem;
         }
         .dnd-step-grid.is-dense-grid .dnd-slot-frac-num {
-            padding: 0.1rem 0.35rem 0.15rem 0.35rem;
+            padding: 0.15rem 0.45rem 0.2rem 0.45rem;
         }
         .dnd-step-grid.is-dense-grid .dnd-slot-frac-den {
-            padding: 0.22rem 0.35rem 0.08rem 0.35rem;
+            padding: 0.28rem 0.45rem 0.12rem 0.45rem;
         }
         .dnd-drop-slot.slot-frac-base {
-            width: clamp(1.6rem, min(3.3vw, 4.8dvh), 2.15rem);
-            height: clamp(1.6rem, min(3.3vw, 4.8dvh), 2.15rem);
-            font-size: clamp(0.8rem, min(1.5vw, 2.2dvh), 1.08rem);
+            width: clamp(1.9rem, min(3.9vw, 5.6dvh), 2.55rem);
+            height: clamp(1.9rem, min(3.9vw, 5.6dvh), 2.55rem);
+            font-size: clamp(0.92rem, min(1.75vw, 2.5dvh), 1.25rem);
         }
         .dnd-drop-slot.slot-frac-exp {
-            width: clamp(1.25rem, min(2.6vw, 3.8dvh), 1.68rem);
-            height: clamp(1.25rem, min(2.6vw, 3.8dvh), 1.68rem);
-            font-size: clamp(0.68rem, min(1.2vw, 1.8dvh), 0.88rem);
+            width: clamp(1.45rem, min(3vw, 4.4dvh), 1.98rem);
+            height: clamp(1.45rem, min(3vw, 4.4dvh), 1.98rem);
+            font-size: clamp(0.76rem, min(1.4vw, 2.05dvh), 1rem);
         }
         .dnd-paren-frac-wrap {
             display: inline-flex;
@@ -542,13 +659,13 @@
             z-index: 2;
         }
         .dnd-drop-slot.slot-rad-idx {
-            width: clamp(1.18rem, min(2.4vw, 3.4dvh), 1.55rem);
-            height: clamp(1.18rem, min(2.4vw, 3.4dvh), 1.55rem);
-            font-size: clamp(0.62rem, min(1.15vw, 1.7dvh), 0.84rem);
-            border-radius: 0.35rem;
+            width: clamp(1.38rem, min(2.8vw, 4dvh), 1.82rem);
+            height: clamp(1.38rem, min(2.8vw, 4dvh), 1.82rem);
+            font-size: clamp(0.72rem, min(1.3vw, 1.95dvh), 0.96rem);
+            border-radius: 0.38rem;
         }
         .dnd-radical-sym-svg {
-            width: clamp(0.85rem, 1.7vw, 1.2rem);
+            width: clamp(0.95rem, 1.9vw, 1.35rem);
             height: auto;
             align-self: stretch;
             flex-shrink: 0;
@@ -559,7 +676,7 @@
             display: inline-flex;
             align-items: flex-end;
             border-top: 2px solid rgba(255, 255, 255, 0.9);
-            padding: 0.22rem 0.32rem 0.08rem 0.22rem;
+            padding: 0.28rem 0.4rem 0.1rem 0.28rem;
             margin-top: 0.06rem;
         }
         .dnd-exp-frac {
@@ -567,39 +684,39 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-left: 0.2rem;
-            margin-bottom: clamp(0.45rem, min(1.1vw, 1.6dvh), 0.72rem);
+            margin-left: 0.24rem;
+            margin-bottom: clamp(0.55rem, min(1.3vw, 1.9dvh), 0.85rem);
         }
         .dnd-exp-frac-num {
             display: flex;
             align-items: center;
             justify-content: center;
             border-bottom: 1.8px solid rgba(255, 255, 255, 0.88);
-            padding: 0 0.2rem 0.14rem 0.2rem;
+            padding: 0 0.24rem 0.16rem 0.24rem;
             width: 100%;
         }
         .dnd-exp-frac-den {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0.14rem 0.2rem 0 0.2rem;
+            padding: 0.16rem 0.24rem 0 0.24rem;
             width: 100%;
         }
         .dnd-step-grid.is-dense-grid .dnd-drop-slot.slot-rad-idx {
-            width: clamp(1rem, min(2vw, 2.75dvh), 1.32rem);
-            height: clamp(1rem, min(2vw, 2.75dvh), 1.32rem);
-            font-size: clamp(0.56rem, min(1vw, 1.45dvh), 0.74rem);
+            width: clamp(1.18rem, min(2.4vw, 3.3dvh), 1.55rem);
+            height: clamp(1.18rem, min(2.4vw, 3.3dvh), 1.55rem);
+            font-size: clamp(0.64rem, min(1.15vw, 1.65dvh), 0.85rem);
         }
         .dnd-step-grid.is-dense-grid .dnd-radical-body {
-            padding: 0.14rem 0.24rem 0.05rem 0.16rem;
+            padding: 0.18rem 0.3rem 0.06rem 0.2rem;
         }
         .dnd-static-base {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: clamp(1.75rem, min(3.7vw, 5.4dvh), 2.4rem);
-            padding: 0 0.22rem;
-            font-size: clamp(1rem, min(2vw, 2.8dvh), 1.35rem);
+            height: clamp(2.1rem, min(4.4vw, 6.4dvh), 2.85rem);
+            padding: 0 0.28rem;
+            font-size: clamp(1.15rem, min(2.3vw, 3.2dvh), 1.55rem);
             font-family: Georgia, 'Times New Roman', serif;
             font-style: italic;
             font-weight: 700;
@@ -610,9 +727,9 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: clamp(1.75rem, min(3.7vw, 5.4dvh), 2.4rem);
-            padding: 0 0.12rem;
-            font-size: clamp(1.1rem, min(2.2vw, 3.1dvh), 1.5rem);
+            height: clamp(2.1rem, min(4.4vw, 6.4dvh), 2.85rem);
+            padding: 0 0.16rem;
+            font-size: clamp(1.25rem, min(2.5vw, 3.5dvh), 1.7rem);
             font-weight: 700;
             color: #e5e5e5;
             user-select: none;
@@ -639,13 +756,13 @@
         .dnd-number-tile {
             width: 100%;
             aspect-ratio: 1 / 1;
-            max-width: clamp(1.65rem, min(3.8vw, 5.4dvh), 2.45rem);
+            max-width: clamp(1.95rem, min(4.4vw, 6.2dvh), 2.85rem);
             background: linear-gradient(180deg, rgba(48, 48, 48, 0.92) 0%, rgba(16, 16, 16, 0.98) 100%);
             border: 1.5px solid rgba(255, 255, 255, 0.32);
-            border-radius: 0.45rem;
+            border-radius: 0.5rem;
             color: #ffffff;
             font-weight: 700;
-            font-size: clamp(0.75rem, min(1.6vw, 2.4dvh), 1.08rem);
+            font-size: clamp(0.88rem, min(1.85vw, 2.7dvh), 1.25rem);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1336,28 +1453,28 @@
             <div id="map-nodes-container" class="absolute inset-0 w-full h-full z-20"></div>
         </div>
 
-        <!-- Math Quiz Modal for Exponent Question (Panel Luas, Proporsional & Responsif) -->
-        <div id="quiz-modal" class="hidden absolute inset-0 z-40 flex items-center justify-center bg-black/80 p-2.5 sm:p-5">
-            <div id="quiz-modal-card" class="quiz-popup-16-9 bg-neutral-950/95 border border-white/25 rounded-2xl overflow-y-auto custom-scroll px-4 py-3.5 sm:px-7 sm:py-5 text-neutral-200 my-auto gap-2.5 sm:gap-3.5">
-                <div class="flex flex-col gap-1 border-b border-neutral-800/90 pb-2 sm:pb-3 shrink-0 text-left">
+        <!-- Math Quiz Modal for Exponent Question (Panel Lebih Besar, Leluasa & Responsif di HP maupun Laptop) -->
+        <div id="quiz-modal" class="hidden absolute inset-0 z-40 flex items-center justify-center bg-black/85 p-1.5 sm:p-3">
+            <div id="quiz-modal-card" class="quiz-popup-16-9 bg-neutral-950/95 border border-white/25 rounded-2xl overflow-hidden px-4 py-3 sm:px-8 sm:py-5 text-neutral-200 my-auto gap-2.5 sm:gap-4">
+                <div id="quiz-header-box" class="flex flex-col gap-0.5 border-b border-neutral-800/90 pb-2 sm:pb-3 shrink-0 text-left">
                     <div class="flex items-center gap-2 min-w-0">
-                        <span class="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white animate-pulse shrink-0 shadow-[0_0_8px_#fff]"></span>
-                        <h3 id="quiz-modal-title" class="title-font text-xs sm:text-sm md:text-base font-bold text-white tracking-wider leading-snug break-words">GERBANG MISTERI: EKSPONEN</h3>
+                        <span class="inline-block w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white animate-pulse shrink-0 shadow-[0_0_8px_#fff]"></span>
+                        <h3 id="quiz-modal-title" class="title-font text-xs sm:text-base md:text-lg font-bold text-white tracking-wider leading-snug break-words">GERBANG MISTERI: EKSPONEN</h3>
                     </div>
-                    <p id="quiz-modal-subtitle" class="text-[10px] sm:text-xs text-neutral-400 pl-4 sm:pl-4.5 leading-relaxed break-words"></p>
+                    <p id="quiz-modal-subtitle" class="text-[11px] sm:text-sm text-neutral-400 pl-4 sm:pl-5 leading-snug break-words"></p>
                 </div>
                 
-                <div id="quiz-body-layout" class="flex-1 flex flex-col gap-2.5 sm:gap-3.5 items-stretch justify-center min-h-0">
-                    <div id="quiz-question-box" class="bg-neutral-900/85 border border-white/15 px-3.5 py-3 sm:px-6 sm:py-4 rounded-xl text-center flex flex-col items-center justify-center flex-1 min-h-0 shadow-inner overflow-y-auto custom-scroll">
-                        <div id="quiz-question-text" class="text-xs sm:text-sm md:text-base font-semibold text-white tracking-wide leading-relaxed w-full max-w-3xl mx-auto my-auto"></div>
+                <div id="quiz-body-layout" class="flex-1 flex flex-col gap-2.5 sm:gap-4 items-stretch justify-between min-h-0 overflow-hidden">
+                    <div id="quiz-question-box" class="bg-neutral-900/85 border border-white/15 px-3 py-2.5 sm:px-6 sm:py-4 rounded-xl text-center flex flex-col flex-1 min-h-0 shadow-inner overflow-y-auto overflow-x-hidden custom-scroll">
+                        <div id="quiz-question-text" class="text-xs sm:text-base md:text-lg font-semibold text-white tracking-wide leading-relaxed w-full flex-1 flex flex-col min-h-0 m-auto"></div>
                     </div>
 
-                    <div id="quiz-options" class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 shrink-0">
+                    <div id="quiz-options" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5 shrink-0">
                         <!-- Options / Drag-and-Drop Number Panel populated via JS -->
                     </div>
                 </div>
 
-                <div id="quiz-feedback" class="text-center text-xs sm:text-sm font-medium min-h-[1.1rem] shrink-0"></div>
+                <div id="quiz-feedback" class="hidden text-center text-xs sm:text-sm md:text-base font-medium shrink-0"></div>
             </div>
         </div>
 
@@ -8315,7 +8432,7 @@ function initWorld(fullReset = false) {
     player.impaledBySpider = false;
     player.webbedTimer = 0;
     player.trappedByBearTrap = null;
-    player.parasiteDir = 0,
+    player.parasiteDir = 0;
     player.onRope = null;
     player.ropeCooldown = 0;
     player.onLadder = false;
@@ -11207,6 +11324,45 @@ function updateBossEntity(dt = 1) {
     bossEntity.y = bossEntity.groundY - 76 + bodyBob + attackCrouch;
 }
 
+// Fungsi Auto-Fit Proporsional agar persamaan & kotak Drag-and-Drop selalu muat utuh di layar HP maupun Laptop tanpa terpotong
+function fitQuizEquationToViewport() {
+    if (!quizActive) return;
+    const eqContainer = document.getElementById('dnd-equation-container');
+    const scaleOuter = document.getElementById('dnd-scale-outer');
+    const scaleInner = document.getElementById('dnd-scale-inner');
+    if (!eqContainer || !scaleOuter || !scaleInner) return;
+
+    scaleInner.style.transform = 'none';
+    scaleOuter.style.width = 'auto';
+    scaleOuter.style.height = 'auto';
+
+    const naturalW = scaleInner.scrollWidth || scaleInner.offsetWidth;
+    const naturalH = scaleInner.scrollHeight || scaleInner.offsetHeight;
+    if (naturalW <= 0 || naturalH <= 0) return;
+
+    const style = window.getComputedStyle(eqContainer);
+    const padX = (parseFloat(style.paddingLeft) || 0) + (parseFloat(style.paddingRight) || 0) + 10;
+    const padY = (parseFloat(style.paddingTop) || 0) + (parseFloat(style.paddingBottom) || 0) + 8;
+
+    const availW = Math.max(160, eqContainer.clientWidth - padX);
+    const availH = Math.max(64, eqContainer.clientHeight - padY);
+
+    const scaleX = availW / naturalW;
+    const scaleY = availH / naturalH;
+    const scale = Math.min(1, Math.max(0.54, Math.min(scaleX, scaleY)));
+
+    scaleInner.style.transformOrigin = 'top left';
+    scaleInner.style.transform = `scale(${scale})`;
+    scaleOuter.style.width = `${Math.ceil(naturalW * scale)}px`;
+    scaleOuter.style.height = `${Math.ceil(naturalH * scale)}px`;
+}
+
+window.addEventListener('resize', () => {
+    if (quizActive) {
+        requestAnimationFrame(fitQuizEquationToViewport);
+    }
+});
+
 function openQuizModal(quizGate) {
     quizActive = true;
     activeQuizGate = quizGate;
@@ -11227,30 +11383,30 @@ function openQuizModal(quizGate) {
     feedbackEl.className = 'hidden';
 
     if (quizData.type === 'explanation') {
-        // Susun materi secara mendatar (2 kolom berdampingan: Konsep & Rumus di kiri, Contoh di kanan) dengan ruang lega
+        // Susun materi secara adaptif (2 kolom berdampingan di layar lebar/landscape, dan dapat di-scroll penuh tanpa terpotong)
         const parts = quizData.question.split('\n\n');
         if (parts.length >= 3) {
             const titlePart = formatMathHTML(parts[0]);
             const conceptPart = formatMathHTML(parts[1]);
             const examplePart = formatMathHTML(parts.slice(2).join('\n'));
             questionTextEl.innerHTML = `
-                <div class="grid grid-cols-1 sm:grid-cols-12 gap-3.5 sm:gap-6 items-center text-left p-1 sm:p-2">
-                    <div class="sm:col-span-7 space-y-2 sm:border-r sm:border-neutral-800 sm:pr-5">
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 sm:gap-5 items-center text-left p-1 sm:p-2 m-auto w-full">
+                    <div class="sm:col-span-7 space-y-1.5 sm:border-r sm:border-neutral-800 sm:pr-4">
                         <div class="text-white font-bold text-xs sm:text-sm md:text-base uppercase tracking-wider text-neutral-300">${titlePart}</div>
-                        <div class="text-xs sm:text-sm md:text-base text-neutral-200 leading-relaxed break-words">${conceptPart}</div>
+                        <div class="text-[11px] sm:text-xs md:text-sm text-neutral-200 leading-relaxed break-words">${conceptPart}</div>
                     </div>
-                    <div class="sm:col-span-5 bg-black/55 border border-neutral-800/90 rounded-xl p-3 sm:p-4 text-xs sm:text-sm md:text-base text-neutral-200 flex items-center justify-center shadow-inner overflow-x-auto custom-scroll">
-                        <div class="text-left">${examplePart}</div>
+                    <div class="sm:col-span-5 bg-black/55 border border-neutral-800/90 rounded-xl p-2.5 sm:p-3.5 text-[11px] sm:text-xs md:text-sm text-neutral-200 flex items-center justify-center shadow-inner overflow-x-auto custom-scroll">
+                        <div class="text-left m-auto">${examplePart}</div>
                     </div>
                 </div>
             `;
         } else {
-            questionTextEl.innerHTML = `<div class="p-2 sm:p-3">${formatMathHTML(quizData.question)}</div>`;
+            questionTextEl.innerHTML = `<div class="p-2 sm:p-3 m-auto">${formatMathHTML(quizData.question)}</div>`;
         }
 
         optionsContainer.className = 'flex justify-end shrink-0 pt-0.5';
         const btn = document.createElement('button');
-        btn.className = 'noir-btn quiz-opt-btn px-6 py-2 sm:px-8 sm:py-2.5 text-white border-white/40 font-semibold text-xs sm:text-sm';
+        btn.className = 'noir-btn quiz-opt-btn px-5 py-1.5 sm:px-8 sm:py-2.5 text-white border-white/40 font-semibold text-xs sm:text-sm';
         btn.innerHTML = formatMathHTML(quizData.options[0]);
         btn.onclick = () => {
             quizGate.solved = true;
@@ -11268,29 +11424,25 @@ function openQuizModal(quizGate) {
         const slotValues = quizData.slots.map(() => '');
         const hasStepRows = Array.isArray(quizData.stepRows) && quizData.stepRows.length > 0;
 
-        // Tampilan Soal & Kolom Drop Jawaban Eksponen yang Proporsional & Rapi di Dalam Panel
+        // Tampilan Soal & Kolom Drop Jawaban Eksponen yang Lebih Besar, Leluasa, Auto-Fit & Tidak Terpotong
         questionTextEl.innerHTML = `
-            <div class="flex flex-col items-center justify-center gap-2.5 sm:gap-3.5 w-full py-0.5 px-1 sm:px-2">
-                <div class="text-xs sm:text-sm md:text-base text-neutral-200 font-medium leading-relaxed max-w-2xl break-words">
+            <div class="flex flex-col items-center justify-between gap-2 sm:gap-3.5 w-full flex-1 min-h-0">
+                <div id="dnd-question-prompt" class="text-xs sm:text-base md:text-lg text-neutral-200 font-medium leading-snug max-w-4xl break-words shrink-0 px-1">
                     ${formatMathHTML(quizData.question)}
                 </div>
-                <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-5 bg-black/70 border border-white/15 px-4 py-3 sm:px-7 sm:py-4 rounded-xl shadow-inner w-full max-w-2xl mx-auto overflow-x-auto custom-scroll">
-                    ${hasStepRows ? `
-                        <div id="dnd-slots-wrapper" class="dnd-step-grid select-none"></div>
-                    ` : `
-                        <div class="text-base sm:text-xl md:text-2xl font-bold text-white tracking-wider flex items-center py-1">
-                            ${formatMathHTML(quizData.equationPrompt || '')}
+                <div id="dnd-equation-container" class="bg-black/75 border border-white/15 px-3.5 py-3 sm:px-7 sm:py-5 rounded-xl shadow-inner w-full max-w-5xl flex-1 min-h-[6rem] custom-scroll">
+                    <div id="dnd-scale-outer">
+                        <div id="dnd-scale-inner" class="gap-3 sm:gap-5">
+                            ${hasStepRows ? `
+                                <div id="dnd-slots-wrapper" class="dnd-step-grid select-none"></div>
+                            ` : `
+                                <div class="text-lg sm:text-2xl md:text-3xl font-bold text-white tracking-wider flex items-center py-1.5 whitespace-nowrap">
+                                    ${formatMathHTML(quizData.equationPrompt || '')}
+                                </div>
+                                <div id="dnd-slots-wrapper" class="inline-flex items-end select-none py-1.5"></div>
+                            `}
                         </div>
-                        <div id="dnd-slots-wrapper" class="inline-flex items-end select-none py-1"></div>
-                    `}
-                </div>
-                <div class="flex items-center justify-center gap-3 sm:gap-4 pt-0.5">
-                    <button id="btn-dnd-clear" type="button" class="noir-btn px-3.5 py-1.5 sm:px-5 sm:py-1.5 text-[11px] sm:text-xs border-white/20 text-neutral-300">
-                        Reset Angka
-                    </button>
-                    <button id="btn-dnd-submit" type="button" class="noir-btn px-4 py-1.5 sm:px-6 sm:py-1.5 text-[11px] sm:text-xs border-white/50 text-white font-bold shadow-[0_0_18px_rgba(255,255,255,0.2)]">
-                        Periksa Jawaban
-                    </button>
+                    </div>
                 </div>
             </div>
         `;
@@ -11342,7 +11494,7 @@ function openQuizModal(quizGate) {
             const buildSingleTermNodes = (term, parentEl, isInsideFraction = false) => {
                 if (term.prefixOp) {
                     const opSpan = document.createElement('span');
-                    opSpan.className = 'mx-1.5 sm:mx-2 text-sm sm:text-lg font-bold text-neutral-300 select-none self-center';
+                    opSpan.className = 'mx-1 sm:mx-1.5 text-sm sm:text-lg font-bold text-neutral-300 select-none self-center';
                     opSpan.innerHTML = term.prefixOp;
                     parentEl.appendChild(opSpan);
                 }
@@ -11563,7 +11715,7 @@ function openQuizModal(quizGate) {
             quizData.stepRows.forEach((row) => {
                 // Kolom 1: Sisi kiri tanda '=' (Soal pada baris pertama, kosong pada baris berikutnya)
                 const leftCell = document.createElement('div');
-                leftCell.className = 'text-right font-bold text-white text-sm sm:text-lg md:text-xl flex items-center justify-end py-0.5';
+                leftCell.className = 'text-right font-bold text-white text-base sm:text-xl md:text-2xl flex items-center justify-end py-1 whitespace-nowrap';
                 if (row.leftPrompt) {
                     leftCell.innerHTML = formatMathHTML(row.leftPrompt);
                 }
@@ -11571,13 +11723,13 @@ function openQuizModal(quizGate) {
 
                 // Kolom 2: Tanda '=' yang tersusun lurus vertikal ke bawah
                 const eqCell = document.createElement('div');
-                eqCell.className = 'text-center font-bold text-neutral-200 text-base sm:text-lg md:text-xl px-1 sm:px-2 flex items-center justify-center py-0.5';
+                eqCell.className = 'text-center font-bold text-neutral-200 text-lg sm:text-xl md:text-2xl px-1.5 sm:px-2.5 flex items-center justify-center py-1';
                 eqCell.textContent = '=';
                 slotsWrapper.appendChild(eqCell);
 
                 // Kolom 3: Sisi kanan tanda '=' (Susunan kotak basis, pangkat & pecahan per langkah)
                 const rightCell = document.createElement('div');
-                rightCell.className = 'text-left flex items-center justify-start py-0.5';
+                rightCell.className = 'text-left flex items-center justify-start py-1 whitespace-nowrap';
 
                 (row.terms || []).forEach((term) => {
                     buildSingleTermNodes(term, rightCell, false);
@@ -11599,16 +11751,32 @@ function openQuizModal(quizGate) {
 
         refreshSlotsUI();
 
-        // Panel Bawah: Deretan Angka 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-        optionsContainer.className = 'bg-neutral-900/90 border border-white/15 rounded-xl px-3.5 py-2 sm:px-5 sm:py-3 flex flex-col items-center gap-1.5 shrink-0';
+        // Panel Bawah: Deretan Angka 0-9 terintegrasi dengan Tombol Reset & Periksa Jawaban yang Lebih Leluasa
+        optionsContainer.className = 'bg-neutral-900/90 border border-white/15 rounded-xl px-3.5 py-2.5 sm:px-6 sm:py-3.5 flex flex-col items-center gap-2 shrink-0';
         const hintLabel = document.createElement('div');
-        hintLabel.className = 'text-[9px] sm:text-[11px] text-neutral-400 uppercase tracking-widest font-medium text-center';
-        hintLabel.textContent = 'Panel Angka (Seret / Drag angka ke kotak jawaban di atas)';
+        hintLabel.className = 'dnd-hint-label text-[10px] sm:text-xs text-neutral-400 uppercase tracking-widest font-medium text-center';
+        hintLabel.textContent = 'Panel Angka (Seret / Ketuk angka ke kotak jawaban di atas)';
         optionsContainer.appendChild(hintLabel);
 
+        const controlsDock = document.createElement('div');
+        controlsDock.className = 'dnd-controls-dock';
+        optionsContainer.appendChild(controlsDock);
+
         const tilesRow = document.createElement('div');
-        tilesRow.className = 'grid grid-cols-10 gap-1.5 sm:gap-2 w-full max-w-lg place-items-center';
-        optionsContainer.appendChild(tilesRow);
+        tilesRow.className = 'dnd-tiles-grid';
+        controlsDock.appendChild(tilesRow);
+
+        const actionBtnsWrap = document.createElement('div');
+        actionBtnsWrap.className = 'dnd-action-btns';
+        actionBtnsWrap.innerHTML = `
+            <button id="btn-dnd-clear" type="button" class="noir-btn px-3.5 py-2 sm:px-5 sm:py-2 text-xs sm:text-sm border-white/25 text-neutral-300">
+                Reset Angka
+            </button>
+            <button id="btn-dnd-submit" type="button" class="noir-btn px-4.5 py-2 sm:px-6 sm:py-2 text-xs sm:text-sm border-white/50 text-white font-bold shadow-[0_0_18px_rgba(255,255,255,0.2)]">
+                Periksa Jawaban
+            </button>
+        `;
+        controlsDock.appendChild(actionBtnsWrap);
 
         const assignDigitToSlot = (slotIdx, digitStr) => {
             if (isResolved || slotIdx < 0 || slotIdx >= slotValues.length) return;
@@ -11627,13 +11795,14 @@ function openQuizModal(quizGate) {
 
         const findHoveredSlotIndex = (clientX, clientY) => {
             let bestIdx = -1;
-            let bestDist = 46; // Radius magnet agar mudah di-drop di layar sentuh maupun mouse
+            let bestDist = 46;
             slotElements.forEach((el, idx) => {
                 const rect = el.getBoundingClientRect();
                 const cx = rect.left + rect.width / 2;
                 const cy = rect.top + rect.height / 2;
+                const maxRadius = Math.max(28, Math.max(rect.width, rect.height) * 1.15);
                 const dist = Math.hypot(clientX - cx, clientY - cy);
-                if (dist < bestDist) {
+                if (dist < maxRadius && dist < bestDist) {
                     bestDist = dist;
                     bestIdx = idx;
                 }
@@ -11689,7 +11858,6 @@ function openQuizModal(quizGate) {
                     if (dropIdx !== -1) {
                         assignDigitToSlot(dropIdx, digitStr);
                     } else if (!moved) {
-                        // Jika pemain mengetuk cepat angka tanpa menyeret, masukkan ke slot aktif
                         assignDigitToSlot(activeSlotIndex, digitStr);
                     }
                 };
@@ -11714,6 +11882,7 @@ function openQuizModal(quizGate) {
                 activeSlotIndex = 0;
                 feedbackEl.className = 'hidden';
                 refreshSlotsUI();
+                requestAnimationFrame(fitQuizEquationToViewport);
             };
         }
 
@@ -11727,6 +11896,7 @@ function openQuizModal(quizGate) {
                     feedbackEl.className = 'text-center text-[10px] sm:text-xs md:text-sm font-medium shrink-0 text-amber-400';
                     feedbackEl.textContent = 'Seret angka ke semua kotak jawaban terlebih dahulu!';
                     audio.playStep();
+                    requestAnimationFrame(fitQuizEquationToViewport);
                     return;
                 }
 
@@ -11765,6 +11935,7 @@ function openQuizModal(quizGate) {
                     feedbackEl.className = 'text-center text-[10px] sm:text-xs md:text-sm font-medium shrink-0 text-emerald-400';
                     feedbackEl.innerHTML = `<span class="font-bold text-amber-300 mr-1.5">[+${SCORE_CORRECT_POINTS} POIN]</span><span class="font-bold text-emerald-300 mr-1.5">${lifeNote}</span>${bossDamageNote} ` + formatMathHTML(quizData.explanation || 'Jawaban benar! Gerbang terbuka.');
                     audio.playCleanse();
+                    requestAnimationFrame(fitQuizEquationToViewport);
 
                     setTimeout(() => {
                         quizGate.solved = true;
@@ -11774,7 +11945,6 @@ function openQuizModal(quizGate) {
                         activeQuizGate = null;
 
                         if (isBossFight) {
-                            // Pastikan Raja Laba-Laba berada di dalam jangkauan layar kamera agar sambaran petir terlihat jelas
                             const minVisX = cameraX + 220;
                             const maxVisX = cameraX + VIEW_W - 190;
                             if (bossEntity.x < minVisX || bossEntity.x > maxVisX) {
@@ -11834,6 +12004,7 @@ function openQuizModal(quizGate) {
                         feedbackEl.className = 'text-center text-[10px] sm:text-xs md:text-sm font-medium shrink-0 text-amber-400';
                         feedbackEl.innerHTML = `<span class="font-bold text-rose-400 mr-1.5">[-${SCORE_WRONG_PENALTY} POIN]</span>Masih ada kotak yang belum tepat! Perbaiki kotak merah (tersisa ${attemptsLeft} kesempatan).`;
                         audio.playParasiteLatch();
+                        requestAnimationFrame(fitQuizEquationToViewport);
                     } else {
                         isResolved = true;
                         if (clearBtn) clearBtn.disabled = true;
@@ -11841,6 +12012,7 @@ function openQuizModal(quizGate) {
                         feedbackEl.className = 'text-center text-[10px] sm:text-xs md:text-sm font-medium shrink-0 text-rose-400';
                         feedbackEl.innerHTML = `<span class="font-bold text-rose-300 mr-1.5">[-${SCORE_WRONG_PENALTY} POIN]</span>Jawaban Salah 2 Kali! Game Over — Kamu harus mengulang dari awal stage ini.`;
                         audio.playDeath();
+                        requestAnimationFrame(fitQuizEquationToViewport);
                         setTimeout(() => {
                             document.getElementById('quiz-modal').classList.add('hidden');
                             quizActive = false;
@@ -11854,30 +12026,20 @@ function openQuizModal(quizGate) {
             };
         }
     } else {
-        questionTextEl.innerHTML = `<div class="p-2 sm:p-4 text-sm sm:text-base md:text-lg leading-relaxed break-words">${formatMathHTML(quizData.question)}</div>`;
+        questionTextEl.innerHTML = `<div class="p-2 sm:p-4 text-sm sm:text-base md:text-lg leading-relaxed break-words m-auto">${formatMathHTML(quizData.question)}</div>`;
         optionsContainer.className = 'grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 shrink-0';
         let attemptsLeft = 2;
 
-        // Acak urutan pilihan ganda setiap kali kuis dibuka (Fisher-Yates Shuffle)
-        const shuffledOptions = quizData.options.map((text, originalIdx) => ({
-            text,
-            isCorrect: originalIdx === quizData.correctIndex
-        }));
-        for (let i = shuffledOptions.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
-        }
-
-        shuffledOptions.forEach((optObj) => {
+        (quizData.options || []).forEach((optText, idx) => {
             const btn = document.createElement('button');
-            btn.className = 'noir-btn quiz-opt-btn text-center justify-center font-semibold';
-            btn.innerHTML = formatMathHTML(optObj.text);
+            btn.className = 'noir-btn quiz-opt-btn text-white';
+            btn.innerHTML = formatMathHTML(optText);
             btn.onclick = () => {
                 feedbackEl.classList.remove('hidden');
-                if (optObj.isCorrect) {
+                if (idx === quizData.answer) {
                     const allBtns = optionsContainer.querySelectorAll('button');
                     allBtns.forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; });
-                    btn.classList.add('border-emerald-400', 'bg-emerald-950/60', 'text-emerald-200');
+                    btn.classList.add('border-emerald-400', 'bg-emerald-950/60');
 
                     const prevLives = playerLives;
                     playerLives = Math.min(100, playerLives + LIFE_STEP_PERCENT);
@@ -11892,7 +12054,6 @@ function openQuizModal(quizGate) {
                     const bossDamageNote = isBossFight
                         ? ` <span class="font-bold text-white">[-25% HP RAJA • Sisa ${projectedBossHp}%]</span>`
                         : '';
-
                     const lifeNote = prevLives >= 100
                         ? '[+10% Nyawa • Maks 100%]'
                         : `[+${LIFE_STEP_PERCENT}% Nyawa]`;
@@ -11986,6 +12147,10 @@ function openQuizModal(quizGate) {
     }
 
     document.getElementById('quiz-modal').classList.remove('hidden');
+    requestAnimationFrame(() => {
+        fitQuizEquationToViewport();
+        setTimeout(fitQuizEquationToViewport, 60);
+    });
 }
 
 function updateParticles() {
